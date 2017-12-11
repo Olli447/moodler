@@ -1,9 +1,13 @@
 function checkName(){
     var word = $('#entityName').val();
+
+    translate.translate(word, checkNameAfterTransalateCallback);
+}
+
+function checkNameAfterTransalateCallback(word) {
     jsonp('https://api.datamuse.com/words?sp=' + word +
         '&md=d&max=1', checkNameCallback);
 }
-
 function checkNameCallback(result) {
     var status = $("#status");
     var statusContent = [];
@@ -20,6 +24,7 @@ function checkNameCallback(result) {
             });
     }
     status.val(JSON.stringify(statusContent));
+    console.log("Status " + status.val())
 }
 
 function httpGet(theUrl)
@@ -33,11 +38,6 @@ function httpGet(theUrl)
 
 function jsonp(url, callback){
     $.getJSON(url, function(response) {
-        $.each(response, function(key, val) {
-            var obj = response[0];
-            var name = obj.defHeadword.replace("\"","");
-            //var nameString = JSON.stringify(name);
-            callback(name);
-        });
+        callback(response[0].defHeadword);
     });
 }

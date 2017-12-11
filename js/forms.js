@@ -64,6 +64,7 @@ window.formHandler = {
         var modal = $("#entity-modal");
         if (!modal.find("form")[0].checkValidity())
             return;
+        checkName();
 
         var id = $("#entityId").val();
         var x = $("#entityX").val();
