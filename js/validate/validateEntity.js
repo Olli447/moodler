@@ -1,9 +1,9 @@
 function checkName(){
     var word = $('#entityName').val();
-
-    jsonp('https://api.datamuse.com/words?sp=' + word +
+    var valid = jsonp('https://api.datamuse.com/words?sp=' + word +
         '&md=d&max=1');
 
+    
 }
 
 function httpGet(theUrl)
@@ -23,7 +23,6 @@ function jsonp(url){
             var obj = response[0];
             var name = obj.defHeadword;
             var nameString = JSON.stringify(name);
-            alert(nameString);
             return nameString;
         });
     });
