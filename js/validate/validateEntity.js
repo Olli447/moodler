@@ -1,9 +1,11 @@
 function checkName(){
     var word = $('#entityName').val();
-    var valid = jsonp('https://api.datamuse.com/words?sp=' + word +
-        '&md=d&max=1');
+    jsonp('https://api.datamuse.com/words?sp=' + word +
+        '&md=d&max=1', checkNameCallback);
+}
 
-    
+function checkNameCallback(result) {
+    alert(result);
 }
 
 function httpGet(theUrl)
@@ -15,15 +17,13 @@ function httpGet(theUrl)
     return json["defHeadword"];
 }
 
-function jsonp(url){
-
-
+function jsonp(url, callback){
     $.getJSON(url, function(response) {
         $.each(response, function(key, val) {
             var obj = response[0];
             var name = obj.defHeadword;
             var nameString = JSON.stringify(name);
-            return nameString;
+            callback(nameString);
         });
     });
 }
