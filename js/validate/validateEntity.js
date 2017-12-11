@@ -5,7 +5,21 @@ function checkName(){
 }
 
 function checkNameCallback(result) {
-    alert(result);
+    var status = $("#status");
+    var statusContent = [];
+
+    if (typeof result === 'undefined')
+    {
+        statusContent.push({"name" : "s"});
+    }
+    else {
+        statusContent.push(
+            {
+                "name": "p",
+                "nameCorrect": result
+            });
+    }
+    status.val(JSON.stringify(statusContent));
 }
 
 function httpGet(theUrl)
@@ -21,9 +35,9 @@ function jsonp(url, callback){
     $.getJSON(url, function(response) {
         $.each(response, function(key, val) {
             var obj = response[0];
-            var name = obj.defHeadword;
-            var nameString = JSON.stringify(name);
-            callback(nameString);
+            var name = obj.defHeadword.replace("\"","");
+            //var nameString = JSON.stringify(name);
+            callback(name);
         });
     });
 }
