@@ -6,15 +6,17 @@
     <link href="css/moodler.css" rel="stylesheet"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/js/material.min.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/js/ripples.min.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/js/standalone/selectize.min.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.3/FileSaver.js"></script>
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/gojs/1.7.26/go-debug.js"></script>
-   <script src="js/moodler/moodler.js"></script>
-   <script src="js/moodler/erd_templates.js"></script>
-   <script src="js/forms.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/js/material.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/js/ripples.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/js/standalone/selectize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.3/FileSaver.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gojs/1.7.26/go-debug.js"></script>
+    <script src="js/moodler/moodler.js"></script>
+    <script src="https://unpkg.com/inflected/dist/umd/inflected.min.js"></script>
+    <script src="js/validate/validateEntity.js"></script>
+    <script src="js/moodler/erd_templates.js"></script>
+    <script src="js/forms.js"></script>
     <script>
         $(function() {
             $.material.init();
@@ -53,6 +55,8 @@
 
 
 <!-- Modals -->
+
+<!-- Entitiy -->
 <div class="modal fade" id="entity-modal">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -113,11 +117,13 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>
-                <button type="button" class="btn btn-primary">Fortfahren</button>
+                <button type="button" onclick="checkName()" class="btn btn-primary">Fortfahren</button>
             </div>
         </div>
     </div>
 </div>
+<!-- -->
+<!-- Relationship -->
 <div class="modal fade" id="relationship-modal">
     <div class="modal-dialog">
         <div class="modal-content">

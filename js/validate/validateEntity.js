@@ -23,7 +23,6 @@ function jsonp(url){
             var obj = response[0];
             var name = obj[0];
             console.log(obj);
-            //blabla
             return obj;
         });
     });
