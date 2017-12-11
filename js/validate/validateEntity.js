@@ -1,8 +1,8 @@
 function checkName(){
     var word = $('#entityName').val();
 
-    alert(jsonp('https://api.datamuse.com/words?sp=' + word +
-        '&md=d&max=1'));
+    jsonp('https://api.datamuse.com/words?sp=' + word +
+        '&md=d&max=1');
 
 }
 
@@ -21,9 +21,10 @@ function jsonp(url){
     $.getJSON(url, function(response) {
         $.each(response, function(key, val) {
             var obj = response[0];
-            var name = obj[0];
-            console.log(obj);
-            return obj;
+            var name = obj.defHeadword;
+            var nameString = JSON.stringify(name);
+            alert(nameString);
+            return nameString;
         });
     });
 }
