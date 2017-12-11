@@ -1,4 +1,4 @@
-function translateWord(word)
+function translateWord(word, callback)
 {
     var key = "trnsl.1.1.20171211T152251Z.290e0af2ce51eee9.b835144280228df50dc98d9bfe5c3a3c620cd4c1";
 
@@ -9,15 +9,13 @@ function translateWord(word)
         $.each(response, function(key, val) {
             var obj = response;
             var name = obj.text;
-            var nameString = JSON.stringify(name[0]);
-            console.log(nameString);
-            callbackTranslate(nameString);
-
+            var nameString = JSON.stringify(name[0]).split("\"").join("");
+            callback(nameString);
         });
     });
 
 }
 
 function callbackTranslate(result){
-    alert(result);
+    console.log(result);
 }
