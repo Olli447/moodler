@@ -5,7 +5,6 @@
     <title>Moodler φ</title>
     <link href="css/moodler.css" rel="stylesheet"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/js/material.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/js/ripples.min.js"></script>
@@ -15,10 +14,36 @@
     <script src="js/moodler/moodler.js"></script>
     <script src="https://unpkg.com/inflected/dist/umd/inflected.min.js"></script>
     <script src="js/validate/validateEntity.js"></script>
+    <script src="js/validate/validateCardinality.js"></script>
     <script src="js/tools/translate.js"></script>
+    <script src="js/tools/jquery.mask.js"></script>
     <script src="js/moodler/erd_templates.js"></script>
     <script src="js/tools/translate.js"></script>
     <script src="js/forms.js"></script>
+    <script>
+            $(document).ready(function () {
+                $('#cardinality1').mask('0BZ', {
+                    translation: {
+                        'Z': {
+                            pattern: /[1-9]|[*]/, optional: false
+                        },
+                        'B': {
+                            pattern: /,/, optional: false
+                        }
+                    }
+                });
+                $('#cardinality2').mask('0BZ', {
+                    translation: {
+                        'Z': {
+                            pattern: /[1-9]|[*]/, optional: false
+                        },
+                        'B': {
+                            pattern: /,/, optional: false
+                        }
+                    }
+                });
+            });
+    </script>
     <script>
         $(function() {
             $.material.init();
@@ -126,16 +151,16 @@
 </div>
 <!-- -->
 <!-- Relationship -->
-<div class="modal fade" id="relationship-modal">
-    <div class="modal-dialog">
-        <div class="modal-content">
+<div class="modal fade" id="relationship-modal" onload="">
+    <div class="modal-dialog"  onload="">
+        <div class="modal-content"  onload="">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h3 class="modal-title">Beziehungstyp hinzufügen/bearbeiten</h3>
                 <hr/>
             </div>
-            <div class="modal-body">
-                <form id="relationshipForm">
+            <div class="modal-body"  onload="">
+                <form id="relationshipForm"  onload="">
                     <input type="hidden" id="relationshipId" value=""/>
                     <input type="hidden" id="relationshipX">
                     <input type="hidden" id="relationshipY">
@@ -161,7 +186,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <div class="form-group label-floating">
+                                     <div class="form-group label-floating">
                                         <label for="entity1" class="control-label">Entitätstyp wählen</label>
                                         <select id="entity1" class="form-control" required>
                                             <option></option>
@@ -183,7 +208,7 @@
                                 <div class="col-sm-4">
                                     <div class="form-group label-floating">
                                         <label class="control-label" for="cardinality1">Kardinalität</label>
-                                        <input pattern="[\d+|\*],[\d+|\*]" id="cardinality1" class="form-control"
+                                        <input id="cardinality1" class="form-control"
                                                type="text">
                                         <p class="help-block">
                                             <span class="small">1,*</span>
@@ -223,7 +248,7 @@
                                 <div class="col-sm-4">
                                     <div class="form-group label-floating">
                                         <label class="control-label" for="cardinality2">Kardinalität</label>
-                                        <input pattern="[\d+|\*],[\d+|\*]" id="cardinality2" class="form-control"
+                                        <input id="cardinality2" class="form-control"
                                                type="text">
                                         <p class="help-block">
                                             <span class="small">1,*</span>
