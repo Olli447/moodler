@@ -264,7 +264,7 @@
                                 <div class="col-sm-4">
                                     <div class="form-group label-floating">
                                         <label class="control-label" for="cardinality2">Kardinalität</label>
-                                        <input id="cardinality2" class="form-control"
+                                        <input id="cardinality2" class="form-control" onblur="checkCardi($('#cardinality2'))"
                                                type="text">
                                         <p class="help-block">
                                             <span class="small">1,*</span>
@@ -338,29 +338,6 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>
                 <button type="button" class="btn btn-primary">Fortfahren</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!--alert cardinality-->
-
-< Button trigger modal -->
-<button type="button" class="btn btn-primary" id="clickModalCardinal" data-toggle="modal" data-target="#modalCardinal" style="display:none">
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="modalCardinal" tabindex="-1" role="dialog" aria-labelledby="modalCardinalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalCardinalLabel">Achtung</h5>
-            </div>
-            <div class="modal-body">
-                Ihr Min-Wert der Kardinalität darf nicht größer sein, als der Max-Wert.
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
             </div>
         </div>
     </div>

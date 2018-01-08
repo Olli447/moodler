@@ -6,7 +6,7 @@ function checkCardi(element) {
     if(lower>higher){
         element.val("");
         b=false;
-        $('#clickModalCardinal').click();
+        toastr.error("Ihr Min-Wert der Kardinalität darf nicht größer sein, als der Max-Wert.");
     }
 }
     return b;
