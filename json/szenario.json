@@ -1,0 +1,17 @@
+{
+  "healthcare": {
+    "entity": {
+      "hospital": {
+        "fullName": "Hospital",
+        "property": {
+          "capacity": {
+            "fullName": "Capacity",
+            "type": "Integer"
+          }
+        }
+      }
+    },
+    "relationship": {
+    }
+  }
+}

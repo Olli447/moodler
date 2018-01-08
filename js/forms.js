@@ -42,7 +42,6 @@ window.formHandler = {
     addField: function () {
         var cloneable = $(this).closest(".cloneable");
         var clone = cloneable.clone(true);
-        clone.find("input").val("");
         clone.find("select").val("");
         cloneable.after(clone);
         var removeBtn = clone.find(".remove");
@@ -159,7 +158,7 @@ window.formHandler = {
 
             modal.find(".cloneable:last-of-type").find(".remove").click();
         }
-
+        initSuggestName(modal);
         modal.modal();
 
     },

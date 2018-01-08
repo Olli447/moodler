@@ -4,12 +4,16 @@
     <meta charset="UTF-8">
     <title>Moodler φ</title>
     <link href="css/moodler.css" rel="stylesheet"/>
+    <link href="css/toastr.min.css" rel="stylesheet"/>
+    <link href="css/typeaheadjs.css" rel="stylesheet"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="js/typeahead.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/js/material.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/js/ripples.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/js/standalone/selectize.min.js"></script>
+    <script src="js/toastr.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.3/FileSaver.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gojs/1.7.26/go-debug.js"></script>
     <script src="js/moodler/moodler.js"></script>
@@ -18,12 +22,24 @@
     <script src="js/tools/translate.js"></script>
     <script src="js/moodler/erd_templates.js"></script>
     <script src="js/tools/translate.js"></script>
+    <script src="js/tools/identify.js"></script>
     <script src="js/forms.js"></script>
+    <script src="js/tools/autocomplete.js"></script>
     <script>
         $(function() {
             $.material.init();
+
+            var request = new XMLHttpRequest();
+            request.open("GET", "json/szenario.json", false);
+            request.send(null);
+            autocomplete.sourceEntity = JSON.parse(request.responseText);
+
+            toastr.options.progressBar = true;
+            toastr.options.timeOut = 30000;
+            toastr.options.extendedTimeOut = 60000;
             moodler.init("moodler");
             formHandler.init();
+            toastr.info("Mistakes will be highlighted. Click on the highlighted area to know more about it.", "Litte Helper");
         });
     </script>
 </head>

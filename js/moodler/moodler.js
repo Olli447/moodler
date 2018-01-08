@@ -25,6 +25,7 @@ window.moodler = {
             "undoManager.isEnabled": true, // enable Ctrl-Z to undo and Ctrl-Y to redo
             model: new go.GraphLinksModel()
         });
+        this._diagram.addDiagramListener("ObjectSingleClicked", checkNameEvent);
         window.PIXELRATIO = this._diagram.computePixelRatio();
         setupTemplates(this._go, this._diagram);
     },
@@ -41,8 +42,8 @@ window.moodler = {
 
         if (entityData.id !== undefined) {
             var entity = this._diagram.model.findNodeDataForKey(entityData.id);
-            this._diagram.model.setDataProperty(entity, "properties", entityData.properties)
-            this._diagram.model.setDataProperty(entity, "entityName", entityData.entityName)
+            this._diagram.model.setDataProperty(entity, "properties", entityData.properties);
+            this._diagram.model.setDataProperty(entity, "entityName", entityData.entityName);
         }
         else {
             this._diagram.model.addNodeData({

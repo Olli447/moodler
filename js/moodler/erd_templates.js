@@ -12,7 +12,16 @@ function setupTemplates($go, diagram) {
             },
             $go(go.Shape, "Rectangle", {
                 fill: "white"
-            }),
+                },
+                new go.Binding("fill", "error", function (v) {
+                    return v ? "red" : "white";
+                }),
+                new go.Binding("stroke", "error", function (v) {
+                    return v ? "black" : "black";
+                }),
+                new go.Binding("strokeWidth", "error", function (v) {
+                    return v ? 1 : 1;
+                })),
             $go(go.TextBlock, new go.Binding("text", "entityName"), {
                 margin: 5
             })
