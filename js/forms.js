@@ -22,7 +22,9 @@ window.formHandler = {
         });
 
         $("#relationship-modal").find(".btn.btn-primary").click(function () {
+            if(validCardiForm()){
             formHandler.addEditRelationship();
+                }
         });
 
         $("#inheritance-modal").find(".btn.btn-primary").click(function () {
