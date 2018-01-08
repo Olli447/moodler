@@ -107,6 +107,9 @@ window.formHandler = {
             targetMultiplicity: modal.find("#cardinality2").val()
         };
 
+       // checkCardi(modal.find("#cardinality1").val());
+        //checkCardi(modal.find("#cardinality2").val());
+
         if (id !== "")
             moodler.deleteRelationship(id);
 
