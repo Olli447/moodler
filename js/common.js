@@ -19,12 +19,17 @@ function finalizeGUI(){
             }
         }
     });
+
+    var szenarioBtn = $('#szenarioBtn');
+    szenarioBtn.click(function() {
+        $('#szenarioModal').modal('show')
+    });
     startWelcomeTour();
     startToasts();
 }
 
 function startToasts(){
-    $.material.init();
+     $.material.init();
 
     var request = new XMLHttpRequest();
     request.open("GET", "json/szenario.json", false);

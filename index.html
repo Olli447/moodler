@@ -53,6 +53,7 @@
                 <img src="images/entity.png" id="entity" draggable="true"/> <br/>
                 <img src="images/relationship.png" id="relationship" draggable="true"/><br/>
                 <img src="images/generalizationSpecialization.png" id="inheritance" draggable="true"/>
+                <button type="button" id="szenarioBtn" class="btn btn-raised btn-default">Domäne wählen</button>
             </div>
 
         </div>
@@ -326,5 +327,32 @@
     </div>
 </div>
 <!-- Welcome-Tour -->
+<!-- Szenario Modal -->
+<div class="modal" id="szenarioModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Wähle eine Domäne aus</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="btn-group btn-group-justified btn-group-raised">
+                    <a href="javascript:void(0)" class="btn ">Left</a>
+                    <a href="javascript:void(0)" class="btn ">Middle</a>
+                    <a href="javascript:void(0)" class="btn ">Right</a>
+                    <a href="javascript:void(0)" class="btn ">Left</a>
+                    <a href="javascript:void(0)" class="btn ">Middle</a>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">OK</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbruch</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Szenario Modal -->
 </body>
 </html>
