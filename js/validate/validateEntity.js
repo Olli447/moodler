@@ -1,7 +1,8 @@
 function checkName(){
     var word = $('#entityName').val();
 
-    identify.identify(word, checkNameCallback)
+    //identify.identify(word, checkNameCallback)
+    return true;
 }
 
 function checkNameCallback(entityName, isPlural, basicWord) {
