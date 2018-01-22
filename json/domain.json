@@ -1,0 +1,139 @@
+﻿{
+  "class": "go.GraphLinksModel",
+  "nodeDataArray": [
+    {
+      "key": "entity",
+      "entityName": "entity",
+      "location": {
+        "class": "go.Point",
+        "x": 280.515625,
+        "y": 142
+      },
+      "properties": [
+        {
+          "propertyName": "attr",
+          "propertyType": "String"
+        }
+      ],
+      "category": "entity"
+    },
+    {
+      "key": "entity2",
+      "entityName": "entity2",
+      "location": {
+        "class": "go.Point",
+        "x": 490.515625,
+        "y": 132
+      },
+      "properties": [
+        {
+          "propertyName": "attr2",
+          "propertyType": "Float"
+        }
+      ],
+      "category": "entity"
+    },
+    {
+      "key": "R_bez1",
+      "location": {
+        "class": "go.Point",
+        "x": 474.515625,
+        "y": 243
+      },
+      "relationshipName": "bez1",
+      "category": "relationshipDiamond"
+    },
+    {
+      "key": "entity3",
+      "entityName": "entity3",
+      "location": {
+        "class": "go.Point",
+        "x": 191.515625,
+        "y": 326
+      },
+      "properties": [
+        {
+          "propertyName": "attr3",
+          "propertyType": "Float"
+        }
+      ],
+      "category": "entity"
+    },
+    {
+      "key": "R_bez2",
+      "location": {
+        "class": "go.Point",
+        "x": 437.515625,
+        "y": 348
+      },
+      "relationshipName": "bez2",
+      "category": "relationshipDiamond"
+    },
+    {
+      "key": "spezial",
+      "entityName": "spezial",
+      "location": {
+        "class": "go.Point",
+        "x": 308.515625,
+        "y": 143
+      },
+      "properties": [
+        {
+          "propertyName": "spezialAttr",
+          "propertyType": "Float"
+        }
+      ],
+      "category": "entity"
+    },
+    {
+      "key": "GS_entity3",
+      "location": {
+        "class": "go.Point",
+        "x": 282.515625,
+        "y": 353
+      },
+      "exclusiveness": "o",
+      "category": "generalizationSpecializationCircle"
+    }
+  ],
+  "linkDataArray": [
+    {
+      "from": "entity",
+      "to": "R_bez1",
+      "role": "",
+      "multiplicity": "4",
+      "category": "relationshipLine"
+    },
+    {
+      "from": "entity2",
+      "to": "R_bez1",
+      "role": "",
+      "multiplicity": "3",
+      "category": "relationshipLine"
+    },
+    {
+      "from": "entity",
+      "to": "R_bez2",
+      "role": "",
+      "multiplicity": "4",
+      "category": "relationshipLine"
+    },
+    {
+      "from": "entity3",
+      "to": "R_bez2",
+      "role": "",
+      "multiplicity": "3",
+      "category": "relationshipLine"
+    },
+    {
+      "from": "entity3",
+      "to": "GS_entity3",
+      "category": "totalGeneralizationLine"
+    },
+    {
+      "from": "spezial",
+      "to": "GS_entity3",
+      "category": "specializationLine"
+    }
+  ]
+}
