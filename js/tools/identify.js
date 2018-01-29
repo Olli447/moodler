@@ -3,7 +3,7 @@ window.identify = {
     apiKey: " ",
     identify: function (word, callback) {
 
-        var uri = "http://localhost:3000/api/auth/";
+        var uri = "http://132.252.51.194:3000/api/auth/";
 
         var xhr = $.ajax({
             url: encodeURI(uri + "check"),
@@ -34,7 +34,7 @@ window.identify = {
         });
     },
     identifyCallback: function (word, callback) {
-        var uri = "http://localhost:3000/api/language/multiplicity/" + word;
+        var uri = "http://132.252.51.194:3000/api/language/multiplicity/" + word;
         var url = encodeURI(uri);
 
         var xhr = $.ajax({
