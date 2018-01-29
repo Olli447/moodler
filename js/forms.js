@@ -189,7 +189,8 @@ window.formHandler = {
             var data = moodler.getRelationshipData(relId);
             $("#relationshipId").val(relId).change();
             $("#relationshipName").val(data.relationshipName);
-            entity1.setValue(data.source).change();
+            entity1.setValue(data.source);
+            entity1.$input.change();
             $("#role1").val(data.sourceRole).change();
             $("#cardinality1").val(data.sourceMultiplicity);
             entity2.setValue(data.target);
