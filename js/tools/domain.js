@@ -5,6 +5,12 @@ function Beziehung(from, to, cardFrom, cardTo) {
     this.cardTo = cardTo;
 }
 
+function Specialization(from, to, total) {
+    this.from = from;
+    this.to = to;
+    this.total = total;
+}
+
 function readTextFile(file, callback) {
     var rawFile = new XMLHttpRequest();
     rawFile.overrideMimeType("application/json");
@@ -22,6 +28,7 @@ function readAll() {
     readTextFile("json/domain.json", function (text) {
         readEntitys(text);
         readRelations(text);
+        readSpecial(text)
     });
 }
 
@@ -43,17 +50,25 @@ function readRelations(data) {
                 if (array[i].to == array[j].to) {
                     if (finalarray.length < array.length / 2) {
                         var bez = new Beziehung(array[i].from, array[j].from, array[i].cardTo, array[j].cardTo);
-                            finalarray.push(bez);
+                        finalarray.push(bez);
                     }
                 }
             }
         }
 
     }
-    for (var i = 0; i < finalarray.length; i++) {
-        console.log("Bezehung von " + finalarray[i].from + " card: " + finalarray[i].cardFrom + " zu: " + finalarray[i].to + " card: " + finalarray[i].cardTo);
+    xml = "<xmlRelation>";
+    for (var k = 0; k < finalarray.length; k++) {
+        xml+="<relation>";
+        xml+="<from>"+finalarray[k].from+"</from>";
+        xml+="<to>"+finalarray[k].to+"</to>";
+        xml+="<cardFrom>"+finalarray[k].cardFrom+"</cardFrom>";
+        xml+="<cardTo>"+finalarray[k].cardTo+"</cardTo>";
+        xml+="</relation>";
     }
-
+    xml+="</xmlRelation>";
+    $('#dataRelation').val(xml);
+    console.log($('#dataRelation').val());
 }
 
 function readEntitys(data) {
@@ -66,7 +81,47 @@ function readEntitys(data) {
             array.push(entityarray[i].entityName);
         }
     }
+     xml = "<xmlEntity>";
     for (var i = 0; i < array.length; i++) {
-        console.log(array[i]);
+        xml+="<name>"+array[i]+"</name>";
     }
+    xml+="</xmlEntity>";
+    $('#dataEntity').val(xml);
+    console.log($('#dataEntity').val());
+}
+
+function readSpecial(data) {
+    var array = [];
+    var mydata = JSON.parse(data);
+    var specialarray = mydata.linkDataArray;
+    for (var i = 0; i < specialarray.length; i++) {
+        if (specialarray[i] !== undefined) {
+            if (specialarray[i].category == "specializationLine") {
+                var to = specialarray[i].from;
+                var connect = specialarray[i].to;
+                specialarray[i] = undefined;
+                for (var j = 0; j < specialarray.length; j++) {
+                    if (specialarray[j] !== undefined) {
+                        if (specialarray[j].category == "partialGeneralizationLine" && specialarray[j].to == connect) {
+                            array.push(new Specialization(specialarray[j].from, to, false));
+                        }
+                        if (specialarray[j].category == "totalGeneralizationLine" && specialarray[j].to == connect) {
+                            array.push(new Specialization(specialarray[j].from, to, true));
+                        }
+                    }
+                }
+            }
+        }
+    }
+    xml = "<xmlSpecial>";
+    for (var k = 0; k < array.length; k++) {
+        xml+="<special>";
+        xml+="<from>"+array[k].from+"</from>";
+        xml+="<to>"+array[k].to+"</to>";
+        xml+="<total>"+array[k].total+"</total>";
+        xml+="</special>";
+    }
+    xml+="</xmlSpecial>";
+    $('#dataSpecialization').val(xml);
+    console.log($('#dataSpecialization').val());
 }
