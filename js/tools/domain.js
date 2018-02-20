@@ -1,3 +1,7 @@
+var entityArray;
+var relationArray;
+var specialArray;
+
 function Beziehung(from, to, cardFrom, cardTo) {
     this.from = from;
     this.to = to;
@@ -57,18 +61,9 @@ function readRelations(data) {
         }
 
     }
-    xml = "<xmlRelation>";
     for (var k = 0; k < finalarray.length; k++) {
-        xml+="<relation>";
-        xml+="<from>"+finalarray[k].from+"</from>";
-        xml+="<to>"+finalarray[k].to+"</to>";
-        xml+="<cardFrom>"+finalarray[k].cardFrom+"</cardFrom>";
-        xml+="<cardTo>"+finalarray[k].cardTo+"</cardTo>";
-        xml+="</relation>";
+        relationArray.push(finalarray[0]);
     }
-    xml+="</xmlRelation>";
-    $('#dataRelation').val(xml);
-    console.log($('#dataRelation').val());
 }
 
 function readEntitys(data) {
@@ -78,16 +73,9 @@ function readEntitys(data) {
     var entityarray = mydata.nodeDataArray;
     for (var i = 0; i < entityarray.length; i++) {
         if (entityarray[i].category == "entity") {
-            array.push(entityarray[i].entityName);
+            entityArray.push(entityarray[i].entityName);
         }
     }
-     xml = "<xmlEntity>";
-    for (var i = 0; i < array.length; i++) {
-        xml+="<name>"+array[i]+"</name>";
-    }
-    xml+="</xmlEntity>";
-    $('#dataEntity').val(xml);
-    console.log($('#dataEntity').val());
 }
 
 function readSpecial(data) {
@@ -115,13 +103,6 @@ function readSpecial(data) {
     }
     xml = "<xmlSpecial>";
     for (var k = 0; k < array.length; k++) {
-        xml+="<special>";
-        xml+="<from>"+array[k].from+"</from>";
-        xml+="<to>"+array[k].to+"</to>";
-        xml+="<total>"+array[k].total+"</total>";
-        xml+="</special>";
+        specialArray.push(array[i]);
     }
-    xml+="</xmlSpecial>";
-    $('#dataSpecialization').val(xml);
-    console.log($('#dataSpecialization').val());
 }
