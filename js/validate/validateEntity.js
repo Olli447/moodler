@@ -15,18 +15,44 @@ function checkNameCallback(entityName, isPlural, basicWord) {
             break;
         }
     }
+    if (isPlural !== null) {
+        moodler._diagram.startTransaction("setError");
+        moodler._diagram.model.setDataProperty(data, "warning", false);
+        moodler._diagram.model.setDataProperty(data, "warningMessage", null);
+        moodler._diagram.model.setDataProperty(data, "error", isPlural);
+        if (isPlural)
+            moodler._diagram.model.setDataProperty(data, "errorMessage", "The entity's name needs to be in singular.<br>You could write: \"" + basicWord + "\"!");
+        moodler._diagram.commitTransaction("setError");
+    } else {
+        moodler._diagram.startTransaction("setWarning");
+        moodler._diagram.model.setDataProperty(data, "error", false);
+        moodler._diagram.model.setDataProperty(data, "errorMessage", null);
+        moodler._diagram.model.setDataProperty(data, "warning", true);
+        moodler._diagram.model.setDataProperty(data, "warningMessage", "The System returned:<br>" + basicWord + "!");
+        moodler._diagram.commitTransaction("setWarning");
+    }
 
-    moodler._diagram.startTransaction("setError");
-    moodler._diagram.model.setDataProperty(data, "error", isPlural);
-    if (isPlural)
-        moodler._diagram.model.setDataProperty(data, "errorMessage", "The entity's name needs to be in singular.<br>You could write: \"" + basicWord + "\"!");
-    moodler._diagram.commitTransaction("setError");
 }
 
 function checkNameEvent(event) {
     var part = event.subject.part;
-    if (part.category === "entity" && part.data.error === true) {
-        toastr.error(part.data.errorMessage, part.data.entityName + ' - Fehler - Einzahl/Mehrzahl')
+
+    var toasts = document.getElementsByClassName("toast-title");
+    var isSingleton = true;
+
+    var index, len;
+    for (index = 0, len = toasts.length; index < len; index++) {
+        if ((toasts[index].innerText === part.data.entityName + ' - Fehler - Einzahl/Mehrzahl') || (toasts[index].innerText === part.data.entityName + ' - Fehler - API Abfrage')) {
+            isSingleton = false;
+            break;
+        }
+    }
+
+    if (part.category === "entity" && part.data.error === true && isSingleton) {
+        toastr.error(part.data.errorMessage, part.data.entityName + ' - Fehler - Einzahl/Mehrzahl');
+    }
+    if (part.category === "entity" && part.data.warning === true && isSingleton) {
+        toastr.warning(part.data.warningMessage, part.data.entityName + ' - Fehler - API Abfrage');
     }
 }
 

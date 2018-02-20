@@ -52,11 +52,14 @@
 
                 <input type="file" class="hidden" id="loadFile">
             </div>
-            <div>
+            <div class="container-fluid">
                 <img src="images/entity.png" id="entity" draggable="true"/> <br/>
                 <img src="images/relationship.png" id="relationship" draggable="true"/><br/>
                 <img src="images/generalizationSpecialization.png" id="inheritance" draggable="true"/>
-                <button type="button" id="szenarioBtn" class="btn btn-raised btn-default">Domäne wählen</button>
+                <div class="clearfix"></div>
+                <button type="button" id="szenarioBtn" class="btn btn-raised btn-default"
+                        style="width: 100%; font-size: 1vw; padding: 5px 5px 5px 5px">Domäne wählen
+                </button>
             </div>
 
         </div>
@@ -86,7 +89,8 @@
                         <div class="col-sm-12">
                             <div class="form-group label-floating">
                                 <label class="control-label" for="entityName">Name des Entitätstyp</label>
-                                <input class="form-control" id="entityName" type="text" pattern="[\w]+" required/>
+                                <input class="form-control" id="entityName" type="text" pattern="[\wöäüßÄÖÜ]+"
+                                       required/>
                                 <p class="help-block">
                                     <strong>Pflichtfeld -</strong> Nur Buchstabe,
                                     Ziffern oder &quot;_&quot;.
@@ -98,7 +102,8 @@
                         <div class="col-sm-7">
                             <div class="label-floating form-group">
                                 <label class="control-label" for="attributeName">Att. Name</label>
-                                <input pattern="[\w]+" id="attributeName" required class="form-control" type="text">
+                                <input pattern="[\wöäüßÄÖÜ]+" id="attributeName" required class="form-control"
+                                       type="text">
                                 <p class="help-block">
                                     <strong>Pflichtfeld -</strong> Nur Buchstabe,
                                     Ziffern oder &quot;_&quot;.
@@ -153,7 +158,8 @@
                         <div class="col-sm-12">
                             <div class="form-group label-floating">
                                 <label class="control-label" for="relationshipName">Name des Beziehungstyps</label>
-                                <input pattern="[\w]+" required id="relationshipName" class="form-control" type="text">
+                                <input pattern="[\wöäüßÄÖÜ]+" required id="relationshipName" class="form-control"
+                                       type="text">
                                 <p class="help-block">
                                     <strong>Pflichtfeld</strong> Nur Buchstabe,
                                     Ziffern oder &quot;_&quot;.

@@ -44,6 +44,7 @@ window.identify = {
             beforeSend: identify.setHeader,
             error: function (response) {
                 console.log(response);
+                callback(word, null, response.responseJSON.error)
             },
             success: function (response) {
                 callback(word, response.isPlural, response.basicForm);
