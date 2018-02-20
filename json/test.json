@@ -1,0 +1,15 @@
+﻿{ "class": "go.GraphLinksModel",
+  "nodeDataArray": [ 
+{"key":"Disjunkt1", "entityName":"Disjunkt1", "location":{"class":"go.Point", "x":281.9403280201426, "y":184}, "properties":[ {"propertyName":"da", "propertyType":"Float"} ], "category":"entity"},
+{"key":"Disjunkt2", "entityName":"Disjunkt2", "location":{"class":"go.Point", "x":235.94032802014257, "y":449}, "properties":[ {"propertyName":"dada", "propertyType":"Boolean"} ], "category":"entity"},
+{"key":"GS_Disjunkt1", "location":{"class":"go.Point", "x":325.9403280201426, "y":325}, "exclusiveness":"d", "category":"generalizationSpecializationCircle", "subclasses":[ "Disjunkt2" ], "isDisjoint":true, "superclass":"Disjunkt1", "isPartial":false},
+{"key":"overlap1", "entityName":"overlap1", "location":{"class":"go.Point", "x":470.9403280201426, "y":239}, "properties":[ {"propertyName":"dad", "propertyType":"Float"} ], "category":"entity"},
+{"key":"overlap2", "entityName":"overlap2", "location":{"class":"go.Point", "x":433.9403280201426, "y":445}, "properties":[ {"propertyName":"eadd", "propertyType":"Date"} ], "category":"entity"},
+{"key":"GS_overlap1", "location":{"class":"go.Point", "x":355.9403280201426, "y":352}, "exclusiveness":"o", "category":"generalizationSpecializationCircle"}
+ ],
+  "linkDataArray": [ 
+{"from":"Disjunkt1", "to":"GS_Disjunkt1", "category":"totalGeneralizationLine"},
+{"from":"Disjunkt2", "to":"GS_Disjunkt1", "category":"specializationLine"},
+{"from":"overlap1", "to":"GS_overlap1", "category":"totalGeneralizationLine"},
+{"from":"overlap2", "to":"GS_overlap1", "category":"specializationLine"}
+ ]}
