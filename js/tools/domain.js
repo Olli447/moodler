@@ -1,6 +1,6 @@
-var entityArray;
-var relationArray;
-var specialArray;
+var entityArray=[];
+var relationArray=[];
+var specialArray=[];
 
 function Beziehung(from, to, cardFrom, cardTo) {
     this.from = from;
