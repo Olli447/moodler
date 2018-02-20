@@ -9,10 +9,11 @@ function Beziehung(from, to, cardFrom, cardTo) {
     this.cardTo = cardTo;
 }
 
-function Specialization(from, to, total) {
+function Specialization(from, to, total, overlap) {
     this.from = from;
     this.to = to;
     this.total = total;
+    this.overlap = overlap;
 }
 
 function readTextFile(file, callback) {
@@ -29,7 +30,7 @@ function readTextFile(file, callback) {
 
 
 function readAll() {
-    readTextFile("json/domain.json", function (text) {
+    readTextFile("json/test.json", function (text) {
         readEntitys(text);
         readRelations(text);
         readSpecial(text)
@@ -61,9 +62,7 @@ function readRelations(data) {
         }
 
     }
-    for (var k = 0; k < finalarray.length; k++) {
-        relationArray.push(finalarray[0]);
-    }
+    relationArray=finalarray;
 }
 
 function readEntitys(data) {
@@ -82,6 +81,7 @@ function readSpecial(data) {
     var array = [];
     var mydata = JSON.parse(data);
     var specialarray = mydata.linkDataArray;
+    var entityarray = mydata.nodeDataArray;
     for (var i = 0; i < specialarray.length; i++) {
         if (specialarray[i] !== undefined) {
             if (specialarray[i].category == "specializationLine") {
@@ -91,18 +91,34 @@ function readSpecial(data) {
                 for (var j = 0; j < specialarray.length; j++) {
                     if (specialarray[j] !== undefined) {
                         if (specialarray[j].category == "partialGeneralizationLine" && specialarray[j].to == connect) {
-                            array.push(new Specialization(specialarray[j].from, to, false));
+                            for(var y = 0; y<entityarray.length; y++){
+                                if(entityarray[y].key == "GS_"+specialarray[j].from){
+                                    if(entityarray[y].exclusiveness=="o"){
+                                        array.push(new Specialization(specialarray[j].from, to, false, true));
+                                    }else{
+                                        array.push(new Specialization(specialarray[j].from, to, false, false));
+                                    }
+                                }
+                            }
                         }
                         if (specialarray[j].category == "totalGeneralizationLine" && specialarray[j].to == connect) {
-                            array.push(new Specialization(specialarray[j].from, to, true));
+                            for(var y = 0; y<entityarray.length; y++) {
+                                if (entityarray[y].key == "GS_" + specialarray[j].from) {
+                                    if (entityarray[y].exclusiveness == "o") {
+                                        array.push(new Specialization(specialarray[j].from, to, true, true));
+                                    }else{
+                                        array.push(new Specialization(specialarray[j].from, to, true, false));
+                                    }
+                                }
+                            }
                         }
                     }
                 }
             }
         }
     }
-    xml = "<xmlSpecial>";
-    for (var k = 0; k < array.length; k++) {
-        specialArray.push(array[i]);
+    specialArray = array;
+    for(var r = 0; r<specialArray.length; r++){
+        console.log(specialArray[r].from+" "+specialArray[r].to+" "+specialArray[r].total+" "+specialArray[r].overlap);
     }
 }

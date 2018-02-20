@@ -45,15 +45,23 @@ function startToasts(){
 }
 
 function startWelcomeTour(){
-    var trigger = $("body").find('[data-toggle="modal"]');
-    trigger.click(function() {
-        var theModal = $(this).data( "target" ),
-            videoSRC = $(this).attr( "data-theVideo" ),
-            videoSRCauto = videoSRC+"?autoplay=1" ;
-        $(theModal+' iframe').attr('src', videoSRCauto);
-        $(theModal+' button.close').click(function () {
-            $(theModal+' iframe').attr('src', videoSRC);
+    // check cookie
+    var visited = Cookies.get('visited');
+    if (visited == null) {
+        var trigger = $("body").find('[data-toggle="modal"]');
+        trigger.click(function() {
+            var theModal = $(this).data( "target" ),
+                videoSRC = $(this).attr( "data-theVideo" ),
+                videoSRCauto = videoSRC+"?autoplay=1" ;
+            $(theModal+' iframe').attr('src', videoSRCauto);
+            $(theModal+' button.close').click(function () {
+                $(theModal+' iframe').attr('src', videoSRC);
+            });
         });
-    });
-    $('#videoBtn').click();
+        $('#videoBtn').click();
+    }
+
+    // set cookie
+    Cookies.set('visited', 'value');
+
 }

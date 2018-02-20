@@ -29,6 +29,7 @@
     <script src="js/forms.js"></script>
     <script src="js/common.js"></script>
     <script src="js/tools/autocomplete.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
     <script>
             $(document).ready(function () {
                 finalizeGUI();
@@ -253,7 +254,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>
-                <button type="button" onclick="checkSpace()" class="btn btn-primary">Fortfahren</button>
+                <button type="button" onclick="checkSpace(); checkThirdSingular()" class="btn btn-primary">Fortfahren</button>
             </div>
         </div>
     </div>
@@ -323,11 +324,11 @@
 <!-- Welcome-Tour -->
 <a href="#" id="videoBtn" class="btn btn-default" data-toggle="modal" data-target="#videoModal" style="display: none" data-theVideo="http://www.youtube.com/embed/loFtozxZG0s" ></a>
 
-<div class="modal fade" id="videoModal" tabindex="-1" role="dialog" aria-labelledby="videoModal" aria-hidden="true">
+<div class="modal fade" id="videoModal" onblur="$('#videoClose').click()" tabindex="-1" role="dialog" aria-labelledby="videoModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <button type="button" id="videoClose" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                 <div>
                     <iframe width="100%" height="350" src=""></iframe>
                 </div>
@@ -363,10 +364,5 @@
     </div>
 </div>
 <!-- Szenario Modal -->
-<!-- hidden Fields -->
-<input type="text" id="dataEntity" hidden>
-<input type="text" id="dataRelation" hidden>
-<input type="text" id="dataSpecialization" hidden>
-<!-- hidden Fields -->
 </body>
 </html>
