@@ -8,6 +8,8 @@ function checkSpace(){
 
 function checkThirdSingular() {
     var name = $('#relationshipName').val();
+    name = name.substring(0,name.indexOf("_"));
+    console.log(name);
     getThirdSing.getThirdSing(name, callBackThirdSingular)
 }
 
