@@ -49,10 +49,10 @@ function checkNameEvent(event) {
     }
 
     if (part.category === "entity" && part.data.error === true && isSingleton) {
-        toastr.error(part.data.errorMessage, part.data.entityName + ' - Fehler - Einzahl/Mehrzahl');
+        notification.createError(part.data.entityName + ' - Fehler - Einzahl/Mehrzahl', part.data.errorMessage, part.data.entityName);
     }
     if (part.category === "entity" && part.data.warning === true && isSingleton) {
-        toastr.warning(part.data.warningMessage, part.data.entityName + ' - Fehler - API Abfrage');
+        notification.createError(part.data.entityName + ' - Fehler - API Abfrage', part.data.warningMessage, part.data.entityName);
     }
 }
 
@@ -65,30 +65,20 @@ function initSuggestName(modal) {
             source: autocomplete.search
         });
     modal.find("#entityName").on('typeahead:select', function (event, suggestion) {
-        //-------------------------------
-        console.log('Selection: ' + suggestion);
-        toastr.info("<div class='row' style='margin-left: 0.33333%;'><p>Do you want to add some suggested attributes to your form?</p></div><div class='row col-md-offset-1'><button type='button' class='btn btn-raised btn-success' id='yesBtn'>Yes</button><button type='button' class='btn btn-raised btn-error' id='noBtn'>No</button></div>", "Need a helping hand?");
-        $('#yesBtn').on('click', function (e) {
+        //console.log('Selection: ' + suggestion);
+        var infoToast = notification.createInfo("Need a helping hand?", "<div class='row' style='margin-left: 0.33333%;'><p>Do you want to add some suggested attributes to your form?</p></div><div class='row col-md-offset-1' style=\"margin-left: 0.33333%;\"><button type='button' class='btn btn-raised btn-success' id='yesBtn'>Yes</button><button type='button' class='btn btn-raised btn-error' id='noBtn'>No</button></div>", "modal");
+        notification.addEventListener(infoToast, "keydown", handleKeydownEnter);
+        infoToast.find('#yesBtn').on('click', function (e) {
             //TODO: ADD check if Attribute allready exists
-            var data = autocomplete.sourceEntity[autocomplete.szenario]
+            var data = autocomplete.sourceEntity[autocomplete.szenario];
             for (var key in data.entity) {
                 if (!data.entity.hasOwnProperty(key)) continue;
                 if (data.entity[key].fullName === suggestion) {
-                    for (var prop in data.entity[key].property) {
-                        if (!data.entity[key].property.hasOwnProperty(prop)) continue;
-                        if (modal.find(".cloneable:last-of-type").find("#attributeName").val().length !== 0 || modal.find(".cloneable:last-of-type").find("#attributeType").val().length !== 0) {
-                            modal.find(".cloneable:last-of-type").find(".add").click();
-                        }
-                        var propertyLine = modal.find(".cloneable:last-of-type");
-                        propertyLine.find("#attributeName").val(data.entity[key].property[prop].fullName).change();
-                        propertyLine.find("#attributeType").val(data.entity[key].property[prop].type).change();
-                        propertyLine.find(".add").click();
-                    }
-                    modal.find(".cloneable:last-of-type").find(".remove").click();
+                    addAttributes(modal, data)
                 }
             }
         });
-        $('#noBtn').on('click', function (e) {
+        infoToast.find('#noBtn').on('click', function (e) {
             //nothing
         });
 //--------------------------------
@@ -97,4 +87,22 @@ function initSuggestName(modal) {
         modal.find("#entityName").off('typeahead:select');
         modal.find("#entityName").typeahead('destroy');
     });
+}
+
+function addAttributes(modal, data) {
+    for (var prop in data.entity[key].property) {
+        if (!data.entity[key].property.hasOwnProperty(prop)) continue;
+        if (modal.find(".cloneable:last-of-type").find("#attributeName").val().length !== 0 || modal.find(".cloneable:last-of-type").find("#attributeType").val().length !== 0) {
+            modal.find(".cloneable:last-of-type").find(".add").click();
+        }
+        var propertyLine = modal.find(".cloneable:last-of-type");
+        propertyLine.find("#attributeName:last-of-type").val(data.entity[key].property[prop].fullName).change();
+        propertyLine.find("#attributeType:last-of-type").val(data.entity[key].property[prop].type).change();
+    }
+}
+
+function handleKeydownEnter() {
+    if (event.code === 'Enter') {
+        $('#yesBtn').click();
+    }
 }

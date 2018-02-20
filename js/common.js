@@ -41,7 +41,7 @@ function startToasts(){
     toastr.options.extendedTimeOut = 60000;
     moodler.init("moodler");
     formHandler.init();
-    toastr.info("Mistakes will be highlighted. Click on the highlighted area to know more about it.", "Litte Helper");
+    notification.createInfo("Litte Helper", "Mistakes will be highlighted. Click on the highlighted area to know more about it.", "overview");
 }
 
 function startWelcomeTour(){

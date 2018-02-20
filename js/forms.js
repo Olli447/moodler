@@ -25,6 +25,7 @@ window.formHandler = {
             if(validCardiForm()){
             formHandler.addEditRelationship();
                 }
+            formHandler.resetDropdowns();
         });
 
         $("#inheritance-modal").find(".btn.btn-primary").click(function () {
@@ -333,6 +334,28 @@ window.formHandler = {
 
         $("#children").selectize(multiValue);
 
+    },
+
+    destroyDropdowns: function () {
+
+        var entity1 = $("#entity1")[0].selectize;
+        var entity2 = $("#entity2")[0].selectize;
+        var parent = $("#parent")[0].selectize;
+        var children = $("#children")[0].selectize
+
+        entity1.clearOptions();
+        entity1.destroy();
+        entity2.clearOptions();
+        entity2.destroy();
+        parent.clearOptions();
+        parent.destroy();
+        parent.clearOptions();
+        parent.destroy();
+    },
+
+    resetDropdowns: function () {
+        formHandler.destroyDropdowns();
+        formHandler.setupDropdowns();
     }
 
 };

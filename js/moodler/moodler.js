@@ -37,8 +37,11 @@ window.moodler = {
      * @param y ordinate of the point where the entity is to be added to the diagram
      */
     addEntity: function (entityData, x, y) {
+        if (entityData.id !== undefined)
+            notification.destroyToastForKey(entityData.id);
 
-        this._diagram.startTransaction("Add/Edit Entity " + entityData.name);
+
+        this._diagram.startTransaction("Add/Edit Entity " + entityData.entityName);
 
         if (entityData.id !== undefined) {
             var entity = this._diagram.model.findNodeDataForKey(entityData.id);
@@ -55,7 +58,7 @@ window.moodler = {
             });
 
         }
-        this._diagram.commitTransaction("Add Entity " + name);
+        this._diagram.commitTransaction("Add/Edit Entity " + entityData.entityName);
     },
 
     /**
