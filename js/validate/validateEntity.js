@@ -49,10 +49,10 @@ function checkNameEvent(event) {
     }
 
     if (part.category === "entity" && part.data.error === true && isSingleton) {
-        notification.createError(part.data.entityName + ' - Fehler - Einzahl/Mehrzahl', part.data.errorMessage, part.data.entityName);
+        notification.createError(part.data.entityName + ' - Fehler - Einzahl/Mehrzahl', part.data.errorMessage, part.data.id);
     }
     if (part.category === "entity" && part.data.warning === true && isSingleton) {
-        notification.createError(part.data.entityName + ' - Fehler - API Abfrage', part.data.warningMessage, part.data.entityName);
+        notification.createWarning(part.data.entityName + ' - Fehler - API Abfrage', part.data.warningMessage, part.data.id);
     }
 }
 
@@ -74,7 +74,7 @@ function initSuggestName(modal) {
             for (var key in data.entity) {
                 if (!data.entity.hasOwnProperty(key)) continue;
                 if (data.entity[key].fullName === suggestion) {
-                    addAttributes(modal, data)
+                    addAttributes(modal, data, key)
                 }
             }
         });
@@ -89,7 +89,7 @@ function initSuggestName(modal) {
     });
 }
 
-function addAttributes(modal, data) {
+function addAttributes(modal, data, key) {
     for (var prop in data.entity[key].property) {
         if (!data.entity[key].property.hasOwnProperty(prop)) continue;
         if (modal.find(".cloneable:last-of-type").find("#attributeName").val().length !== 0 || modal.find(".cloneable:last-of-type").find("#attributeType").val().length !== 0) {

@@ -339,27 +339,70 @@
 </div>
 <!-- Welcome-Tour -->
 <!-- Szenario Modal -->
-<div class="modal" id="szenarioModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
+<div class="modal fade" id="szenarioModal" tabindex="-1" role="dialog" aria-labelledby="Szenario" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-notify modal-info" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Wähle eine Domäne aus</h3>
+                <h3 class="heading lead">Wähle eine Domäne aus</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true" class="white-text">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <div class="btn-group btn-group-justified btn-group-raised">
-                    <a href="javascript:void(0)" class="btn ">Left</a>
-                    <a href="javascript:void(0)" class="btn ">Middle</a>
-                    <a href="javascript:void(0)" class="btn ">Right</a>
-                    <a href="javascript:void(0)" class="btn ">Left</a>
-                    <a href="javascript:void(0)" class="btn ">Middle</a>
+                <div class="container-fluid">
+                    <p class="text-center" id="waitDomain">... Loading</p>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary">OK</button>
+                <button type="button" class="btn btn-warning mr-auto" id="editDomainButton">Einloggen</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbruch</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="domainLogin" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
+    <div class="modal-dialog cascading-modal" role="document">
+        <div class="modal-content">
+            <div class="modal-header warning-color white-text">
+                <h4 class="title">
+                    <i class="fa fa-key"></i> Log in
+                </h4>
+                <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form id="domainLoginForm" onsubmit="return domainLogin();">
+                    <!-- Material input email -->
+                    <div class="md-form">
+                        <i class="fa fa-user prefix grey-text"></i>
+                        <input type="text" id="usernameDomain" class="form-control">
+                        <label for="usernameDomain">Benutzername</label>
+                    </div>
+
+                    <!-- Material input password -->
+                    <div class="md-form">
+                        <i class="fa fa-lock prefix grey-text"></i>
+                        <input type="password" id="passwordDomain" class="form-control">
+                        <label for="passwordDomain">Passwort</label>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button class="btn btn-default" type="submit">Login</button>
+                    </div>
+                </form>
+                <div id="success"
+                     style="display: none; position: absolute; left: 0; top: 0; right: 0; bottom: 2vh; background-color: white">
+                    <i class="fa fa-check"
+                       style="color: green; transform: scale(14) translate(0.8vw,0.5vh); z-index: 10"></i>
+                </div>
+                <div id="error"
+                     style="display: none; position: absolute; left: 0; top: 1vh; right: 0; bottom: 2vh; background-color: white">
+                    <i class="fa fa-minus-circle"
+                       style="color: red; transform: scale(13) translate(0.93vw,0.6vh); z-index: 10"></i>
+                </div>
             </div>
         </div>
     </div>
