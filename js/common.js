@@ -22,14 +22,19 @@ function finalizeGUI(){
 
     var szenarioBtn = $('#szenarioBtn');
     szenarioBtn.click(function() {
-        $('#szenarioModal').modal('show')
+        $('#szenarioModal').modal('show');
+        $('#szenarioModal').on('hide.bs.modal', finalizeDomainModal);
+        $('#editDomainButton').on('click', initEditDomains);
+        initDomains();
+
+
     });
     startWelcomeTour();
     startToasts();
 }
 
 function startToasts(){
-     $.material.init();
+    //$.material.init();
 
     var request = new XMLHttpRequest();
     request.open("GET", "json/szenario.json", false);

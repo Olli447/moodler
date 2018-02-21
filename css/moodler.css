@@ -1,36 +1,39 @@
-@import url("https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css");
+/*@import url("https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css");
 @import url("https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.4/css/selectize.bootstrap3.min.css");
 @import url("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/bootstrap-material-design.min.css");
-@import url("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/ripples.min.css");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/css/ripples.min.css");*/
 @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
 @import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700");
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons");
+@import "material/bootstrap.css";
+@import "material/mdb.min.css";
+@import "material/style.css";
 
 body {
     margin: 0;
 }
 
-.row hr {
+/*.row hr {
     border-width: 1px;
     border-color: #DDD;
     margin-top: 5px;
     margin-bottom: 5px;
-}
+}*/
 
-.modal-header > hr {
+/*.modal-header > hr {
     border-width: 2px;
     border-color: #DDD;
     margin-top: 10px;
     margin-bottom: 0px;
-}
+}*/
 
 .add {
     cursor: pointer;
 }
 
-.modal-content .modal-body {
+/*.modal-content .modal-body {
     padding-top: 15px;
-}
+}*/
 
 .remove {
     cursor: pointer;

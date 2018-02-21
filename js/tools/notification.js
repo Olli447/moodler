@@ -44,8 +44,8 @@ window.notification = {
 
         return newToast;
     },
-    createWarn: function (title, content, key) {
-        var newToast = toastr.warn(content, title);
+    createWarning: function (title, content, key) {
+        var newToast = toastr.warning(content, title);
 
         if (this.activeToasts.length === 0) {
             var config = {childList: true, subtree: true};
@@ -68,7 +68,9 @@ window.notification = {
     addEventListener: function (toast, type, callback) {
         for (var i = 0, len = notification.activeToasts.length; i < len; i++) {
             if (this.activeToasts[i].id === toast.attr("data-id")) {
-                type === "keydown" ? document.addEventListener(type, callback) : this.activeToasts[i].toast.addEventListener(type, callback);
+                type === "keydown" ? setTimeout(function () {
+                    document.addEventListener(type, callback);
+                }, 500) : this.activeToasts[i].toast.addEventListener(type, callback);
                 this.activeToasts[i].events.push({
                     type: type,
                     callback: callback
