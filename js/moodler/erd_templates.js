@@ -21,6 +21,15 @@ function setupTemplates($go, diagram) {
                 }),
                 new go.Binding("strokeWidth", "error", function (v) {
                     return v ? 1 : 1;
+                }),
+                new go.Binding("fill", "warning", function (v) {
+                    return v ? "yellow" : "white";
+                }),
+                new go.Binding("stroke", "warning", function (v) {
+                    return v ? "black" : "black";
+                }),
+                new go.Binding("strokeWidth", "warning", function (v) {
+                    return v ? 1 : 1;
                 })),
             $go(go.TextBlock, new go.Binding("text", "entityName"), {
                 margin: 5
