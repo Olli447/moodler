@@ -205,6 +205,7 @@ window.formHandler = {
     },
 
     showInheritanceForm: function (x, y, id) {
+        this.resetDropdowns();
         var modal = $("#inheritance-modal");
         modal.find("form")[0].reset();
         $("#inheritanceX").val(x);
