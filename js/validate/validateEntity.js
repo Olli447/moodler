@@ -15,21 +15,23 @@ function checkNameCallback(entityName, isPlural, basicWord) {
             break;
         }
     }
-    if (isPlural !== null) {
-        moodler._diagram.startTransaction("setError");
-        moodler._diagram.model.setDataProperty(data, "warning", false);
-        moodler._diagram.model.setDataProperty(data, "warningMessage", null);
-        moodler._diagram.model.setDataProperty(data, "error", isPlural);
-        if (isPlural)
-            moodler._diagram.model.setDataProperty(data, "errorMessage", "The entity's name needs to be in singular.<br>You could write: \"" + basicWord + "\"!");
-        moodler._diagram.commitTransaction("setError");
-    } else {
-        moodler._diagram.startTransaction("setWarning");
-        moodler._diagram.model.setDataProperty(data, "error", false);
-        moodler._diagram.model.setDataProperty(data, "errorMessage", null);
-        moodler._diagram.model.setDataProperty(data, "warning", true);
-        moodler._diagram.model.setDataProperty(data, "warningMessage", "The System returned:<br>" + basicWord + "!");
-        moodler._diagram.commitTransaction("setWarning");
+    if (entityName !== basicWord) {
+        if (isPlural !== null) {
+            moodler._diagram.startTransaction("setError");
+            moodler._diagram.model.setDataProperty(data, "warning", false);
+            moodler._diagram.model.setDataProperty(data, "warningMessage", null);
+            moodler._diagram.model.setDataProperty(data, "error", isPlural);
+            if (isPlural)
+                moodler._diagram.model.setDataProperty(data, "errorMessage", "Der Name der Entität muss im Singualar sein.<br>Besser: \"" + basicWord + "\"");
+            moodler._diagram.commitTransaction("setError");
+        } else {
+            moodler._diagram.startTransaction("setWarning");
+            moodler._diagram.model.setDataProperty(data, "error", false);
+            moodler._diagram.model.setDataProperty(data, "errorMessage", null);
+            moodler._diagram.model.setDataProperty(data, "warning", true);
+            moodler._diagram.model.setDataProperty(data, "warningMessage", "The System returned:<br>" + basicWord + "!");
+            moodler._diagram.commitTransaction("setWarning");
+        }
     }
 
 }
@@ -66,7 +68,7 @@ function initSuggestName(modal) {
         });
     modal.find("#entityName").on('typeahead:select', function (event, suggestion) {
         //console.log('Selection: ' + suggestion);
-        var infoToast = notification.createInfo("Need a helping hand?", "<div class='row' style='margin-left: 0.33333%;'><p>Do you want to add some suggested attributes to your form?</p></div><div class='row col-md-offset-1' style=\"margin-left: 0.33333%;\"><button type='button' class='btn btn-raised btn-success' id='yesBtn'>Yes</button><button type='button' class='btn btn-raised btn-error' id='noBtn'>No</button></div>", "modal");
+        var infoToast = notification.createInfo("Need a helping hand?", "<div class='row' style='margin-left: 0.33333%;'><p>Do you want to add some suggested attributes to your form?</p></div><div class='row col-md-offset-1' style=\"margin-left: 0.33333%;\"><div></div><button type='button' class='btn btn-raised btn-success btn-block' style='width: 45%; margin: 2.5%' id='yesBtn'>Yes</button><button type='button' class='btn btn-raised btn-danger btn-block' style='width: 45%; margin: 2.5%' id='noBtn'>No</button></div>", "modal");
         notification.addEventListener(infoToast, "keydown", handleKeydownEnter);
         infoToast.find('#yesBtn').on('click', function (e) {
             //TODO: ADD check if Attribute allready exists

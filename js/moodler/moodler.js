@@ -26,6 +26,15 @@ window.moodler = {
             model: new go.GraphLinksModel()
         });
         this._diagram.addDiagramListener("ObjectSingleClicked", checkNameEvent);
+        this._diagram.addModelChangedListener(function (evt) {
+            if (evt.isTransactionFinished) {
+                if (typeof(Storage) !== "undefined") {
+                    localStorage.setItem("quicksave", evt.model.toJson())
+                } else {
+                    // Sorry! No Web Storage support..
+                }
+            }
+        });
         window.PIXELRATIO = this._diagram.computePixelRatio();
         setupTemplates(this._go, this._diagram);
     },
@@ -247,6 +256,11 @@ window.moodler = {
 
     toJSON: function () {
         var json = this._diagram.model.toJSON();
+        if (typeof(Storage) !== "undefined") {
+            localStorage.setItem("quicksave", "");
+        } else {
+            // Sorry! No Web Storage support..
+        }
         return json;
     },
 

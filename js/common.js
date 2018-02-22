@@ -6,7 +6,8 @@ function finalizeGUI(){
         },
         error: function (result) {
             document.getElementById("intranetError").classList.remove("hidden");
-        }
+        },
+        timeout: 1000
     });
 
 
@@ -60,6 +61,24 @@ function startToasts(){
     moodler.init("moodler");
     formHandler.init();
     notification.createInfo("Litte Helper", "Mistakes will be highlighted. Click on the highlighted area to know more about it.", "overview");
+
+    if (typeof(Storage) !== "undefined") {
+        var save = localStorage.getItem("quicksave");
+        if (save) {
+            var modal = notification.createWarning("Hinweis", "<div class='row' style='margin-left: 0.33333%;'><p>Es wurde ein Modell wiederhergestellt. Soll es geladen werden?</p></div><div class='row col-md-offset-1' style=\"margin-left: 0.33333%;\"><div></div><button type='button' class='btn btn-raised btn-success btn-block' style='width: 45%; margin: 2.5%' id='reload'>Yes</button><button type='button' class='btn btn-raised btn-danger btn-block' style='width: 45%; margin: 2.5%' id='discard'>No</button></div>");
+            modal.find("#reload").on("click", function () {
+                moodler.fromJSON(save);
+                if (moodler.getEntityList.length !== 0) {
+                    localStorage.setItem("quicksave", "");
+                }
+            });
+            modal.find("#discard").on("click", function () {
+                localStorage.setItem("quicksave", "");
+            });
+        }
+    } else {
+        // Sorry! No Web Storage support..
+    }
 }
 
 function startWelcomeTour(){
