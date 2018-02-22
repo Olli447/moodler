@@ -1,13 +1,14 @@
 var domainApiKey = "";
 var domains = [];
-var waitElementClone = document.getElementById("waitDomain").cloneNode(false);
+var waitElementClone;
 
 function initDomains() {
+    waitElementClone = document.getElementById("waitDomain").cloneNode(false);
     if (domains.length !== 0)
         return;
 
-    //var uri = "http://132.252.51.194:3000/api/auth/";
-    var uri = "http://localhost:3000/api/auth/";
+    var uri = "http://132.252.51.194:3000/api/auth/";
+    //var uri = "http://localhost:3000/api/auth/";
 
     var xhr = $.ajax({
         url: encodeURI(uri + "check"),
@@ -57,8 +58,8 @@ function domainLogin(pre) {
     var error = document.getElementById("error");
     pre === undefined ? pre = false : pre;
 
-    //var uri = "http://132.252.51.194:3000/api/auth/";
-    var uri = "http://localhost:3000/api/auth/";
+    var uri = "http://132.252.51.194:3000/api/auth/";
+    //var uri = "http://localhost:3000/api/auth/";
 
     var xhr = $.ajax({
         url: encodeURI(uri + "check"),
@@ -115,8 +116,8 @@ function domainLogin(pre) {
 }
 
 function loadDomains() {
-    //var uri = "http://132.252.51.194:3000/api/domain/";
-    var uri = "http://localhost:3000/api/domain/";
+    var uri = "http://132.252.51.194:3000/api/domain/";
+    //var uri = "http://localhost:3000/api/domain/";
 
     var xhr = $.ajax({
         url: encodeURI(uri),
@@ -151,7 +152,6 @@ function domainListCallback(domains) {
             var createNew = document.createElement("button");
             createNew.classList.add("btn");
             createNew.classList.add("btn-outline-primary");
-            createNew.classList.add("waves-effect");
             createNew.type = "button";
             createNew.innerText = "Domain erstellen";
             createNew.addEventListener("click", createDomain);
@@ -184,7 +184,6 @@ function domainListCallback(domains) {
                     var button = document.createElement("button");
                     button.classList.add("btn");
                     button.classList.add("btn-outline-primary");
-                    button.classList.add("waves-effect");
                     button.type = "button";
                     button.innerText = domains[j].name;
                     button.setAttribute("data-id", domains[j].id);
@@ -194,7 +193,6 @@ function domainListCallback(domains) {
                     var button2 = document.createElement("button");
                     button2.classList.add("btn");
                     button2.classList.add("btn-outline-warning");
-                    button2.classList.add("waves-effect");
                     button2.type = "button";
                     button2.innerHTML = "<i class='fa fa-pen'></i>";
                     button2.setAttribute("data-id", domains[j].id);
@@ -204,7 +202,6 @@ function domainListCallback(domains) {
                     var button3 = document.createElement("button");
                     button3.classList.add("btn");
                     button3.classList.add("btn-outline-error");
-                    button3.classList.add("waves-effect");
                     button3.type = "button";
                     button3.innerHTML = "<i class='fa fa-trash'></i>";
                     button3.setAttribute("data-id", domains[j].id);
@@ -229,7 +226,6 @@ function domainListCallback(domains) {
             var createNew2 = document.createElement("button");
             createNew2.classList.add("btn");
             createNew2.classList.add("btn-outline-primary");
-            createNew2.classList.add("waves-effect");
             createNew2.type = "button";
             createNew2.innerText = "Domain erstellen";
             createNew2.addEventListener("click", createDomain);
@@ -253,7 +249,6 @@ function domainListCallback(domains) {
                     var button = document.createElement("button");
                     button.classList.add("btn");
                     button.classList.add("btn-outline-primary");
-                    button.classList.add("waves-effect");
                     button.type = "button";
                     button.innerText = domains[j].name;
                     button.setAttribute("data-id", domains[j].id);

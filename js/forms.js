@@ -21,11 +21,12 @@ window.formHandler = {
             formHandler.addEditEntity();
         });
 
-        $("#relationship-modal").find(".btn.btn-primary").click(function () {
+        var relationshipModal = $("#relationship-modal");
+        relationshipModal.find(".btn.btn-primary").click(function () {
             if(validCardiForm()){
-            formHandler.addEditRelationship();
+                formHandler.addEditRelationship();
                 }
-            formHandler.resetDropdowns();
+
         });
 
         $("#inheritance-modal").find(".btn.btn-primary").click(function () {
@@ -170,6 +171,7 @@ window.formHandler = {
     },
 
     showRelForm: function (x, y, relId) {
+        this.resetDropdowns();
         var modal = $("#relationship-modal");
         modal.find("form")[0].reset();
         $("#relationshipX").val(x);
@@ -177,14 +179,15 @@ window.formHandler = {
         var entity1 = $("#entity1")[0].selectize;
         var entity2 = $("#entity2")[0].selectize;
 
-        entity1.clearOptions();
-        entity2.clearOptions();
+        if (moodler.getEntityList().length !== 0) {
+            entity1.clearOptions();
+            entity2.clearOptions();
 
-        moodler.getEntityList().forEach(function (entity) {
-            entity1.addOption(entity);
-            entity2.addOption(entity);
-        });
-
+            moodler.getEntityList().forEach(function (entity) {
+                entity1.addOption(entity);
+                entity2.addOption(entity);
+            });
+        }
 
         if (typeof relId !== "undefined") {
             var data = moodler.getRelationshipData(relId);
@@ -209,13 +212,15 @@ window.formHandler = {
         var parentSelect = $("#parent")[0].selectize;
         var childrenSelect = $("#children")[0].selectize;
 
-        parentSelect.clearOptions();
-        childrenSelect.clearOptions();
+        if (moodler.getEntityList().length !== 0) {
+            parentSelect.clearOptions();
+            childrenSelect.clearOptions();
 
-        moodler.getEntityList().forEach(function (entity) {
-            parentSelect.addOption(entity);
-            childrenSelect.addOption(entity);
-        });
+            moodler.getEntityList().forEach(function (entity) {
+                parentSelect.addOption(entity);
+                childrenSelect.addOption(entity);
+            });
+        }
 
         if (typeof id !== "undefined") {
             var data = moodler.getGeneralizationSpecializationData(id);
@@ -326,6 +331,9 @@ window.formHandler = {
         multiValue.plugins = ['remove_button'];
 
 
+        if (moodler.getEntityList().length === 0)
+            return;
+
         $("#entity1").selectize(singleValue);
 
         $("#entity2").selectize(singleValue);
@@ -343,14 +351,26 @@ window.formHandler = {
         var parent = $("#parent")[0].selectize;
         var children = $("#children")[0].selectize
 
-        entity1.clearOptions();
-        entity1.destroy();
-        entity2.clearOptions();
-        entity2.destroy();
-        parent.clearOptions();
-        parent.destroy();
-        parent.clearOptions();
-        parent.destroy();
+        if (entity1) {
+            entity1.clearOptions();
+            entity1.destroy();
+        }
+        if (entity2) {
+            entity2.clearOptions();
+            entity2.destroy();
+        }
+        if (parent) {
+            parent.clearOptions();
+            parent.destroy();
+        }
+        if (children) {
+            parent.clearOptions();
+            parent.destroy();
+        }
+
+
+
+
     },
 
     resetDropdowns: function () {

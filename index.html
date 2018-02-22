@@ -7,11 +7,18 @@
     <link href="css/toastr.min.css" rel="stylesheet"/>
     <link href="css/typeaheadjs.css" rel="stylesheet"/>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
     <script src="js/typeahead.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/js/material.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/js/ripples.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/js/standalone/selectize.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/js/material.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/js/ripples.min.js"></script>-->
+    <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js"
+            integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U"
+            crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js"
+            integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9"
+            crossorigin="anonymous"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/js/standalone/selectize.min.js"></script>-->
+    <script src="js/dist/selectize.js"></script>
     <script src="js/toastr.min.js"></script>
     <script src="js/tools/notification.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.3/FileSaver.js"></script>
@@ -31,14 +38,21 @@
     <script src="js/common.js"></script>
     <script src="js/tools/autocomplete.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+    <script src="js/tools/chooseDomain.js"></script>
     <script>
-            $(document).ready(function () {
-                finalizeGUI();
-                readAll();
-            });
+        $(document).ready(function () {
+            finalizeGUI();
+            readAll();
+        });
     </script>
 </head>
 <body>
+<div id="intranetError" class="noIntranet hidden">
+    <p>
+        Sie sind nicht im Intranet der Universität Duisburg-Essen. <br>
+        Die Backend Server sind nur im Intranet erreichbar!
+    </p>
+</div>
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-2" id="menu">
@@ -73,17 +87,34 @@
 
 <!-- Modals -->
 
-<!-- Entitiy -->
-<div class="modal fade" id="entity-modal">
-    <div class="modal-dialog">
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
+
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h3 class="modal-title">Entitätstyp hinzufügen/bearbeiten</h3>
-                <hr/>
+                <h4 class="modal-title" id="myLargeModalLabel">Large modal</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
             </div>
             <div class="modal-body">
-                <form id="entityForm">
+                ...
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Entitiy -->
+<div class="modal fade" id="entity-modal" tabindex="-1" role="dialog" aria-labelledby="Entity" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Entitätstyp hinzufügen/bearbeiten</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="entityForm" class="" onsubmit="return false;">
                     <input type="text" id="entityId" class="hidden"/>
                     <input type="text" id="entityX" class="hidden"/>
                     <input type="text" id="entityY" class="hidden"/>
@@ -91,30 +122,23 @@
                         <div class="col-sm-12">
                             <div class="form-group label-floating">
                                 <label class="control-label" for="entityName">Name des Entitätstyp</label>
-                                <input class="form-control" id="entityName" type="text" pattern="[\wöäüßÄÖÜ]+"
+                                <input class="form-control" id="entityName" type="text" pattern="[\wöäüÄÖÜß]+"
+                                       title="Nur Buchstaben, Ziffern oder _"
                                        required/>
-                                <p class="help-block">
-                                    <strong>Pflichtfeld -</strong> Nur Buchstabe,
-                                    Ziffern oder &quot;_&quot;.
-                                </p>
                             </div>
                         </div>
                     </div>
                     <div class="row cloneable">
                         <div class="col-sm-7">
                             <div class="label-floating form-group">
-                                <label class="control-label" for="attributeName">Att. Name</label>
+                                <label class="control-label" for="attributeName">Attr. Name</label>
                                 <input pattern="[\wöäüßÄÖÜ]+" id="attributeName" required class="form-control"
-                                       type="text">
-                                <p class="help-block">
-                                    <strong>Pflichtfeld -</strong> Nur Buchstabe,
-                                    Ziffern oder &quot;_&quot;.
-                                </p>
+                                       type="text" title="Nur Buchstaben, Ziffern oder _">
                             </div>
                         </div>
                         <div class="col-sm-3">
                             <div class="label-floating form-group">
-                                <label for="attributeType" class="control-label">At. Typ</label>
+                                <label for="attributeType" class="control-label">Attr. Typ</label>
                                 <select id="attributeType" class="form-control" required title="Pflichtfeld">
                                     <option></option>
                                     <option value="String">String</option>
@@ -132,11 +156,14 @@
                             </div>
                         </div>
                     </div>
+
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>
-                <button type="button" class="btn btn-primary">Fortfahren</button>
+                <button class="btn btn-primary" type="submit" form="entityForm"
+                        onclick="!this.form&&$('#'+$(this).attr('form')).submit()">Fortfahren
+                </button>
             </div>
         </div>
     </div>
@@ -144,15 +171,16 @@
 <!-- -->
 <!-- Relationship -->
 <div class="modal fade" id="relationship-modal" onload="">
-    <div class="modal-dialog"  onload="">
-        <div class="modal-content"  onload="">
+    <div class="modal-dialog modal-lg" onload="">
+        <div class="modal-content" onload="">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h3 class="modal-title">Beziehungstyp hinzufügen/bearbeiten</h3>
-                <hr/>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div class="modal-body"  onload="">
-                <form id="relationshipForm"  onload="">
+            <div class="modal-body" onload="">
+                <form id="relationshipForm" onload="" onsubmit="return false;">
                     <input type="hidden" id="relationshipId" value=""/>
                     <input type="hidden" id="relationshipX">
                     <input type="hidden" id="relationshipY">
@@ -161,11 +189,7 @@
                             <div class="form-group label-floating">
                                 <label class="control-label" for="relationshipName">Name des Beziehungstyps</label>
                                 <input pattern="[\wöäüßÄÖÜ]+" required id="relationshipName" class="form-control"
-                                       type="text">
-                                <p class="help-block">
-                                    <strong>Pflichtfeld</strong> Nur Buchstabe,
-                                    Ziffern oder &quot;_&quot;.
-                                </p>
+                                       type="text" title="Nur Buchstaben, Ziffern oder _">
                             </div>
                         </div>
                     </div>
@@ -173,17 +197,14 @@
                         <div class="col-sm-6">
                             <div class="row">
                                 <div class="col-sm-12 form-group">
-                                    <h4>1. Entitätstyp</h4>
-                                    <hr/>
+                                    <h5>1. Entitätstyp</h5>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-12">
-                                     <div class="form-group label-floating">
+                                    <div class="form-group label-floating">
                                         <label for="entity1" class="control-label">Entitätstyp wählen</label>
-                                        <select id="entity1" class="form-control" required>
-                                            <option></option>
-                                        </select>
+                                        <select id="entity1" class="form-control"></select>
                                     </div>
                                 </div>
                             </div>
@@ -191,19 +212,17 @@
                                 <div class="col-sm-8">
                                     <div class="form-group label-floating">
                                         <label class="control-label" for="role1">Rolle</label>
-                                        <input id="role1" class="form-control" type="text">
-                                        <p class="help-block">
-                                            Nur Buchstabe,
-                                            Ziffern oder &quot;_&quot;.
-                                        </p>
+                                        <input id="role1" class="form-control" type="text" pattern="[\wöäüÄÖÜß]+"
+                                               title="Nur Buchstaben, Ziffern oder _">
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-group label-floating">
                                         <label class="control-label" for="cardinality1">Kardinalität</label>
-                                        <input id="cardinality1" class="form-control" onblur="checkCardi($('#cardinality1'))"
+                                        <input id="cardinality1" class="form-control"
+                                               onblur="checkCardi($('#cardinality1'))"
                                                type="text">
-                                        <p class="help-block">
+                                        <p class="form-text text-mute">
                                             <span class="small">1,*</span>
                                         </p>
                                     </div>
@@ -213,17 +232,14 @@
                         <div class="col-sm-6">
                             <div class="row">
                                 <div class="col-sm-12 form-group">
-                                    <h4>2. Entitätstyp</h4>
-                                    <hr/>
+                                    <h5>2. Entitätstyp</h5>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-12">
-                                    <div class="form-group label-static">
+                                    <div class="form-group label-floating">
                                         <label for="entity2" class="control-label">Entitätstyp wählen</label>
-                                        <select id="entity2" class="form-control" required>
-                                            <option></option>
-                                        </select>
+                                        <select id="entity2" class="form-control"></select>
                                     </div>
                                 </div>
                             </div>
@@ -231,19 +247,17 @@
                                 <div class="col-sm-8">
                                     <div class="form-group label-floating">
                                         <label class="control-label" for="role2">Rolle</label>
-                                        <input id="role2" class="form-control" type="text">
-                                        <p class="help-block">
-                                            Nur Buchstabe,
-                                            Ziffern oder &quot;_&quot;.
-                                        </p>
+                                        <input id="role2" class="form-control" type="text" pattern="[\wöäüÄÖÜß]+"
+                                               title="Nur Buchstaben, Ziffern oder _">
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-group label-floating">
                                         <label class="control-label" for="cardinality2">Kardinalität</label>
-                                        <input id="cardinality2" class="form-control" onblur="checkCardi($('#cardinality2'))"
+                                        <input id="cardinality2" class="form-control"
+                                               onblur="checkCardi($('#cardinality2'))"
                                                type="text">
-                                        <p class="help-block">
+                                        <p class="form-text text-mute">
                                             <span class="small">1,*</span>
                                         </p>
                                     </div>
@@ -255,21 +269,25 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>
-                <button type="button" onclick="checkSpace(); checkThirdSingular()" class="btn btn-primary">Fortfahren</button>
+                <button class="btn btn-primary" type="submit" form="relationshipForm"
+                        onclick="checkSpace(); checkThirdSingular();!this.form&&$('#'+$(this).attr('form')).submit()">
+                    Fortfahren
+                </button>
             </div>
         </div>
     </div>
 </div>
 <div class="modal fade" id="inheritance-modal">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                 <h3 class="modal-title">Generalisierungs-/Spezialisierungsbeziehung hinzufügen/bearbeiten</h3>
-                <hr/>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
-                <form id="inheritanceForm">
+                <form id="inheritanceForm" onsubmit="return false;">
                     <input type="hidden" id="inheritanceId">
                     <input type="hidden" id="inheritanceX">
                     <input type="hidden" id="inheritanceY">
@@ -314,7 +332,9 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>
-                <button type="button" class="btn btn-primary">Fortfahren</button>
+                <button class="btn btn-primary" type="submit" form="inheritanceForm"
+                        onclick="!this.form&&$('#'+$(this).attr('form')).submit()">Fortfahren
+                </button>
             </div>
         </div>
     </div>
@@ -323,13 +343,16 @@
 <!-- /Modal -->
 
 <!-- Welcome-Tour -->
-<a href="#" id="videoBtn" class="btn btn-default" data-toggle="modal" data-target="#videoModal" style="display: none" data-theVideo="http://www.youtube.com/embed/loFtozxZG0s" ></a>
+<a href="#" id="videoBtn" class="btn btn-default" data-toggle="modal" data-target="#videoModal" style="display: none"
+   data-theVideo="http://www.youtube.com/embed/loFtozxZG0s"></a>
 
-<div class="modal fade" id="videoModal" onblur="$('#videoClose').click()" tabindex="-1" role="dialog" aria-labelledby="videoModal" aria-hidden="true">
+<div class="modal fade" id="videoModal" onblur="$('#videoClose').click()" tabindex="-1" role="dialog"
+     aria-labelledby="videoModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-body">
-                <button type="button" id="videoClose" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <button type="button" id="videoClose" class="close" data-dismiss="modal" aria-hidden="true">&times;
+                </button>
                 <div>
                     <iframe width="100%" height="350" src=""></iframe>
                 </div>
@@ -343,9 +366,9 @@
     <div class="modal-dialog modal-lg modal-notify modal-info" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="heading lead">Wähle eine Domäne aus</h3>
+                <h3 class="modal-title">Wähle eine Domäne aus</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true" class="white-text">&times;</span>
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
@@ -354,7 +377,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-warning mr-auto" id="editDomainButton">Einloggen</button>
+                <button type="button" class="btn btn-warning" id="editDomainButton">Einloggen</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbruch</button>
             </div>
         </div>
@@ -362,29 +385,27 @@
 </div>
 
 <div class="modal fade" id="domainLogin" tabindex="-1" role="dialog" aria-labelledby="Login" aria-hidden="true">
-    <div class="modal-dialog cascading-modal" role="document">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header warning-color white-text">
-                <h4 class="title">
+            <div class="modal-header">
+                <h4 class="modal-title">
                     <i class="fa fa-key"></i> Log in
                 </h4>
-                <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
                 </button>
             </div>
 
             <div class="modal-body">
                 <form id="domainLoginForm" onsubmit="return domainLogin();">
                     <!-- Material input email -->
-                    <div class="md-form">
-                        <i class="fa fa-user prefix grey-text"></i>
+                    <div class="form-group">
                         <input type="text" id="usernameDomain" class="form-control">
                         <label for="usernameDomain">Benutzername</label>
                     </div>
 
                     <!-- Material input password -->
-                    <div class="md-form">
-                        <i class="fa fa-lock prefix grey-text"></i>
+                    <div class="form-group">
                         <input type="password" id="passwordDomain" class="form-control">
                         <label for="passwordDomain">Passwort</label>
                     </div>
@@ -396,12 +417,12 @@
                 <div id="success"
                      style="display: none; position: absolute; left: 0; top: 0; right: 0; bottom: 2vh; background-color: white">
                     <i class="fa fa-check"
-                       style="color: green; transform: scale(14) translate(0.8vw,0.5vh); z-index: 10"></i>
+                       style="color: green; transform: scale(14) translate(1vw,1.5vh); z-index: 10"></i>
                 </div>
                 <div id="error"
                      style="display: none; position: absolute; left: 0; top: 1vh; right: 0; bottom: 2vh; background-color: white">
                     <i class="fa fa-minus-circle"
-                       style="color: red; transform: scale(13) translate(0.93vw,0.6vh); z-index: 10"></i>
+                       style="color: red; transform: scale(13) translate(1vw,1.6vh); z-index: 10"></i>
                 </div>
             </div>
         </div>

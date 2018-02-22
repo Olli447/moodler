@@ -85,11 +85,25 @@ window.notification = {
         if (isEvent) {
             for (var i = 0, len = this.activeToasts.length; i < len; i++) {
                 var item = this.activeToasts[i];
-                if (this.activeToasts[i].id === toast) {
+                if (this.activeToasts[i].id === toast.dataset.id) {
                     this.activeToasts.splice(i, 1);
+
+                    for (var j = 0, len2 = item.events.length; j < len2; j++) {
+                        var type = item.events[j].type;
+                        var callback = item.events[j].callback;
+
+                        if (type == "keydown") {
+                            document.removeEventListener(type, callback)
+                        } else {
+                            toast.removeEventListener(type, callback);
+                        }
+                    }
+
                     break;
                 }
+
             }
+
         }
         else {
             for (var i = 0, len = this.activeToasts.length; i < len; i++) {
@@ -125,7 +139,7 @@ window.notification = {
 function somethingChanged(mutations) {
     for (var i = 0, len = mutations.length; i < len; i++) {
         for (var j = 0, len2 = mutations[i].removedNodes.length; j < len2; j++) {
-            notification.destroyToast(mutations[i].removedNodes[j].dataset.id, true);
+            notification.destroyToast(mutations[i].removedNodes[j], true);
         }
     }
 }

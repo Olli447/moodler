@@ -1,4 +1,16 @@
 function finalizeGUI(){
+    $.ajax({
+        url: 'http://132.252.51.194:3000/api/testConnection',
+        success: function (result) {
+            console.log("Connected to Server")
+        },
+        error: function (result) {
+            document.getElementById("intranetError").classList.remove("hidden");
+        }
+    });
+
+
+
     $('#cardinality1').mask('0BZ', {
         translation: {
             'Z': {
@@ -35,6 +47,7 @@ function finalizeGUI(){
 
 function startToasts(){
     //$.material.init();
+    $('body').bootstrapMaterialDesign();
 
     var request = new XMLHttpRequest();
     request.open("GET", "json/szenario.json", false);

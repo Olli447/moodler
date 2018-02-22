@@ -101,8 +101,11 @@ function addAttributes(modal, data, key) {
     }
 }
 
-function handleKeydownEnter() {
+function handleKeydownEnter(event) {
     if (event.code === 'Enter') {
+        event.preventDefault();
         $('#yesBtn').click();
+
+        return false;
     }
 }
