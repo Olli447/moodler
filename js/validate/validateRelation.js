@@ -42,7 +42,7 @@ window.getThirdSing = {
                     },
                     success: function (response) {
                         var apiKey = response.token.replace("JWT ", "");
-                        getThirdSing.apiKey = apiKey;
+                        identify.apiKey = apiKey;
                         getThirdSing.getThirdSingCallback(word, callback);
                     }
                 });
@@ -54,7 +54,8 @@ window.getThirdSing = {
     },
     getThirdSingCallback: function (word, callback) {
         var uri = "http://132.252.51.194:3000/api/language/relationshipName/" + word;
-        var url = encodeURI(uri);
+        //var url = encodeURI(uri);
+        var url = uri;
 
         var xhr = $.ajax({
             url: url,
@@ -71,7 +72,7 @@ window.getThirdSing = {
     },
     setHeader: function (xhr) {
         xhr.setRequestHeader('Accept', 'application/json')
-        xhr.setRequestHeader('Authorization', getThirdSing.apiKey);
+        xhr.setRequestHeader('Authorization', identify.apiKey);
     },
 };
 

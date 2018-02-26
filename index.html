@@ -28,6 +28,7 @@
     <script src="js/validate/validateEntity.js"></script>
     <script src="js/validate/validateCardinality.js"></script>
     <script src="js/validate/validateRelation.js"></script>
+    <script src="js/validate/validateAttributes.js"></script>
     <script src="js/tools/translate.js"></script>
     <script src="js/tools/jquery.mask.js"></script>
     <script src="js/tools/domain.js"></script>
@@ -162,7 +163,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>
                 <button class="btn btn-primary" type="submit" form="entityForm"
-                        onclick="!this.form&&$('#'+$(this).attr('form')).submit()">Fortfahren
+                        onclick="!this.form&&$('#'+$(this).attr('form')).submit(); checkAtomar()">Fortfahren
                 </button>
             </div>
         </div>
