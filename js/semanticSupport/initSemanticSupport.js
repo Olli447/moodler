@@ -2,15 +2,14 @@ function finalizeGUI(){
     $.ajax({
         url: 'http://132.252.51.194:3000/api/testConnection',
         success: function (result) {
-            console.log("Connected to Server")
+            console.log("Connection to Server possible");
+            initConnection(undefined);
         },
         error: function (result) {
             document.getElementById("intranetError").classList.remove("hidden");
         },
         timeout: 1000
     });
-
-
 
     $('#cardinality1').mask('0BZ', {
         translation: {
@@ -79,6 +78,8 @@ function startToasts(){
     } else {
         // Sorry! No Web Storage support..
     }
+
+
 }
 
 function startWelcomeTour(){

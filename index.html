@@ -6,46 +6,6 @@
     <link href="css/moodler.css" rel="stylesheet"/>
     <link href="css/toastr.min.css" rel="stylesheet"/>
     <link href="css/typeaheadjs.css" rel="stylesheet"/>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
-    <script src="js/typeahead.bundle.min.js"></script>
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/js/material.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/js/ripples.min.js"></script>-->
-    <script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js"
-            integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U"
-            crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js"
-            integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9"
-            crossorigin="anonymous"></script>
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/js/standalone/selectize.min.js"></script>-->
-    <script src="js/dist/selectize.js"></script>
-    <script src="js/toastr.min.js"></script>
-    <script src="js/tools/notification.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.3/FileSaver.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gojs/1.7.26/go-debug.js"></script>
-    <script src="js/moodler/moodler.js"></script>
-    <script src="https://unpkg.com/inflected/dist/umd/inflected.min.js"></script>
-    <script src="js/validate/validateEntity.js"></script>
-    <script src="js/validate/validateCardinality.js"></script>
-    <script src="js/validate/validateRelation.js"></script>
-    <script src="js/validate/validateAttributes.js"></script>
-    <script src="js/tools/translate.js"></script>
-    <script src="js/tools/jquery.mask.js"></script>
-    <script src="js/tools/domain.js"></script>
-    <script src="js/moodler/erd_templates.js"></script>
-    <script src="js/tools/translate.js"></script>
-    <script src="js/tools/identify.js"></script>
-    <script src="js/forms.js"></script>
-    <script src="js/common.js"></script>
-    <script src="js/tools/autocomplete.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
-    <script src="js/tools/chooseDomain.js"></script>
-    <script>
-        $(document).ready(function () {
-            finalizeGUI();
-            readAll();
-        });
-    </script>
 </head>
 <body>
 <div id="intranetError" class="noIntranet hidden">
@@ -437,5 +397,47 @@
     </div>
 </div>
 <!-- Szenario Modal -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>-->
+<!--<script src="js/semanticSupport/apiConnection/identify.js"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/js/standalone/selectize.min.js"></script>-->
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/js/material.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-material-design/0.5.10/js/ripples.min.js"></script>-->
+<script src="js/dist/typeahead.bundle.min.js"></script>
+<script src="https://unpkg.com/popper.js@1.12.6/dist/umd/popper.js"
+        integrity="sha384-fA23ZRQ3G/J53mElWqVJEGJzU0sTs+SvzG8fXVWP+kJQ1lwFAOkcUOysnlKJC33U"
+        crossorigin="anonymous"></script>
+<script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js"
+        integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.3/FileSaver.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gojs/1.7.26/go-debug.js"></script>
+<script src="https://unpkg.com/inflected/dist/umd/inflected.min.js"></script>
+<script src="js/dist/jquery.mask.js"></script>
+<script src="js/dist/selectize.js"></script>
+<script src="js/dist/toastr.min.js"></script>
+<script src="js/moodler/moodler.js"></script>
+<script src="js/moodler/erd_templates.js"></script>
+<script src="js/forms.js"></script>
+<script src="js/semanticSupport/initSemanticSupport.js"></script>
+<script src="js/semanticSupport/apiConnection/apiConnection.js"></script>
+<script src="js/semanticSupport/tools/notificationProvider.js"></script>
+<script src="js/semanticSupport/tools/autocomplete.js"></script>
+<script src="js/semanticSupport/validate/validateEntity.js"></script>
+<script src="js/semanticSupport/validate/validateCardinality.js"></script>
+<script src="js/semanticSupport/validate/validateRelation.js"></script>
+<script src="js/semanticSupport/validate/validateAttributes.js"></script>
+<script src="js/semanticSupport/domain/domainData.js"></script>
+<script src="js/semanticSupport/domain/chooseDomain.js"></script>
+
+<script>
+    $(document).ready(function () {
+        finalizeGUI();
+        readAll();
+    });
+
+</script>
 </body>
 </html>

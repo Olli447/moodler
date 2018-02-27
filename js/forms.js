@@ -46,6 +46,7 @@ window.formHandler = {
     addField: function () {
         var cloneable = $(this).closest(".cloneable");
         var clone = cloneable.clone(true);
+        clone.find("input").val("");
         clone.find("select").val("");
         cloneable.after(clone);
         var removeBtn = clone.find(".remove");

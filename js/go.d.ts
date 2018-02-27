@@ -2113,7 +2113,7 @@ declare namespace go {
 
         /**
          * Find the approximate point of the other end of the link.
-         * This is useful when computing the connection point when there is no specific spot, to have an idea of which general direction the link should be going.
+         * This is useful when computing the apiConnection point when there is no specific spot, to have an idea of which general direction the link should be going.
          * By default this will return the center of the other port.
          */
         protected computeOtherPoint(othernode: Node, otherport: GraphObject): Point;
@@ -2149,10 +2149,10 @@ declare namespace go {
         findClosestSegment(p: Point): number;
 
         /**
-         * Compute the direction in which a link should go from a given connection point.
+         * Compute the direction in which a link should go from a given apiConnection point.
          * @param {Node} node
          * @param {GraphObject} port the GraphObject representing a port on the node.
-         * @param {Point} linkpoint the connection point, in document coordinates.
+         * @param {Point} linkpoint the apiConnection point, in document coordinates.
          * @param {Spot} spot a Spot value describing where the link should connect.
          * @param {boolean} from true if the link is coming out of the port; false if going to the port.
          * @param {boolean} ortho whether the link should have orthogonal segments.
@@ -5192,7 +5192,7 @@ declare namespace go {
          * Gets or sets the name of the data property that returns the optional parameter naming a "port" element on the node that the link data is connected from,
          * or a function that takes a link data object and returns that string.
          * The default value is the empty string indicating that one cannot distinguish
-         * different logical connection points for any links.
+         * different logical apiConnection points for any links.
          * The name must not be null.
          */
         linkFromPortIdProperty: PropertyAccessor;
@@ -5226,7 +5226,7 @@ declare namespace go {
          * the optional parameter naming a "port" element on the node that the link data is connected to,
          * or a function that takes a link data object and returns that string.
          * The default value is the empty string indicating that one cannot distinguish
-         * different logical connection points for any links.
+         * different logical apiConnection points for any links.
          * The name must not be null.
          */
         linkToPortIdProperty: PropertyAccessor;

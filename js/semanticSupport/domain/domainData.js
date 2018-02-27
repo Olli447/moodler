@@ -24,7 +24,7 @@ function readTextFile(file, callback) {
         if (rawFile.readyState === 4 && rawFile.status == "200") {
             callback(rawFile.responseText);
         }
-    }
+    };
     rawFile.send(null);
 }
 

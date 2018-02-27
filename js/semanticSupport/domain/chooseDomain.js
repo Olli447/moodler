@@ -1,4 +1,3 @@
-var domainApiKey = "";
 var domains = [];
 var waitElementClone;
 
@@ -7,36 +6,7 @@ function initDomains() {
     if (domains.length !== 0)
         return;
 
-    var uri = "http://132.252.51.194:3000/api/auth/";
-    //var uri = "http://localhost:3000/api/auth/";
-
-    var xhr = $.ajax({
-        url: encodeURI(uri + "check"),
-        type: 'GET',
-        dataType: 'json',
-        beforeSend: identify.setHeader,
-        error: function (response) {
-            console.log("No key acquired yet!");
-            $.ajax({
-                url: encodeURI(uri + "login"),
-                type: 'POST',
-                dataType: 'json',
-                data: {username: "public", password: "public"},
-                beforeSend: identify.setHeader,
-                error: function (response) {
-                    console.log("Login failed!");
-                },
-                success: function (response) {
-                    var apiKey = response.token.replace("JWT ", "");
-                    identify.apiKey = apiKey;
-                    loadDomains(identify.apiKey)
-                }
-            });
-        },
-        success: function (response) {
-            loadDomains(identify.apiKey)
-        }
-    });
+    loadDomains();
 }
 
 function initEditDomains(event) {
@@ -57,81 +27,56 @@ function domainLogin(pre) {
     var success = document.getElementById("success");
     var error = document.getElementById("error");
     pre === undefined ? pre = false : pre;
-
-    var uri = "http://132.252.51.194:3000/api/auth/";
-    //var uri = "http://localhost:3000/api/auth/";
-
-    var xhr = $.ajax({
-        url: encodeURI(uri + "check"),
-        type: 'GET',
-        dataType: 'json',
-        beforeSend: setAdminHeader,
-        error: function (response) {
-            console.log("No key acquired yet!");
-
-            if (!pre) {
-                $.ajax({
-                    url: encodeURI(uri + "login"),
-                    type: 'POST',
-                    dataType: 'json',
-                    data: {username: username, password: passwort},
-                    beforeSend: setAdminHeader,
-                    error: function (response) {
-                        error.style.display = "block";
-                        setTimeout(function () {
-                            document.getElementById("domainLoginForm").reset();
-                            error.style.display = "none";
-                        }, 1000);
-                    },
-                    success: function (response) {
-                        success.style.display = "block";
-                        domainApiKey = response.token.replace("JWT ", "");
-                        setTimeout(function () {
-                            document.getElementById("domainLoginForm").reset();
-                            success.style.display = "none";
-                            modal = $("#domainLogin").modal('hide');
-                            $('#szenarioModal').modal('show');
-                            initDomains();
-                        }, 1000);
-                    }
-                });
-            }
-
-        },
-        success: function (response) {
-            //Wenn du hier landest bist du schon angemeldet. Man muesste es nur vorher testen ^^
+    if (pre) {
+        if (isLoggedIn) {
             success.style.display = "block";
             setTimeout(function () {
                 document.getElementById("domainLoginForm").reset();
-                error.style.display = "none";
+                success.style.display = "none";
                 modal = $("#domainLogin").modal('hide');
                 $('#szenarioModal').modal('show');
                 initDomains();
             }, 1000);
         }
-    });
+    } else {
+        login(username, passwort,
+            function (response) {
+                success.style.display = "block";
+                domainApiKey = response.token.replace("JWT ", "");
+                setTimeout(function () {
+                    document.getElementById("domainLoginForm").reset();
+                    success.style.display = "none";
+                    modal = $("#domainLogin").modal('hide');
+                    $('#szenarioModal').modal('show');
+                    initDomains();
+                }, 1000);
+            },
+            function (response) {
+                error.style.display = "block";
+                setTimeout(function () {
+                    document.getElementById("domainLoginForm").reset();
+                    error.style.display = "none";
+                }, 1000);
+            });
+    }
 
     return false;
 
 }
 
 function loadDomains() {
-    var uri = "http://132.252.51.194:3000/api/domain/";
-    //var uri = "http://localhost:3000/api/domain/";
-
-    var xhr = $.ajax({
-        url: encodeURI(uri),
-        type: 'GET',
-        dataType: 'json',
-        data: {},
-        beforeSend: identify.setHeader,
-        error: function (response) {
-            console.log("Connection to Server to load domains failed")
+    makeRequest(
+        DOMAIN,
+        function (response) {
+            domainListCallback(response.domains);
         },
-        success: function (response) {
-            domainListCallback(response.domains)
+        function (response) {
+            console.log("Connection to Server to load domains failed");
+        },
+        {
+            type: 'GET'
         }
-    })
+    );
 }
 
 function domainListCallback(domains) {
@@ -143,7 +88,7 @@ function domainListCallback(domains) {
     if (domains.length === 0) {
         waitElement.innerText = "Es sind keine verfügbaren Domänen gefunden worden!"
 
-        if (domainApiKey) {
+        if (isLoggedIn) {
             var clearfix = document.createElement("div");
             clearfix.classList.add("row");
             clearfix.classList.add("text-center");
@@ -166,7 +111,7 @@ function domainListCallback(domains) {
         }
     }
     else {
-        if (domainApiKey) {
+        if (isLoggedIn) {
             for (var i = 0, len_i = domains.length % 4; i < len_i; i++) {
                 row[i] = document.createElement("div");
                 row[i].classList.add("row");
@@ -268,20 +213,59 @@ function domainListCallback(domains) {
 
 }
 
-function getDomain() {
-
+function getDomain(id) {
+    makeRequest(
+        DOMAIN + id,
+        function (response) {
+            readAll(response.data);
+            $('#szenarioModal').modal('hide');
+        },
+        function (response) {
+            console.log("Error while loading domain");
+        },
+        {
+            type: 'GET'
+        }
+    );
 }
 
-function domainCallback() {
-
+function createDomain(name, data) {
+    makeRequest(
+        DOMAIN,
+        function (response) {
+            $('#szenarioModal').modal('hide');
+        },
+        function (response) {
+            console.log("Error while loading domain");
+        },
+        {
+            type: 'POST'
+        },
+        {
+            name: name,
+            data: data
+        }
+    );
 }
 
-function createDomain() {
-
-}
-
-function updateDomain() {
-
+function updateDomain(id, data) {
+    makeRequest(
+        DOMAIN + id,
+        function (response) {
+            readAll(response.data);
+            $('#szenarioModal').modal('hide');
+        },
+        function (response) {
+            console.log("Error while loading domain");
+        },
+        {
+            type: 'PUT'
+        },
+        {
+            id: id,
+            data: data
+        }
+    );
 }
 
 function setAdminHeader(xhr) {
@@ -290,7 +274,7 @@ function setAdminHeader(xhr) {
 }
 
 function logoutDomain() {
-    domainApiKey = undefined;
+    logout();
     $('#szenarioModal').modal('hide');
 }
 

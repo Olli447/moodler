@@ -1,7 +1,17 @@
 function checkName(){
     var word = $('#entityName').val();
 
-    identify.identify(word, checkNameCallback)
+    makeRequest(MULTIPLICITY + word,
+        function (response) {
+            checkNameCallback(word, response.isPlural, response.basicForm);
+        },
+        function (response) {
+            console.log(response);
+            checkNameCallback(word, null, response.responseJSON.error)
+        },
+        {
+            type: "GET"
+        });
     return true;
 }
 
