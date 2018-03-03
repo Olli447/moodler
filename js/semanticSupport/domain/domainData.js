@@ -1,6 +1,10 @@
 var entityArray=[];
 var relationArray=[];
 var specialArray=[];
+var domainDetails = {
+    name: "",
+    id: ""
+};
 
 function Beziehung(from, to, cardFrom, cardTo) {
     this.from = from;
@@ -29,12 +33,26 @@ function readTextFile(file, callback) {
 }
 
 
-function readAll() {
-    readTextFile("json/test.json", function (text) {
-        readEntitys(text);
-        readRelations(text);
-        readSpecial(text)
-    });
+function readAll(data) {
+    entityArray = [];
+    relationArray = [];
+    specialArray = [];
+
+    if (data === undefined) {
+        readTextFile("json/test.json", function (text) {
+            readEntitys(text);
+            readRelations(text);
+            readSpecial(text)
+        });
+    }
+    else {
+        readEntitys(data);
+        readRelations(data);
+        readRelations(data);
+    }
+
+
+
 }
 
 function readRelations(data) {
@@ -66,13 +84,14 @@ function readRelations(data) {
 }
 
 function readEntitys(data) {
-
-    var array = [];
     var mydata = JSON.parse(data);
-    var entityarray = mydata.nodeDataArray;
-    for (var i = 0; i < entityarray.length; i++) {
-        if (entityarray[i].category == "entity") {
-            entityArray.push(entityarray[i].entityName);
+    var array = mydata.nodeDataArray;
+    for (var i = 0; i < array.length; i++) {
+        if (array[i].category === "entity") {
+            entityArray.push({
+                name: array[i].entityName,
+                properties: array[i].properties
+            });
         }
     }
 }

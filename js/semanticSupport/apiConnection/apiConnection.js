@@ -1,7 +1,8 @@
 var apiKey = "";
 var publicApiKey = "";
 var isLoggedIn = false;
-var baseURL = "http://132.252.51.194:3000/api/";
+//var baseURL = "http://132.252.51.194:3000/api/";
+var baseURL = "http://localhost:3000/api/";
 var CHECK = baseURL + "auth/check";
 var LOGIN = baseURL + "auth/login";
 var MULTIPLICITY = baseURL + "language/multiplicity/";

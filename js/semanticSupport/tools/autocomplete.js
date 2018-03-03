@@ -12,9 +12,9 @@ window.autocomplete = {
 
         // iterate through the pool of strings and for any string that
         // contains the substring `q`, add it to the `matches` array
-        $.each(autocomplete.sourceEntity[autocomplete.szenario].entity, function (i, str) {
-            if (substrRegex.test(str.fullName)) {
-                matches.push(str.fullName);
+        $.each(entityArray, function (i, obj) {
+            if (substrRegex.test(obj.name)) {
+                matches.push(obj.name);
             }
         });
 

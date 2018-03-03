@@ -83,7 +83,7 @@ function domainListCallback(domains) {
     var title = document.getElementById("szenarioModal").querySelector(".heading");
     var body = document.getElementById("szenarioModal").querySelector(".modal-body").querySelector(".container-fluid");
     var waitElement = document.getElementById("waitDomain");
-    var row;
+    var row = [];
 
     if (domains.length === 0) {
         waitElement.innerText = "Es sind keine verfügbaren Domänen gefunden worden!"
@@ -94,13 +94,17 @@ function domainListCallback(domains) {
             clearfix.classList.add("text-center");
             var col = document.createElement("div");
             col.classList.add("col-12");
-            var createNew = document.createElement("button");
-            createNew.classList.add("btn");
-            createNew.classList.add("btn-outline-primary");
-            createNew.type = "button";
-            createNew.innerText = "Domain erstellen";
-            createNew.addEventListener("click", createDomain);
-            col.appendChild(createNew);
+            var createNewContainer = document.createElement("label");
+            createNewContainer.classList.add("btn");
+            createNewContainer.classList.add("btn-outline-primary");
+            createNewContainer.classList.add("btn-file");
+            createNewContainer.innerText = "Domain erstellen";
+            var createNew = document.createElement("input");
+            createNew.type = "file";
+            createNew.style = "display:none;";
+            createNew.addEventListener("change", createDomainHandler);
+            createNewContainer.appendChild(createNew);
+            col.appendChild(createNewContainer);
             clearfix.appendChild(col);
             body.appendChild(clearfix);
 
@@ -115,52 +119,59 @@ function domainListCallback(domains) {
             for (var i = 0, len_i = domains.length % 4; i < len_i; i++) {
                 row[i] = document.createElement("div");
                 row[i].classList.add("row");
-                for (var j = i * 4, len_j = j + 4; i < len_j; j++) {
+                for (var j = i * 4, len_j = j + 4; j < len_j; j++) {
+                    if (domains[j] !== undefined) {
                     var col = document.createElement("div");
-                    col.classList.add("col");
+                        col.classList.add("col-md-3");
 
-                    var subrow = document.createElement("div");
-                    subCol2.classList.add("row");
                     var subCol1 = document.createElement("div");
-                    subCol1.classList.add("col");
-                    var subCol2 = document.createElement("div");
-                    subCol2.classList.add("col");
+                        subCol1.classList.add("row");
+                        subCol1.classList.add("no-margin");
 
                     var button = document.createElement("button");
                     button.classList.add("btn");
                     button.classList.add("btn-outline-primary");
+                        button.classList.add("btn-block");
+                        button.style.whiteSpace = "normal";
                     button.type = "button";
                     button.innerText = domains[j].name;
                     button.setAttribute("data-id", domains[j].id);
-                    button.addEventListener("click", getDomain);
+                        button.addEventListener("click", getDomainHandler);
                     col.appendChild(button);
 
-                    var button2 = document.createElement("button");
-                    button2.classList.add("btn");
-                    button2.classList.add("btn-outline-warning");
-                    button2.type = "button";
-                    button2.innerHTML = "<i class='fa fa-pen'></i>";
-                    button2.setAttribute("data-id", domains[j].id);
-                    button2.addEventListener("click", updateDomain);
-                    subCol1.appendChild(button2);
+                        var button2Container = document.createElement("label");
+                        button2Container.classList.add("btn");
+                        button2Container.classList.add("btn-outline-warning");
+                        button2Container.style.width = "50%";
+                        button2Container.classList.add("btn-file");
+                        button2Container.innerHTML = "<i class='fa fa-pencil'></i>";
+                        button2Container.setAttribute("data-id", domains[j].id);
+                        var button2 = document.createElement("input");
+                        button2.type = "file";
+                        button2.style = "display:none;";
+                        button2.addEventListener("change", updateDomainHandler);
+                        button2Container.appendChild(button2);
+
+                        subCol1.appendChild(button2Container);
 
                     var button3 = document.createElement("button");
                     button3.classList.add("btn");
-                    button3.classList.add("btn-outline-error");
+                        button3.classList.add("btn-outline-danger");
+                        button3.style.width = "50%";
                     button3.type = "button";
                     button3.innerHTML = "<i class='fa fa-trash'></i>";
                     button3.setAttribute("data-id", domains[j].id);
                     //button.addEventListener("click", deleteDomain);
-                    subCol2.appendChild(button3);
+                        subCol1.appendChild(button3);
 
-                    subrow.appendChild(subCol1);
-                    subrow.appendChild(subCol2);
+
+                        col.appendChild(subCol1);
 
                     row[i].appendChild(col);
-                    row[i].appendChild(subrow);
+                    }
                 }
 
-                body.appendChild(row[j]);
+                body.appendChild(row[i]);
             }
 
             var clearfix2 = document.createElement("div");
@@ -168,13 +179,19 @@ function domainListCallback(domains) {
             clearfix2.classList.add("text-center");
             var col2 = document.createElement("div");
             col2.classList.add("col-12");
-            var createNew2 = document.createElement("button");
-            createNew2.classList.add("btn");
-            createNew2.classList.add("btn-outline-primary");
-            createNew2.type = "button";
-            createNew2.innerText = "Domain erstellen";
-            createNew2.addEventListener("click", createDomain);
-            col2.appendChild(createNew2);
+
+            var createNewContainer2 = document.createElement("label");
+            createNewContainer2.classList.add("btn");
+            createNewContainer2.classList.add("btn-outline-primary");
+            createNewContainer2.classList.add("btn-file");
+            createNewContainer2.innerText = "Domain erstellen";
+            var createNew2 = document.createElement("input");
+            createNew2.type = "file";
+            createNew2.style = "display:none;";
+            createNew2.addEventListener("change", createDomainHandler);
+            createNewContainer2.appendChild(createNew2);
+
+            col2.appendChild(createNewContainer2);
             clearfix2.appendChild(col2);
             body.appendChild(clearfix2);
 
@@ -187,23 +204,27 @@ function domainListCallback(domains) {
             for (var i = 0, len_i = domains.length % 4; i < len_i; i++) {
                 row[i] = document.createElement("div");
                 row[i].classList.add("row");
-                for (var j = i * 4, len_j = j + 4; i < len_j; j++) {
-                    var col = document.createElement("div");
-                    col.classList.add("col");
+                for (var j = i * 4, len_j = j + 4; j < len_j; j++) {
+                    if (domains[j] !== undefined) {
+                        var col = document.createElement("div");
+                        col.classList.add("col-md-3");
 
-                    var button = document.createElement("button");
-                    button.classList.add("btn");
-                    button.classList.add("btn-outline-primary");
-                    button.type = "button";
-                    button.innerText = domains[j].name;
-                    button.setAttribute("data-id", domains[j].id);
-                    button.addEventListener("click", getDomain);
-                    col.appendChild(button);
+                        var button = document.createElement("button");
+                        button.classList.add("btn");
+                        button.classList.add("btn-outline-primary");
+                        button.classList.add("btn-block");
+                        button.style.whiteSpace = "normal";
+                        button.type = "button";
+                        button.innerText = domains[j].name;
+                        button.setAttribute("data-id", domains[j].id);
+                        button.addEventListener("click", getDomainHandler);
+                        col.appendChild(button);
 
-                    row[i].appendChild(col);
+                        row[i].appendChild(col);
+                    }
                 }
 
-                body.appendChild(row[j]);
+                body.appendChild(row[i]);
             }
         }
 
@@ -219,6 +240,13 @@ function getDomain(id) {
         function (response) {
             readAll(response.data);
             $('#szenarioModal').modal('hide');
+
+            readAll(response.data);
+            var currentDomain = $("#currentDomain");
+            currentDomain.find(".name").text(response.name);
+            currentDomain.find(".id").text(response.id);
+            domainDetails.name = response.name;
+            domainDetails.id = response.id
         },
         function (response) {
             console.log("Error while loading domain");
@@ -291,4 +319,28 @@ function finalizeDomainModal(modal) {
     }
 
     body.appendChild(waitElementClone);
+}
+
+function createDomainHandler(event) {
+    var files = event.target.files;
+    if (files.length === 0) {
+        alert("Es muss eine Datei  ausgewählt werden!");
+        return;
+    }
+    var reader = new FileReader();
+    reader.readAsText(files[0]);
+    reader.onload = function (event) {
+        var name = files[0].name;
+        name = name.replace(/\.[^/\\.]+$/, "");
+        createDomain(name, event.target.result);
+    };
+}
+
+function updateDomainHandler(event) {
+
+}
+
+function getDomainHandler(event) {
+    var id = event.target.getAttribute("data-id");
+    getDomain(id);
 }

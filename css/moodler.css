@@ -124,3 +124,41 @@ body {
 .switch-description {
     display: inline;
 }
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+.no-margin {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+}
+
+.domainDisplay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    flex: 0 0 16.66667%;
+    width: 16.66667%;
+}
+
+.domainDisplay > p {
+    margin-bottom: 0 !important;
+}

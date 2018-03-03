@@ -82,11 +82,10 @@ function initSuggestName(modal) {
         notification.addEventListener(infoToast, "keydown", handleKeydownEnter);
         infoToast.find('#yesBtn').on('click', function (e) {
             //TODO: ADD check if Attribute allready exists
-            var data = autocomplete.sourceEntity[autocomplete.szenario];
-            for (var key in data.entity) {
-                if (!data.entity.hasOwnProperty(key)) continue;
-                if (data.entity[key].fullName === suggestion) {
-                    addAttributes(modal, data, key)
+            var data = entityArray;
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].name === suggestion) {
+                    addAttributes(modal, data[i].properties)
                 }
             }
         });
@@ -101,15 +100,14 @@ function initSuggestName(modal) {
     });
 }
 
-function addAttributes(modal, data, key) {
-    for (var prop in data.entity[key].property) {
-        if (!data.entity[key].property.hasOwnProperty(prop)) continue;
+function addAttributes(modal, data) {
+    for (var i = 0; i < data.length; i++) {
         if (modal.find(".cloneable:last-of-type").find("#attributeName").val().length !== 0 || modal.find(".cloneable:last-of-type").find("#attributeType").val().length !== 0) {
             modal.find(".cloneable:last-of-type").find(".add").click();
         }
         var propertyLine = modal.find(".cloneable:last-of-type");
-        propertyLine.find("#attributeName:last-of-type").val(data.entity[key].property[prop].fullName).change();
-        propertyLine.find("#attributeType:last-of-type").val(data.entity[key].property[prop].type).change();
+        propertyLine.find("#attributeName:last-of-type").val(data[i].propertyName).change();
+        propertyLine.find("#attributeType:last-of-type").val(data[i].propertyType).change();
     }
 }
 
