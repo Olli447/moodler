@@ -17,8 +17,6 @@ function initEditDomains(event) {
     setTimeout(function () {
         domainLogin(true)
     }, 500);
-
-
 }
 
 function domainLogin(pre) {
@@ -68,6 +66,10 @@ function loadDomains() {
     makeRequest(
         DOMAIN,
         function (response) {
+            availableDomains = [];
+            for (var i = 0; i < response.domains; i++) {
+                availableDomains[i] = response.domains[i].id;
+            }
             domainListCallback(response.domains);
         },
         function (response) {

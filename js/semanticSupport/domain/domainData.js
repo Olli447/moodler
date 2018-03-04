@@ -1,6 +1,7 @@
 var entityArray=[];
 var relationArray=[];
 var specialArray=[];
+var availableDomains = [];
 var domainDetails = {
     name: "",
     id: ""

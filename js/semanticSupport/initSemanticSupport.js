@@ -60,6 +60,9 @@ function startToasts(){
     moodler.init("moodler");
     formHandler.init();
     notification.createInfo("Litte Helper", "Mistakes will be highlighted. Click on the highlighted area to know more about it.", "overview");
+    setTimeout(function () {
+        notification.createInfo("Domäne auswählen", "Bitte wählen Sie eine Domäne aus um Kontexthilfen zu erhalten", "overview");
+    }, 1500);
 
     if (typeof(Storage) !== "undefined") {
         var save = localStorage.getItem("quicksave");
