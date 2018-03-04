@@ -29,7 +29,9 @@ window.moodler = {
         this._diagram.addModelChangedListener(function (evt) {
             if (evt.isTransactionFinished) {
                 if (typeof(Storage) !== "undefined") {
-                    localStorage.setItem("quicksave", evt.model.toJson())
+                    var entityList = moodler._diagram.model.nodeDataArray;
+                    if (entityList.length > 0)
+                        localStorage.setItem("quicksave", evt.model.toJson())
                 } else {
                     // Sorry! No Web Storage support..
                 }

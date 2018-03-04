@@ -98,7 +98,7 @@ function domainListCallback(domains) {
             createNewContainer.classList.add("btn");
             createNewContainer.classList.add("btn-outline-primary");
             createNewContainer.classList.add("btn-file");
-            createNewContainer.innerText = "Domain erstellen";
+            createNewContainer.innerText = "Domäne erstellen";
             var createNew = document.createElement("input");
             createNew.type = "file";
             createNew.style = "display:none;";
@@ -161,7 +161,7 @@ function domainListCallback(domains) {
                     button3.type = "button";
                     button3.innerHTML = "<i class='fa fa-trash'></i>";
                     button3.setAttribute("data-id", domains[j].id);
-                    //button.addEventListener("click", deleteDomain);
+                        button3.addEventListener("click", deleteDomainHandler);
                         subCol1.appendChild(button3);
 
 
@@ -184,7 +184,7 @@ function domainListCallback(domains) {
             createNewContainer2.classList.add("btn");
             createNewContainer2.classList.add("btn-outline-primary");
             createNewContainer2.classList.add("btn-file");
-            createNewContainer2.innerText = "Domain erstellen";
+            createNewContainer2.innerText = "Domäne erstellen";
             var createNew2 = document.createElement("input");
             createNew2.type = "file";
             createNew2.style = "display:none;";
@@ -262,9 +262,11 @@ function createDomain(name, data) {
         DOMAIN,
         function (response) {
             $('#szenarioModal').modal('hide');
+            getDomain(response.id);
         },
         function (response) {
             console.log("Error while loading domain");
+            console.log(response.responseJSON.error)
         },
         {
             type: 'POST'
@@ -276,12 +278,13 @@ function createDomain(name, data) {
     );
 }
 
-function updateDomain(id, data) {
+function updateDomain(id, name, data) {
     makeRequest(
         DOMAIN + id,
         function (response) {
-            readAll(response.data);
+            getDomain(id);
             $('#szenarioModal').modal('hide');
+            alert(response.message);
         },
         function (response) {
             console.log("Error while loading domain");
@@ -290,8 +293,40 @@ function updateDomain(id, data) {
             type: 'PUT'
         },
         {
-            id: id,
+            name: name,
             data: data
+        }
+    );
+}
+
+function deleteDomain(id) {
+    makeRequest(
+        DOMAIN + id,
+        function (response) {
+            $('#szenarioModal').modal('hide');
+            alert("Domain gelöscht!");
+        },
+        function (response) {
+            if (response.status === 200) {
+                $('#szenarioModal').modal('hide')
+
+                entityArray = [];
+                relationArray = [];
+                specialArray = [];
+                var currentDomain = $("#currentDomain");
+                currentDomain.find(".name").text("");
+                currentDomain.find(".id").text("");
+                domainDetails.name = "";
+                domainDetails.id = "";
+
+                alert("Domäne gelöscht!");
+            } else {
+                alert("Es ist ein Fehler aufgetreten\nStatus: " + response.status);
+            }
+
+        },
+        {
+            type: 'DELETE'
         }
     );
 }
@@ -337,10 +372,31 @@ function createDomainHandler(event) {
 }
 
 function updateDomainHandler(event) {
-
+    var id = event.target.parentNode.getAttribute("data-id");
+    var files = event.target.files;
+    if (files.length === 0) {
+        alert("Es muss eine Datei  ausgewählt werden!");
+        return;
+    }
+    var reader = new FileReader();
+    reader.readAsText(files[0]);
+    reader.onload = function (event) {
+        var name = files[0].name;
+        name = name.replace(/\.[^/\\.]+$/, "");
+        updateDomain(id, name, event.target.result);
+    };
 }
 
 function getDomainHandler(event) {
-    var id = event.target.getAttribute("data-id");
+    var id = event.currentTarget.getAttribute("data-id");
     getDomain(id);
+}
+
+function deleteDomainHandler(event) {
+    var id = event.currentTarget.getAttribute("data-id");
+    if (confirm('Soll das Modell wirklich entfernt werden?')) {
+        deleteDomain(id);
+    } else {
+        // Do nothing!
+    }
 }
