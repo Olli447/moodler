@@ -1,4 +1,4 @@
-function checkName(){
+function checkName() {
     var word = $('#entityName').val();
 
     makeRequest(MULTIPLICITY + word,
@@ -16,6 +16,12 @@ function checkName(){
 }
 
 function checkNameCallback(entityName, isPlural, basicWord) {
+
+    for (var i = 0; i < entityArray; i++) {
+        if (entityName === entityArray[i].name) {
+            return;
+        }
+    }
     var allData = moodler.getEntityList();
 
     var index, len, data;
@@ -25,6 +31,8 @@ function checkNameCallback(entityName, isPlural, basicWord) {
             break;
         }
     }
+
+
     if (entityName !== basicWord) {
         if (isPlural !== null) {
             moodler._diagram.startTransaction("setError");
@@ -78,8 +86,8 @@ function initSuggestName(modal) {
         });
     modal.find("#entityName").on('typeahead:select', function (event, suggestion) {
         //console.log('Selection: ' + suggestion);
-        var infoToast = notification.createInfo("Need a helping hand?", "<div class='row' style='margin-left: 0.33333%;'><p>Do you want to add some suggested attributes to your form?</p></div><div class='row col-md-offset-1' style=\"margin-left: 0.33333%;\"><div></div><button type='button' class='btn btn-raised btn-success btn-block' style='width: 45%; margin: 2.5%' id='yesBtn'>Yes</button><button type='button' class='btn btn-raised btn-danger btn-block' style='width: 45%; margin: 2.5%' id='noBtn'>No</button></div>", "modal");
-        notification.addEventListener(infoToast, "keydown", handleKeydownEnter);
+        var infoToast = notification.createInfo("Brauchen Sie eine helfende Hand?", "<div class='row' style='margin-left: 0.33333%;'><p>Wollen Sie empfohlene Attribute zum Formular hinzufügen?</p></div><div class='row col-md-offset-1' style=\"margin-left: 0.33333%;\"><div></div><button type='button' class='btn btn-raised btn-success btn-block' style='width: 45%; margin: 2.5%' id='yesBtn'>Yes</button><button type='button' class='btn btn-raised btn-danger btn-block' style='width: 45%; margin: 2.5%' id='noBtn'>No</button></div>", "modal");
+        notification.addEventListener(infoToast, "keydown", handleKeydownEnterEntity);
         infoToast.find('#yesBtn').on('click', function (e) {
             //TODO: ADD check if Attribute allready exists
             var data = entityArray;
@@ -111,7 +119,7 @@ function addAttributes(modal, data) {
     }
 }
 
-function handleKeydownEnter(event) {
+function handleKeydownEnterEntity(event) {
     if (event.code === 'Enter') {
         event.preventDefault();
         $('#yesBtn').click();

@@ -405,6 +405,82 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="suggestModal" tabindex="-1" role="dialog" aria-labelledby="Suggestion" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Vorgeschlagene Ergänzungen</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4>Relationen</h4>
+                            <div class="table-responsive">
+                                <table class="table" id="relationTable">
+                                    <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Von</th>
+                                        <th>Nach</th>
+                                        <th>Kard. Links</th>
+                                        <th>Kard. Rechts</th>
+                                        <th>Erstellen?</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4>Enitäten</h4>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-md-2"><i class="fa fa-circle" style="  color:rgb(2,255,42);"></i></div>
+                                <div class="col-md-10">
+                                    <p>Entiäten die erstellt werden</p>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2"><i class="fa fa-circle" style="  color:rgb(255,204,75);"></i>
+                                </div>
+                                <div class="col-md-10">
+                                    <p>Entiäten die bereits vorhanden sind</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table" id="entityTable">
+                                    <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Attribute</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" type="button" data-dismiss="modal">Abbrechen</button>
+                <button class="btn btn-primary" type="button" onclick="suggestionModalCallback()">Anwenden</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Szenario Modal -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -434,12 +510,14 @@
 <script src="js/semanticSupport/apiConnection/apiConnection.js"></script>
 <script src="js/semanticSupport/tools/notificationProvider.js"></script>
 <script src="js/semanticSupport/tools/autocomplete.js"></script>
+<script src="js/semanticSupport/tools/helperFunctions.js"></script>
 <script src="js/semanticSupport/validate/validateEntity.js"></script>
 <script src="js/semanticSupport/validate/validateCardinality.js"></script>
 <script src="js/semanticSupport/validate/validateRelation.js"></script>
 <script src="js/semanticSupport/validate/validateAttributes.js"></script>
 <script src="js/semanticSupport/domain/domainData.js"></script>
 <script src="js/semanticSupport/domain/chooseDomain.js"></script>
+<script src="js/semanticSupport/suggest/suggestEntity.js"></script>
 
 <script>
     $(document).ready(function () {

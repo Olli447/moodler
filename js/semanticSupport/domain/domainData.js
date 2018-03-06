@@ -7,7 +7,8 @@ var domainDetails = {
     id: ""
 };
 
-function Beziehung(from, to, cardFrom, cardTo) {
+function Beziehung(from, to, cardFrom, cardTo, name) {
+    this.name = name;
     this.from = from;
     this.to = to;
     this.cardFrom = cardFrom;
@@ -62,19 +63,27 @@ function readRelations(data) {
     var relationarray = mydata.linkDataArray;
     array = [];
     for (var i = 0; i < relationarray.length; i++) {
-        if (relationarray[i].category == "relationshipLine") {
+        if (relationarray[i].category === "relationshipLine") {
             array.push(new Beziehung(relationarray[i].from, relationarray[i].to, 0, relationarray[i].multiplicity));
         }
     }
     var finalarray = [];
     finalarray.pop();
+    //Look for relationship Lines that belong together
     for (var i = 0; i < array.length; i++) {
         for (var j = 0; j < array.length; j++) {
-            if (i != j) {
-                if (array[i].to == array[j].to) {
+            if (i !== j) {
+                if (array[i].to === array[j].to) {
                     if (finalarray.length < array.length / 2) {
-                        var bez = new Beziehung(array[i].from, array[j].from, array[i].cardTo, array[j].cardTo);
-                        finalarray.push(bez);
+                        //Find relationship name
+                        for (var x = 0; x < mydata.nodeDataArray.length; x++) {
+                            var entity = mydata.nodeDataArray[x];
+                            if (entity.category === "relationshipDiamond" && entity.key === array[i].to) {
+                                var bez = new Beziehung(array[i].from, array[j].from, array[i].cardTo, array[j].cardTo, entity.relationshipName);
+                                finalarray.push(bez);
+                            }
+                        }
+
                     }
                 }
             }

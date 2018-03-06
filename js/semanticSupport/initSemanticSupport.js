@@ -38,8 +38,6 @@ function finalizeGUI(){
         $('#szenarioModal').on('hide.bs.modal', finalizeDomainModal);
         $('#editDomainButton').on('click', initEditDomains);
         initDomains();
-
-
     });
     startWelcomeTour();
     startToasts();
