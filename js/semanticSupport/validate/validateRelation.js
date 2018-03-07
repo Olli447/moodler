@@ -22,8 +22,23 @@ function checkThirdSingular() {
 }
 
 function callBackThirdSingular(response) {
-    console.log(response);
+    if(response.isSingular && response.isThirdPerson == true){
+
+    }else{
+        var allData = moodler.getEntityList();
+
+        var index, len, data;
+        for (index = 0, len = allData.length; index < len; ++index) {
+            if (allData[index].entityName === entityName) {
+                data = allData[index];
+                break;
+            }
+        }
+
+        moodler._diagram.startTransaction("setError");
+        moodler._diagram.model.setDataProperty(data, "warning", false);
+        moodler._diagram.model.setDataProperty(data, "warningMessage", null);
+        moodler._diagram.model.setDataProperty(data, "error", isPlural);
+    }
 }
-
-
 
