@@ -148,8 +148,10 @@ window.formHandler = {
         modal.find("form")[0].reset();
         modal.find(".remove").click();
 
-        modal.find("#entityX").val(x);
-        modal.find("#entityY").val(y);
+        if (x)
+            modal.find("#entityX").val(x);
+        if (y)
+            modal.find("#entityY").val(y);
 
         if (typeof entityId !== "undefined") {
             var entity = moodler.getEntityData(entityId);
@@ -175,8 +177,10 @@ window.formHandler = {
         this.resetDropdowns();
         var modal = $("#relationship-modal");
         modal.find("form")[0].reset();
-        $("#relationshipX").val(x);
-        $("#relationshipY").val(y);
+        if (x)
+            $("#relationshipX").val(x);
+        if (y)
+            $("#relationshipY").val(y);
         var entity1 = $("#entity1")[0].selectize;
         var entity2 = $("#entity2")[0].selectize;
 

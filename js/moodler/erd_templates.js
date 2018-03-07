@@ -4,7 +4,7 @@ function setupTemplates($go, diagram) {
 
     var template_entity = $go(go.Node, go.Panel.Vertical, new go.Binding("position", "location"), {
             doubleClick: function (e, node) {
-                formHandler.showEntityModal(node.data.location.x, node.data.location.y, node.data.key);
+                node.data.location === undefined ? formHandler.showEntityModal(undefined, undefined, node.data.key) : formHandler.showEntityModal(node.data.location.x, node.data.location.y, node.data.key);
             }
         },
         $go(go.Panel, "Auto", {
@@ -61,7 +61,7 @@ function setupTemplates($go, diagram) {
 
     var template_relationshipDiamond = $go(go.Node, go.Panel.Auto, new go.Binding("location", "location"), {
             doubleClick: function (e, node) {
-                formHandler.showRelForm(node.data.location.x, node.data.location.y, node.data.key);
+                node.data.location === undefined ? formHandler.showRelForm(undefined, undefined, node.data.key) : formHandler.showRelForm(node.data.location.x, node.data.location.y, node.data.key);
             }
         },
         $go(go.Shape, "Diamond", {

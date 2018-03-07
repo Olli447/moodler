@@ -65,13 +65,22 @@ window.moodler = {
             this._diagram.model.setDataProperty(entity, "entityName", entityData.entityName);
         }
         else {
-            this._diagram.model.addNodeData({
-                key: entityData.entityName,
-                entityName: entityData.entityName,
-                location: new go.Point(parseFloat(x), parseFloat(y)),
-                properties: entityData.properties,
-                category: "entity"
-            });
+            if (x && y) {
+                this._diagram.model.addNodeData({
+                    key: entityData.entityName,
+                    entityName: entityData.entityName,
+                    location: new go.Point(parseFloat(x), parseFloat(y)),
+                    properties: entityData.properties,
+                    category: "entity"
+                });
+            } else {
+                this._diagram.model.addNodeData({
+                    key: entityData.entityName,
+                    entityName: entityData.entityName,
+                    properties: entityData.properties,
+                    category: "entity"
+                });
+            }
             suggestEntityAndRelation(entityData);
         }
         this._diagram.commitTransaction("Add/Edit Entity " + entityData.entityName);
@@ -133,13 +142,22 @@ window.moodler = {
 
         this._diagram.startTransaction("Add Relationship " + relName);
 
+        if (x && y) {
+            this._diagram.model.addNodeData({
+                key: relName,
+                location: new go.Point(parseFloat(x), parseFloat(y)),
+                relationshipName: linkData.name,
+                category: "relationshipDiamond"
+            });
+        } else {
+            this._diagram.model.addNodeData({
+                key: relName,
+                relationshipName: linkData.name,
+                category: "relationshipDiamond"
+            });
+        }
         //Adding Diamond
-        this._diagram.model.addNodeData({
-            key: relName,
-            location: new go.Point(parseFloat(x), parseFloat(y)),
-            relationshipName: linkData.name,
-            category: "relationshipDiamond"
-        });
+
 
         //Adding Source Link
         this._diagram.model.addLinkData({
