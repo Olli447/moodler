@@ -20,7 +20,7 @@ window.moodler = {
          * @var {go.Diagram}
          */
         this._diagram = this._go(go.Diagram, moodlerDiv, {
-            initialContentAlignment: go.Spot.Center, // center Diagram contents
+            //initialContentAlignment: go.Spot.Center, // center Diagram contents
             padding: new go.Margin(75, 5, 5, 5),
             "undoManager.isEnabled": true, // enable Ctrl-Z to undo and Ctrl-Y to redo
             model: new go.GraphLinksModel(),
