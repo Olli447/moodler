@@ -1,3 +1,5 @@
+var semanticSupportEnabled = true;
+
 function finalizeGUI(){
     $.ajax({
         url: 'http://132.252.51.194:3000/api/testConnection',
@@ -39,6 +41,60 @@ function finalizeGUI(){
         $('#editDomainButton').on('click', initEditDomains);
         initDomains();
     });
+
+    var switchMessagesBtn = $('#SwitchMessagesBtn');
+    switchMessagesBtn.click(function () {
+        if (semanticSupportEnabled) {
+            semanticSupportEnabled = false;
+            notification.destroyAll();
+            $('#szenarioBtn').prop('disabled', true);
+            document.getElementById('currentDomain').classList.add("hidden");
+            switchMessagesBtn.text("Hinweise einschalten");
+
+            for (var i = 0; i < moodler._diagram.model.nodeDataArray.length; i++) {
+                var item = moodler._diagram.model.nodeDataArray[i];
+
+                if (!item) {
+                    continue;
+                }
+
+                if (item.error) {
+                    moodler._diagram.model.setDataProperty(item, "error", false);
+                }
+
+                if (item.warning) {
+                    moodler._diagram.model.setDataProperty(item, "warning", false);
+                }
+
+
+            }
+        }
+        else {
+            semanticSupportEnabled = true;
+            $('#szenarioBtn').prop('disabled', false);
+            document.getElementById('currentDomain').classList.remove("hidden");
+            switchMessagesBtn.text("Hinweise ausschalten");
+
+            for (var i = 0; i < moodler._diagram.model.nodeDataArray.length; i++) {
+                var item = moodler._diagram.model.nodeDataArray[i];
+
+                if (!item) {
+                    continue;
+                }
+
+                if (item.errorMessage) {
+                    moodler._diagram.model.setDataProperty(item, "error", true);
+                }
+
+                if (item.warningMessage) {
+                    moodler._diagram.model.setDataProperty(item, "warning", true);
+                }
+
+
+            }
+        }
+    });
+
     startWelcomeTour();
     startToasts();
 }
@@ -60,7 +116,7 @@ function startToasts(){
     notification.createInfo("Litte Helper", "Mistakes will be highlighted. Click on the highlighted area to know more about it.", "overview");
     setTimeout(function () {
         notification.createInfo("Domäne auswählen", "Bitte wählen Sie eine Domäne aus um Kontexthilfen zu erhalten", "overview");
-    }, 1500);
+    }, 1000);
 
     if (typeof(Storage) !== "undefined") {
         var save = localStorage.getItem("quicksave");
@@ -83,10 +139,10 @@ function startToasts(){
 
 }
 
-function startWelcomeTour(){
+function startWelcomeTour(again) {
     // check cookie
     var visited = Cookies.get('visited');
-    if (visited == null) {
+    if (visited == null || again === true) {
         var trigger = $("body").find('[data-toggle="modal"]');
         trigger.click(function() {
             var theModal = $(this).data( "target" ),

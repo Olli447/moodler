@@ -1,4 +1,9 @@
 function checkAtomar() {
+
+    if (!semanticSupportEnabled) {
+        return;
+    }
+
     var modal = $("#entity-modal");
     var attributes = [];
     var key = $('#entityName').val();

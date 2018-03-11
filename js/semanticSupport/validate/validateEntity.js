@@ -1,4 +1,5 @@
 function checkName() {
+
     var word = $('#entityName').val();
 
     makeRequest(MULTIPLICITY + word,
@@ -36,17 +37,23 @@ function checkNameCallback(entityName, isPlural, basicWord) {
     if (entityName !== basicWord) {
         if (isPlural !== null) {
             moodler._diagram.startTransaction("setError");
-            moodler._diagram.model.setDataProperty(data, "warning", false);
+
+            if (semanticSupportEnabled) {
+                moodler._diagram.model.setDataProperty(data, "warning", false);
+                moodler._diagram.model.setDataProperty(data, "error", isPlural);
+            }
             moodler._diagram.model.setDataProperty(data, "warningMessage", null);
-            moodler._diagram.model.setDataProperty(data, "error", isPlural);
             if (isPlural)
                 moodler._diagram.model.setDataProperty(data, "errorMessage", "Der Name der Entität muss im Singualar sein.<br>Besser: \"" + basicWord + "\"");
             moodler._diagram.commitTransaction("setError");
         } else {
             moodler._diagram.startTransaction("setWarning");
-            moodler._diagram.model.setDataProperty(data, "error", false);
+
+            if (semanticSupportEnabled) {
+                moodler._diagram.model.setDataProperty(data, "error", false);
+                moodler._diagram.model.setDataProperty(data, "warning", true);
+            }
             moodler._diagram.model.setDataProperty(data, "errorMessage", null);
-            moodler._diagram.model.setDataProperty(data, "warning", true);
             moodler._diagram.model.setDataProperty(data, "warningMessage", "The System returned:<br>" + basicWord + "!");
             moodler._diagram.commitTransaction("setWarning");
         }
@@ -77,6 +84,11 @@ function checkNameEvent(event) {
 }
 
 function initSuggestName(modal) {
+
+    if (!semanticSupportEnabled) {
+        return;
+    }
+
     modal.find("#entityName").typeahead({
             minLength: 1,
             highlight: true

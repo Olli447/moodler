@@ -1,4 +1,9 @@
 function suggestEntityAndRelation(entityData) {
+
+    if (!semanticSupportEnabled) {
+        return;
+    }
+
     var key = entityData.entityName;
     var fromEntity = moodler._diagram.model.findNodeDataForKey(key);
 
@@ -265,6 +270,14 @@ function suggestionModalCallback() {
         }
 
         var relName = "R_" + relations[x].name;
+        var relNameSuffix = 0;
+
+        while (moodler._diagram.model.findNodeDataForKey(relName + "_" + relNameSuffix) !== null) {
+            relNameSuffix++;
+        }
+
+        relName = relName + "_" + relNameSuffix;
+
         moodler._diagram.model.addNodeData({
             key: relName,
             relationshipName: relations[x].name,
