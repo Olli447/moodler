@@ -53,6 +53,13 @@ window.moodler = {
      * @param y ordinate of the point where the entity is to be added to the diagram
      */
     addEntity: function (entityData, x, y) {
+        var node = this._diagram.model.findNodeDataForKey(entityData.entityName);
+
+        //if (node !== null) {
+          //  notification.createError("Fehler","A Entity with this name already exists.");
+            //throw new Error("A Entity with this name already exists.");
+           // return;
+        //}
         if (entityData.id !== undefined)
             notification.destroyToastForKey(entityData.id);
 
@@ -226,6 +233,7 @@ window.moodler = {
     addGeneralizationSpecialization: function (gsData, x, y) {
         console.log(gsData);
         var relName = "GS_" + gsData.parent;
+        console.log("NAME: "+relName);
         var node = this._diagram.model.findNodeDataForKey(relName);
 
         if (node !== null) {

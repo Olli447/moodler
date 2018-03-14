@@ -113,14 +113,14 @@
                         <div class="col-sm-7">
                             <div class="label-floating form-group">
                                 <label class="control-label" for="attributeName">Attr. Name</label>
-                                <input pattern="[\wöäüßÄÖÜ]+" id="attributeName" required class="form-control"
+                                <input pattern="[\wöäüßÄÖÜ]+" id="attributeName" onblur="if($('#attributeName').val()!=''){$('#attributeType').prop('required',true);}else{('#attributeType').prop('required',false);}" class="form-control"
                                        type="text" title="Nur Buchstaben, Ziffern oder _">
                             </div>
                         </div>
                         <div class="col-sm-3">
                             <div class="label-floating form-group">
                                 <label for="attributeType" class="control-label">Attr. Typ</label>
-                                <select id="attributeType" class="form-control" required title="Pflichtfeld">
+                                <select id="attributeType" class="form-control" title="Pflichtfeld">
                                     <option></option>
                                     <option value="String">String</option>
                                     <option value="Integer">Integer</option>
