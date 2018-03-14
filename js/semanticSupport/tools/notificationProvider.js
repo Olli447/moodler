@@ -3,6 +3,10 @@ window.notification = {
     observer: new MutationObserver(this.somethingChanged),
     createInfo: function (title, content, key) {
 
+        if (!semanticSupportEnabled) {
+            return null;
+        }
+
         var newToast = toastr.info(content, title);
 
         if (this.activeToasts.length === 0) {
@@ -24,6 +28,11 @@ window.notification = {
         return newToast;
     },
     createError: function (title, content, key) {
+
+        if (!semanticSupportEnabled) {
+            return null;
+        }
+
         var newToast = toastr.error(content, title);
 
         if (this.activeToasts.length === 0) {
@@ -45,6 +54,11 @@ window.notification = {
         return newToast;
     },
     createWarning: function (title, content, key) {
+
+        if (!semanticSupportEnabled) {
+            return null;
+        }
+
         var newToast = toastr.warning(content, title);
 
         if (this.activeToasts.length === 0) {
@@ -66,6 +80,11 @@ window.notification = {
         return newToast;
     },
     addEventListener: function (toast, type, callback) {
+
+        if (!semanticSupportEnabled) {
+            return;
+        }
+
         for (var i = 0, len = notification.activeToasts.length; i < len; i++) {
             if (this.activeToasts[i].id === toast.attr("data-id")) {
                 type === "keydown" ? setTimeout(function () {
@@ -85,6 +104,10 @@ window.notification = {
         if (isEvent) {
             for (var i = 0, len = this.activeToasts.length; i < len; i++) {
                 var item = this.activeToasts[i];
+
+                if (!item)
+                    continue;
+
                 if (this.activeToasts[i].id === toast.dataset.id) {
                     this.activeToasts.splice(i, 1);
 
@@ -124,6 +147,10 @@ window.notification = {
     destroyToastForKey: function (key) {
         for (var i = 0, len = this.activeToasts.length; i < len; i++) {
             var item = this.activeToasts[i];
+
+            if (!item)
+                continue;
+
             if (this.activeToasts[i].key === key) {
                 for (var j = 0, len2 = item.events.length; j < len2; j++) {
                     var event = item.event[j];
@@ -132,6 +159,22 @@ window.notification = {
                 toastr.clear(item.toast);
                 this.activeToasts.splice(i, 1);
             }
+        }
+    },
+
+    destroyAll: function () {
+        for (var i = 0, len = this.activeToasts.length; i < len; i++) {
+            var item = this.activeToasts[i];
+
+            if (!item)
+                continue;
+
+            for (var j = 0, len2 = item.events.length; j < len2; j++) {
+                var event = item.event[j];
+                event.removeEventListener(event.type, event.callback)
+            }
+            toastr.clear(item.toast);
+            this.activeToasts.splice(i, 1);
         }
     }
 };

@@ -1,4 +1,9 @@
 function checkSpace() {
+
+    if (!semanticSupportEnabled) {
+        return;
+    }
+
     var name = $('#relationshipName').val();
     var underscore = "_"
     name = name.split(' ').join(underscore);
@@ -7,6 +12,11 @@ function checkSpace() {
 }
 
 function checkThirdSingular() {
+
+    if (!semanticSupportEnabled) {
+        return;
+    }
+
     var fullName = $('#relationshipName').val();
     var name = fullName.split('_', 1)[0] ? fullName.split("_", 1)[0] : fullName;
     makeRequest(RELATIONSHIP + name,
@@ -36,9 +46,11 @@ function callBackThirdSingular(response) {
         }
 
         moodler._diagram.startTransaction("setError");
-        moodler._diagram.model.setDataProperty(data, "warning", false);
+        if (semanticSupportEnabled) {
+            moodler._diagram.model.setDataProperty(data, "warning", false);
+            moodler._diagram.model.setDataProperty(data, "error", isPlural); //TODO: Where does "isPlural" come form? Copy-Paste?
+        }
         moodler._diagram.model.setDataProperty(data, "warningMessage", null);
-        moodler._diagram.model.setDataProperty(data, "error", isPlural);
     }
 }
 

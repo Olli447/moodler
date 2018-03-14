@@ -1,4 +1,9 @@
 function checkCardi(element) {
+
+    if (!semanticSupportEnabled) {
+        return;
+    }
+
     var b = true;
     if (element.val().charAt(2)!= '*') {
     var lower = parseInt(element.val().charAt(0));

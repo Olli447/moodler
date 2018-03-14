@@ -137,8 +137,13 @@ window.moodler = {
     addRelationship: function (linkData, x, y) {
 
         var relName = "R_" + linkData.name;
-        if (this._diagram.model.findNodeDataForKey(relName) !== null)
-            throw new Error("An Relationship with this name already exists");
+        var relNameSuffix = 0;
+
+        while (this._diagram.model.findNodeDataForKey(relName + "_" + relNameSuffix) !== null) {
+            relNameSuffix++;
+        }
+
+        relName = relName + "_" + relNameSuffix;
 
         this._diagram.startTransaction("Add Relationship " + relName);
 
