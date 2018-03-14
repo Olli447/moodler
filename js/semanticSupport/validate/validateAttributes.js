@@ -154,7 +154,7 @@ function checkAtomar() {
                     }
                     data.properties.push({
                         propertyName: "Geburtsdatum",
-                        propertyType: "String"
+                        propertyType: "Date"
                     });
                     var entitys = moodler.getEntityList();
                     for (var i = 0; i < entitys.length; i++) {
