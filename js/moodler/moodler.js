@@ -183,6 +183,7 @@ window.moodler = {
         });
 
         this._diagram.commitTransaction("Add Relationship " + relName);
+        checkThirdSingular(linkData.name);
     },
 
     getRelationshipData: function (id) {

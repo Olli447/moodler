@@ -251,7 +251,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>
                 <button class="btn btn-primary" type="submit" form="relationshipForm"
-                        onclick="checkSpace(); checkThirdSingular();!this.form&&$('#'+$(this).attr('form')).submit()">
+                        onclick="checkSpace();!this.form&&$('#'+$(this).attr('form')).submit();checkThirdSingular();">
                     Fortfahren
                 </button>
             </div>
