@@ -35,15 +35,15 @@ function callBackThirdSingular(response) {
     if(response.isSingular && response.isThirdPerson){
         console.log("YES");
     }else{
-        var data= moodler.getRelationshipData($('#relationshipName').val());
-        console.log(data);
+        var data= moodler.getRelationshipData("R_"+$('#relationshipName').val()+"_0");
         moodler._diagram.startTransaction("setError");
         if (semanticSupportEnabled) {
             moodler._diagram.model.setDataProperty(data, "warning", false);
-            moodler._diagram.model.setDataProperty(data, "error", isPlural); //TODO: Where does "isPlural" come form? Copy-Paste?
+            moodler._diagram.model.setDataProperty(data, "error", true);
+            moodler._diagram.model.setDataProperty(data, "errorMessage", "Der Name der Relation muss in der 3. Person Singular sein");
         }
         moodler._diagram.model.setDataProperty(data, "warningMessage", null);
-        moodler._diagram.model.setDataProperty(data, "error", isPlural);
+        moodler._diagram.commitTransaction("setError");
     }
 }
 

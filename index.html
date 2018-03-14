@@ -492,6 +492,67 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="suggestModal2" tabindex="-1" role="dialog" aria-labelledby="Suggestion" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Vorgeschlagene Spezialisierung/Generalisierung</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4>Spezialisierung</h4>
+                            <div class="table-responsive">
+                                <table class="table" id="specialTable">
+                                    <thead>
+                                    <tr>
+                                        <th>Von</th>
+                                        <th>Nach</th>
+                                        <th>Total</th>
+                                        <th>Überlappend</th>
+                                        <th>Erstellen?</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-md-12">
+                        <h4>Generalisierung</h4>
+                        <div class="table-responsive">
+                            <table class="table" id="generalTable">
+                                <thead>
+                                <tr>
+                                    <th>Von</th>
+                                    <th>Nach</th>
+                                    <th>Total</th>
+                                    <th>Überlappend</th>
+                                    <th>Erstellen?</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" type="button" data-dismiss="modal">Abbrechen</button>
+                <button class="btn btn-primary" type="button" onclick="generalModalCallback()">Anwenden</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Szenario Modal -->
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -529,6 +590,7 @@
 <script src="js/semanticSupport/domain/domainData.js"></script>
 <script src="js/semanticSupport/domain/chooseDomain.js"></script>
 <script src="js/semanticSupport/suggest/suggestEntity.js"></script>
+<script src="js/semanticSupport/suggest/suggestSpecial.js"></script>
 
 <script>
     $(document).ready(function () {

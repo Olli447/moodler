@@ -50,7 +50,7 @@ function readAll(data) {
     else {
         readEntitys(data);
         readRelations(data);
-        readRelations(data);
+        readSpecial(data);
     }
 
 
@@ -147,7 +147,4 @@ function readSpecial(data) {
         }
     }
     specialArray = array;
-    for(var r = 0; r<specialArray.length; r++){
-        console.log(specialArray[r].from+" "+specialArray[r].to+" "+specialArray[r].total+" "+specialArray[r].overlap);
-    }
 }

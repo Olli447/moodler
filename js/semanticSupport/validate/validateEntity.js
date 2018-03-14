@@ -37,7 +37,7 @@ function checkNameCallback(entityName, isPlural, basicWord) {
     if (entityName !== basicWord) {
         if (isPlural !== null) {
             moodler._diagram.startTransaction("setError");
-
+            console.log(data);
             if (semanticSupportEnabled) {
                 moodler._diagram.model.setDataProperty(data, "warning", false);
                 moodler._diagram.model.setDataProperty(data, "error", isPlural);

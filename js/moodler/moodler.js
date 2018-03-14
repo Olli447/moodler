@@ -82,6 +82,7 @@ window.moodler = {
                 });
             }
             suggestEntityAndRelation(entityData);
+            suggestGeneralSpecial(entityData);
         }
         this._diagram.commitTransaction("Add/Edit Entity " + entityData.entityName);
     },
@@ -223,7 +224,7 @@ window.moodler = {
      * @param y ordinate of the point where the circle is to be added to the diagram
      */
     addGeneralizationSpecialization: function (gsData, x, y) {
-
+        console.log(gsData);
         var relName = "GS_" + gsData.parent;
         var node = this._diagram.model.findNodeDataForKey(relName);
 
