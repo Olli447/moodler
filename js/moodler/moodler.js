@@ -310,11 +310,13 @@ window.moodler = {
     },
 
     addGeneralizationChild: function(parent, child){
+        this._diagram.startTransaction("Add Child " + child);
         this._diagram.model.addLinkData({
             from: child,
             to: "GS_"+parent,
             category: "specializationLine"
         });
+        this._diagram.commitTransaction("Add Child " + child);
     },
 
     existParentChild: function(parent, child){
