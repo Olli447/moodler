@@ -54,12 +54,11 @@ window.moodler = {
      */
     addEntity: function (entityData, x, y) {
         var node = this._diagram.model.findNodeDataForKey(entityData.entityName);
-
-        //if (node !== null) {
-          //  notification.createError("Fehler","A Entity with this name already exists.");
-            //throw new Error("A Entity with this name already exists.");
-           // return;
-        //}
+        // if (node !== null) {
+        //         notification.createError("Fehler", "A Entity with this name already exists.");
+        //         throw new Error("A Entity with this name already exists.");
+        //         return;
+        // }
         if (entityData.id !== undefined)
             notification.destroyToastForKey(entityData.id);
 
@@ -90,6 +89,46 @@ window.moodler = {
             }
             suggestEntityAndRelation(entityData);
             suggestGeneralSpecial(entityData);
+        }
+        this._diagram.commitTransaction("Add/Edit Entity " + entityData.entityName);
+    },
+
+    addEntityNoGeneralSuggest: function (entityData, x, y) {
+        var node = this._diagram.model.findNodeDataForKey(entityData.entityName);
+        // if (node !== null) {
+        //         notification.createError("Fehler", "A Entity with this name already exists.");
+        //         throw new Error("A Entity with this name already exists.");
+        //         return;
+        // }
+        if (entityData.id !== undefined)
+            notification.destroyToastForKey(entityData.id);
+
+
+        this._diagram.startTransaction("Add/Edit Entity " + entityData.entityName);
+
+        if (entityData.id !== undefined) {
+            var entity = this._diagram.model.findNodeDataForKey(entityData.id);
+            this._diagram.model.setDataProperty(entity, "properties", entityData.properties);
+            this._diagram.model.setDataProperty(entity, "entityName", entityData.entityName);
+        }
+        else {
+            if (x && y) {
+                this._diagram.model.addNodeData({
+                    key: entityData.entityName,
+                    entityName: entityData.entityName,
+                    location: new go.Point(parseFloat(x), parseFloat(y)),
+                    properties: entityData.properties,
+                    category: "entity"
+                });
+            } else {
+                this._diagram.model.addNodeData({
+                    key: entityData.entityName,
+                    entityName: entityData.entityName,
+                    properties: entityData.properties,
+                    category: "entity"
+                });
+            }
+            suggestEntityAndRelation(entityData);
         }
         this._diagram.commitTransaction("Add/Edit Entity " + entityData.entityName);
     },
@@ -231,12 +270,11 @@ window.moodler = {
      * @param y ordinate of the point where the circle is to be added to the diagram
      */
     addGeneralizationSpecialization: function (gsData, x, y) {
-        console.log(gsData);
         var relName = "GS_" + gsData.parent;
-        console.log("NAME: "+relName);
         var node = this._diagram.model.findNodeDataForKey(relName);
 
         if (node !== null) {
+            console.log(moodler.getGeneralizationSpecializationData(relName));
             throw new Error("A Gen/Spec for the parent already exists.");
         }
 
@@ -268,6 +306,32 @@ window.moodler = {
 
         }
         this._diagram.commitTransaction("Add Gen/Spec " + relName);
+        console.log(moodler.getGeneralizationSpecializationData(relName));
+    },
+
+    addGeneralizationChild: function(parent, child){
+        this._diagram.model.addLinkData({
+            from: child,
+            to: "GS_"+parent,
+            category: "specializationLine"
+        });
+    },
+
+    existParentChild: function(parent, child){
+        if(moodler.existNode("GS_"+parent)) {
+            var node = this._diagram.findNodeForKey("GS_"+parent);
+            if (node.data.exclusiveness!==undefined) {
+                var data = moodler.getGeneralizationSpecializationData("GS_"+parent);
+                if(data!==undefined && data.subclasses!==undefined){
+                for (var i = 0; i < data.subclasses.length; i++) {
+                    if (data.subclasses[i] == child) {
+                        return true;
+                    }
+                }
+                }
+            }
+        }
+        return false;
     },
 
     getGeneralizationSpecializationData: function (id) {
@@ -288,6 +352,15 @@ window.moodler = {
         }
 
         return data;
+    },
+
+    existNode: function (id){
+        var node = this._diagram.findNodeForKey(id);
+        if(node===null){
+            return false;
+        }else{
+            return true;
+        }
     },
 
     deleteGeneralizationSpecialization: function (id) {

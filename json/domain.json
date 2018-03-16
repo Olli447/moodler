@@ -94,8 +94,8 @@
       },
       "exclusiveness": "o",
       "category": "generalizationSpecializationCircle"
-    }
-  ],
+}
+],
   "linkDataArray": [
     {
       "from": "entity",
