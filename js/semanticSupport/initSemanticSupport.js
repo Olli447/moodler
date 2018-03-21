@@ -13,27 +13,8 @@ function finalizeGUI(){
         timeout: 1000
     });
 
-    $('#cardinality1').mask('0BZ', {
-        translation: {
-            'Z': {
-                pattern: /[1-9]|[*]/, optional: false
-            },
-            'B': {
-                pattern: /,/, optional: false
-            }
-        }
-    });
-    $('#cardinality2').mask('0BZ', {
-        translation: {
-            'Z': {
-                pattern: /[1-9]|[*]/, optional: false
-            },
-            'B': {
-                pattern: /,/, optional: false
-            }
-        }
-    });
-
+    $('#cardinality1').inputmask({ regex: "([0]|[1-9]+)(,)[1-9]+|\\*"});
+    $('#cardinality2').inputmask({ regex: "([0]|[1-9]+)(,)[1-9]+|\\*"});
     var szenarioBtn = $('#szenarioBtn');
     szenarioBtn.click(function() {
         $('#szenarioModal').modal('show');

@@ -231,6 +231,7 @@ window.moodler = {
 
         this._diagram.commitTransaction("Add Relationship " + relName);
         checkThirdSingular(linkData.name);
+        suggestRelation(linkData.source, linkData.target, relName);
     },
 
     getRelationshipData: function (id) {
@@ -305,6 +306,8 @@ window.moodler = {
             });
 
         }
+
+
         this._diagram.commitTransaction("Add Gen/Spec " + relName);
         console.log(moodler.getGeneralizationSpecializationData(relName));
     },

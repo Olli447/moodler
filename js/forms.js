@@ -158,12 +158,14 @@ window.formHandler = {
             modal.find("#entityName").val(entity.entityName).change();
             modal.find("#entityId").val(entityId).change();
 
-            entity.properties.forEach(function(prop){
+        if(entity.properties!==undefined) {
+            entity.properties.forEach(function (prop) {
                 var propertyLine = modal.find(".cloneable:last-of-type");
                 propertyLine.find("#attributeName").val(prop.propertyName).change();
                 propertyLine.find("#attributeType").val(prop.propertyType).change();
                 propertyLine.find(".add").click()
             })
+        }
 
 
             modal.find(".cloneable:last-of-type").find(".remove").click();

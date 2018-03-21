@@ -3,18 +3,22 @@ function checkCardi(element) {
     if (!semanticSupportEnabled) {
         return;
     }
-
+    var inhalt = element.val();
     var b = true;
-    if (element.val().charAt(2)!= '*') {
-    var lower = parseInt(element.val().charAt(0));
-    var higher = parseInt(element.val().charAt(2));
-    if(lower>higher){
-        element.val("");
-        b=false;
-        //toastr.error("Ihr Min-Wert der Kardinalität darf nicht größer sein, als der Max-Wert.");
-        notification.createError("Fehler","Ihr Min-Wert der Kardinalität darf nicht größer sein, als der Max-Wert.", $('#relationshipName').val());
+    var lower = inhalt.substring(0, inhalt.indexOf(","));
+    var higher = inhalt.substring(inhalt.indexOf(",")+1, inhalt.length);
+
+    if(higher=="*"){
+        b= true;
+        return b;
+    }else{
+        lNumber= parseInt(lower);
+        hNumber = parseInt(higher);
+        if(lNumber>hNumber){
+            b= false;
+            notification.createError("Fehler", "Ihr Min-Wert der Kardinalität darf nicht größer sein, als der Max-Wert.", $('#relationshipName').val());
+        }
     }
-}
     return b;
 }
 

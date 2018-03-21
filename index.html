@@ -251,7 +251,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>
                 <button class="btn btn-primary" type="submit" form="relationshipForm"
-                        onclick="checkSpace();!this.form&&$('#'+$(this).attr('form')).submit();checkThirdSingular();">
+                        onclick="checkSpace();!this.form&&$('#'+$(this).attr('form')).submit();">
                     Fortfahren
                 </button>
             </div>
@@ -572,7 +572,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.3/FileSaver.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gojs/1.7.26/go-debug.js"></script>
 <script src="https://unpkg.com/inflected/dist/umd/inflected.min.js"></script>
-<script src="js/dist/jquery.mask.js"></script>
+<script src="js/dist/jquery.inputmask.bundle.js"></script>
 <script src="js/dist/selectize.js"></script>
 <script src="js/dist/toastr.min.js"></script>
 <script src="js/moodler/moodler.js"></script>
@@ -591,6 +591,7 @@
 <script src="js/semanticSupport/domain/chooseDomain.js"></script>
 <script src="js/semanticSupport/suggest/suggestEntity.js"></script>
 <script src="js/semanticSupport/suggest/suggestSpecial.js"></script>
+<script src="js/semanticSupport/suggest/suggestRelation.js"></script>
 
 <script>
     $(document).ready(function () {
