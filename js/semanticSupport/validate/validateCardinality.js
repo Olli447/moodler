@@ -17,6 +17,7 @@ function checkCardi(element) {
         if(lNumber>hNumber){
             b= false;
             notification.createError("Fehler", "Ihr Min-Wert der Kardinalität darf nicht größer sein, als der Max-Wert.", $('#relationshipName').val());
+            element.val("");
         }
     }
     return b;

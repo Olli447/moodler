@@ -67,7 +67,7 @@ function suggestGeneralSpecial(entityData) {
         toast.find("#suggestYes2").on("click", function () {
             initGeneralModal(tempG, tempS);
         });
-        toast.find("#suggestNo").on("click", function () {
+        toast.find("#suggestNo2").on("click", function () {
         });
         notification.addEventListener(toast, "keydown", handleKeyDownEnterSuggestion);
     }
