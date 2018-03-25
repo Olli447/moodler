@@ -152,10 +152,12 @@ window.notification = {
                 continue;
 
             if (this.activeToasts[i].key === key) {
-                for (var j = 0, len2 = item.events.length; j < len2; j++) {
-                    var event = item.event[j];
-                    event.removeEventListener(event.type, event.callback)
-                }
+	            if (item.event) {
+		            for (var j = 0, len2 = item.events.length; j < len2; j++) {
+			            var event = item.event[j];
+			            event.removeEventListener(event.type, event.callback)
+		            }
+	            }
                 toastr.clear(item.toast);
                 this.activeToasts.splice(i, 1);
             }

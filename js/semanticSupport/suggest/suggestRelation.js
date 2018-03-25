@@ -7,8 +7,7 @@ function suggestRelation(from, to, name){
 
 	            if (semanticSupportEnabled) {
 		            var text = "Wir empfehlen die Entitäten: " + from + " und " + to + " eventuell durch die Relation: " + relationArray[i].name + " zu ersetzten. Wollen Sie diese ersetzten?"
-		            var toast = notification.createInfo("Empfehlungen verfügbar", "<div class='row' style='margin-left: 0.33333%;'><p id='toastText'></p></div><div class='row col-md-offset-1' style=\"margin-left: 0.33333%;\"><div></div><button type='button' class='btn btn-raised btn-success btn-block' style='width: 45%; margin: 2.5%' id='suggestYes3'>Yes</button><button type='button' class='btn btn-raised btn-danger btn-block' style='width: 45%; margin: 2.5%' id='suggestNo3'>No</button></div>", name);
-		            $('#toastText').val(text);
+		            var toast = notification.createInfo("Empfehlungen verfügbar", "<div class='row' style='margin-left: 0.33333%;'><p id='toastText'> " + text + "</p></div><div class='row col-md-offset-1' style=\"margin-left: 0.33333%;\"><div></div><button type='button' class='btn btn-raised btn-success btn-block' style='width: 45%; margin: 2.5%' id='suggestYes3'>Yes</button><button type='button' class='btn btn-raised btn-danger btn-block' style='width: 45%; margin: 2.5%' id='suggestNo3'>No</button></div>", name);
 		            toast.find("#suggestYes3").on("click", function () {
 		            });
 		            toast.find("#suggestNo3").on("click", function () {
@@ -18,4 +17,19 @@ function suggestRelation(from, to, name){
             }
         }
     }
+}
+
+function suggestBetterName(relName, name, target, source) {
+	//Lookup for a relation between target and source
+	for (var i = 0; i < relationArray.length; i++) {
+		if (
+			(relationArray[i].from === source && relationArray[i].to === target) ||
+			(relationArray[i].to === source && relationArray[i].from === target)
+		) {
+			if (name !== relationArray[i].name && semanticSupportEnabled) {
+				notification.createWarning("Hinweis", "Das Modell sieht für die Relation \"" + name + "\" zwischen \"" + source + "\" und \"" + target + "\" den Namen \"" + relationArray[i].name + "\" vor!", relName);
+				break;
+			}
+		}
+	}
 }

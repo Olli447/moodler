@@ -232,7 +232,8 @@ window.moodler = {
         this._diagram.commitTransaction("Add Relationship " + relName);
 	    checkThirdSingular(linkData.name, relName);
         console.log(linkData.source);
-        suggestRelation(linkData.source, linkData.target, relName);
+	    //suggestRelation(linkData.source, linkData.target, relName);
+	    suggestBetterName(relName, linkData.name, linkData.target, linkData.source);
     },
 
     getRelationshipData: function (id) {
