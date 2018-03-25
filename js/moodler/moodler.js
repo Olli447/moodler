@@ -230,7 +230,7 @@ window.moodler = {
         });
 
         this._diagram.commitTransaction("Add Relationship " + relName);
-        checkThirdSingular(linkData.name);
+	    checkThirdSingular(linkData.name, relName);
         console.log(linkData.source);
         suggestRelation(linkData.source, linkData.target, relName);
     },

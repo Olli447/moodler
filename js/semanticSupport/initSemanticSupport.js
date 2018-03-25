@@ -32,6 +32,8 @@ function finalizeGUI(){
             document.getElementById('currentDomain').classList.add("hidden");
             switchMessagesBtn.text("Hinweise einschalten");
 
+
+	        moodler._diagram.startTransaction("remove messages");
             for (var i = 0; i < moodler._diagram.model.nodeDataArray.length; i++) {
                 var item = moodler._diagram.model.nodeDataArray[i];
 
@@ -39,16 +41,24 @@ function finalizeGUI(){
                     continue;
                 }
 
-                if (item.error) {
+	            if (item.error && item.category === "entity") {
                     moodler._diagram.model.setDataProperty(item, "error", false);
                 }
+	            if (item.errorRelation) {
+		            moodler._diagram.model.setDataProperty(item, "errorRelation", false);
+	            }
 
                 if (item.warning) {
                     moodler._diagram.model.setDataProperty(item, "warning", false);
                 }
 
+	            if (item.warningRelation) {
+		            moodler._diagram.model.setDataProperty(item, "warningRelation", false);
+	            }
+
 
             }
+	        moodler._diagram.commitTransaction("remove messages");
         }
         else {
             semanticSupportEnabled = true;
@@ -56,6 +66,7 @@ function finalizeGUI(){
             document.getElementById('currentDomain').classList.remove("hidden");
             switchMessagesBtn.text("Hinweise ausschalten");
 
+	        moodler._diagram.startTransaction("add messages");
             for (var i = 0; i < moodler._diagram.model.nodeDataArray.length; i++) {
                 var item = moodler._diagram.model.nodeDataArray[i];
 
@@ -64,15 +75,26 @@ function finalizeGUI(){
                 }
 
                 if (item.errorMessage) {
-                    moodler._diagram.model.setDataProperty(item, "error", true);
+	                if (item.category === "entity") {
+		                moodler._diagram.model.setDataProperty(item, "error", true);
+	                } else {
+		                moodler._diagram.model.setDataProperty(item, "errorRelation", true);
+	                }
+
+
                 }
 
                 if (item.warningMessage) {
-                    moodler._diagram.model.setDataProperty(item, "warning", true);
+	                if (item.category === "entity") {
+		                moodler._diagram.model.setDataProperty(item, "warning", true);
+	                } else {
+		                moodler._diagram.model.setDataProperty(item, "warningRelation", true);
+	                }
                 }
 
 
             }
+	        moodler._diagram.commitTransaction("add messages");
         }
     });
 

@@ -10,7 +10,7 @@ function suggestEntityAndRelation(entityData) {
     var toEntityRelations = [];
     var toEntityNodes = [];
 
-    //Look for relationships were the the fromEntity is present
+	//Look for relationships were the fromEntity is present
     for (var i = 0; i < relationArray.length; i++) {
         if (relationArray[i].from === fromEntity.key || relationArray[i].to === fromEntity.key) {
             var tempEntityFrom = moodler._diagram.model.findNodeDataForKey(relationArray[i].from);
@@ -204,11 +204,13 @@ function initSuggestionModal(relations, entities) {
         nameCell2.innerText = entities[j].name;
         var attributesCell = row2.insertCell();
         var content = "";
-        for (var o = 0; o < entities[j].properties.length; o++) {
-            content += entities[j].properties[o].propertyName;
-            content += " : ";
-            content += entities[j].properties[o].propertyType;
-            content += "<br>";
+	    if (entities[j].properties) {
+		    for (var o = 0; o < entities[j].properties.length; o++) {
+			    content += entities[j].properties[o].propertyName;
+			    content += " : ";
+			    content += entities[j].properties[o].propertyType;
+			    content += "<br>";
+		    }
         }
         attributesCell.innerHTML = content;
     }
@@ -238,7 +240,8 @@ function suggestionModalCallback() {
     }
 
     for (var x = 0; x < relations.length; x++) {
-        moodler._diagram.startTransaction("Add Relationship: " + relations[x].name);
+
+	    moodler._diagram.startTransaction("Add Relationship: " + relations[x].name);
 
         if (!moodler._diagram.findNodeForKey(relations[x].from)) {
             for (var u1 = 0; u1 < entities.length; u1++) {

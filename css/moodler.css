@@ -162,3 +162,13 @@ body {
 .domainDisplay > p {
     margin-bottom: 0 !important;
 }
+
+.modal .modal-content {
+    overflow: hidden;
+    max-height: 90vh;
+}
+
+.modal-body {
+    overflow-y: auto;
+/ / to get scrollbar only for y axis
+}

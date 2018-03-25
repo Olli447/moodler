@@ -281,6 +281,8 @@ function createDomain(name, data) {
 }
 
 function updateDomain(id, name, data) {
+	data = validateAndCorrectDomainModel(data);
+
     makeRequest(
         DOMAIN + id,
         function (response) {
@@ -401,4 +403,58 @@ function deleteDomainHandler(event) {
     } else {
         // Do nothing!
     }
+}
+
+function validateAndCorrectDomainModel(data) {
+	var mydata = JSON.parse(data);
+	var relationarray = mydata.linkDataArray;
+	var entityarray = mydata.nodeDataArray;
+
+	for (var i = 0; i < entityarray.length; i++) {
+		var item = entityarray[i];
+		var oldName = "";
+		var newName = "";
+
+		if (!item)
+			continue;
+		if (item.entityName !== item.key && item.category === "entity") {
+			oldName = item.key;
+			newName = item.entityName;
+
+			item.key = newName;
+
+			//Change references present in the entity array
+			for (var x = 0; x < entityarray.length; x++) {
+				if (entityarray[x].category === "generalizationSpecializationCircle") {
+					if (entityarray[x].subclasses) {
+						for (var x1 = 0; x < entityarray[x].subclasses.length; x1++) {
+							if (entityarray[x].subclasses[x1] === oldName)
+								entityarray[x].subclasses[x1] = newName;
+						}
+					}
+
+					if (entityarray[x].superclass === oldName)
+						entityarray[x].superclass = newName;
+				}
+				else if (entityarray[x].category === "relationshipDiamond") {
+					if (entityarray[x].source === oldName)
+						entityarray[x].source = newName;
+					if (entityarray[x].target === oldName)
+						entityarray[x].target = newName
+				}
+			}
+
+			//Change any references present in any relations
+			for (var o = 0; o < relationarray.length; o++) {
+				if (relationarray[o].from === oldName)
+					relationarray[o].from = newName;
+
+				if (relationarray[o].to === oldName)
+					relationarray[o].to = newName;
+			}
+		}
+
+	}
+	return JSON.stringify(mydata)
+	//TODO: Check if entityname and -id are the same. If not this needs to be changed accordingly. Also check relations for the new id
 }

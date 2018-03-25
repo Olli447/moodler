@@ -68,7 +68,26 @@ function setupTemplates($go, diagram) {
             fill: "white",
             margin: 2,
             minSize: new go.Size(20, 20)
-        }),
+	        },
+	        new go.Binding("fill", "errorRelation", function (v) {
+		        return v ? "red" : "white";
+	        }),
+	        new go.Binding("stroke", "errorRelation", function (v) {
+		        return v ? "black" : "black";
+	        }),
+	        new go.Binding("strokeWidth", "errorRelation", function (v) {
+		        return v ? 1 : 1;
+	        }),
+	        new go.Binding("fill", "warningRelation", function (v) {
+		        return v ? "yellow" : "white";
+	        }),
+	        new go.Binding("stroke", "warningRelation", function (v) {
+		        return v ? "black" : "black";
+	        }),
+	        new go.Binding("strokeWidth", "warningRelation", function (v) {
+		        return v ? 1 : 1;
+	        })
+        ),
         $go(go.TextBlock, {
             margin: 2,
             font: "10px sans-serif"
