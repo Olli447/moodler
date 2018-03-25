@@ -126,6 +126,7 @@ function startWelcomeTour(again) {
     if (visited == null || again === true) {
         var trigger = $("body").find('[data-toggle="modal"]');
         trigger.click(function() {
+            $("#videoModal").modal({backdrop: "static"});
             var theModal = $(this).data( "target" ),
                 videoSRC = $(this).attr( "data-theVideo" ),
                 videoSRCauto = videoSRC+"?autoplay=1" ;
