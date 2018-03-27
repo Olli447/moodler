@@ -106,10 +106,6 @@ function startToasts(){
     //$.material.init();
     $('body').bootstrapMaterialDesign();
 
-    /*var request = new XMLHttpRequest();
-    request.open("GET", "json/szenario.json", false);
-    request.send(null);
-    autocomplete.sourceEntity = JSON.parse(request.responseText);*/
 
     toastr.options.progressBar = true;
     toastr.options.timeOut = 30000;

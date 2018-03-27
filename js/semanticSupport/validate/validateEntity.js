@@ -2,7 +2,7 @@ function checkDoubleEntity(){
     if(moodler.existNode($('#entityName').val())){
         if(moodler.getEntityData($('#entityName').val())!== undefined){
             alert('Dieser Entitätstyp existiert bereits');
-            $('#entityName').val("");
+            $('#entityName').focus();
         }
     }
 }
@@ -107,7 +107,7 @@ function initSuggestName(modal) {
         });
     modal.find("#entityName").on('typeahead:select', function (event, suggestion) {
         //console.log('Selection: ' + suggestion);
-        var infoToast = notification.createInfo("Brauchen Sie eine helfende Hand?", "<div class='row' style='margin-left: 0.33333%;'><p>Wollen Sie empfohlene Attribute zum Formular hinzufügen?</p></div><div class='row col-md-offset-1' style=\"margin-left: 0.33333%;\"><div></div><button type='button' class='btn btn-raised btn-success btn-block' style='width: 45%; margin: 2.5%' id='yesBtn'>Yes</button><button type='button' class='btn btn-raised btn-danger btn-block' style='width: 45%; margin: 2.5%' id='noBtn'>No</button></div>", "modal");
+        var infoToast = notification.createInfo("Brauchen Sie eine helfende Hand?", "<div class='row' style='margin-left: 0.33333%;'><p>Wollen Sie empfohlene Attribute zum Formular hinzufügen?</p></div><div class='row col-md-offset-1' style=\"margin-left: 0.33333%;\"><div></div><button type='button' class='btn btn-raised btn-success btn-block' style='width: 45%; margin: 2.5%' id='yesBtn'>Ja</button><button type='button' class='btn btn-raised btn-danger btn-block' style='width: 45%; margin: 2.5%' id='noBtn'>Nein</button></div>", "modal");
         notification.addEventListener(infoToast, "keydown", handleKeydownEnterEntity);
         infoToast.find('#yesBtn').on('click', function (e) {
             //TODO: ADD check if Attribute allready exists

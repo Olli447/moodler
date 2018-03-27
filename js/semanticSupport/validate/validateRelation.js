@@ -33,9 +33,7 @@ function checkThirdSingular(fullName, relName) {
 function callBackThirdSingular(response, relName) {
     console.log(response);
     if(response.isSingular && response.isThirdPerson){
-        console.log("YES");
     }else{
-        //Testweise mit R_NAME_0
 	    var data = moodler.getRelationshipData(relName);
         moodler._diagram.startTransaction("setError");
         if (semanticSupportEnabled) {
