@@ -124,7 +124,7 @@ function startToasts(){
     if (typeof(Storage) !== "undefined") {
         var save = localStorage.getItem("quicksave");
         if (save) {
-            var modal = notification.createWarning("Hinweis", "<div class='row' style='margin-left: 0.33333%;'><p>Es wurde ein Modell wiederhergestellt. Soll es geladen werden?</p></div><div class='row col-md-offset-1' style=\"margin-left: 0.33333%;\"><div></div><button type='button' class='btn btn-raised btn-success btn-block' style='width: 45%; margin: 2.5%' id='reload'>Yes</button><button type='button' class='btn btn-raised btn-danger btn-block' style='width: 45%; margin: 2.5%' id='discard'>No</button></div>");
+            var modal = notification.createWarning("Hinweis", "<div class='row' style='margin-left: 0.33333%;'><p>Es wurde ein Modell wiederhergestellt. Soll es geladen werden?</p></div><div class='row col-md-offset-1' style=\"margin-left: 0.33333%;\"><div></div><button type='button' class='btn btn-raised btn-success btn-block' style='width: 45%; margin: 2.5%' id='reload'>Ja</button><button type='button' class='btn btn-raised btn-danger btn-block' style='width: 45%; margin: 2.5%' id='discard'>Nein</button></div>");
             modal.find("#reload").on("click", function () {
                 moodler.fromJSON(save);
                 if (moodler.getEntityList.length !== 0) {

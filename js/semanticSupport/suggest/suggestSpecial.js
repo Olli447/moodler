@@ -63,7 +63,7 @@ function suggestGeneralSpecial(entityData) {
 
         var tempS = specials;
         var tempG = generals;
-        var toast = notification.createInfo("Empfehlungen verfügbar", "<div class='row' style='margin-left: 0.33333%;'><p>Es werden zu diesem Entitätstyp Generalisierungen/Spezialisierungen empfohlen. Sollen diese angezeigt werden?</p></div><div class='row col-md-offset-1' style=\"margin-left: 0.33333%;\"><div></div><button type='button' class='btn btn-raised btn-success btn-block' style='width: 45%; margin: 2.5%' id='suggestYes2'>Yes</button><button type='button' class='btn btn-raised btn-danger btn-block' style='width: 45%; margin: 2.5%' id='suggestNo2'>No</button></div>", entityData.entityName);
+        var toast = notification.createInfo("Empfehlungen verfügbar", "<div class='row' style='margin-left: 0.33333%;'><p>Es werden zu diesem Entitätstyp Generalisierungen/Spezialisierungen empfohlen. Sollen diese angezeigt werden?</p></div><div class='row col-md-offset-1' style=\"margin-left: 0.33333%;\"><div></div><button type='button' class='btn btn-raised btn-success btn-block' style='width: 45%; margin: 2.5%' id='suggestYes2'>Ja</button><button type='button' class='btn btn-raised btn-danger btn-block' style='width: 45%; margin: 2.5%' id='suggestNo2'>Nein</button></div>", entityData.entityName);
         toast.find("#suggestYes2").on("click", function () {
             initGeneralModal(tempG, tempS);
         });
