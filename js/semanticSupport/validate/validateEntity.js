@@ -44,7 +44,7 @@ function checkNameCallback(entityName, isPlural, basicWord) {
             }
             moodler._diagram.model.setDataProperty(data, "warningMessage", null);
             if (isPlural)
-                moodler._diagram.model.setDataProperty(data, "errorMessage", "Der Name der Entität muss im Singualar sein.<br>Besser: \"" + basicWord + "\"");
+                moodler._diagram.model.setDataProperty(data, "errorMessage", "Der Name des Entitätstyp muss im Singualar sein.<br>Besser: \"" + basicWord + "\"");
             moodler._diagram.commitTransaction("setError");
         } else {
             moodler._diagram.startTransaction("setWarning");
@@ -54,7 +54,7 @@ function checkNameCallback(entityName, isPlural, basicWord) {
                 moodler._diagram.model.setDataProperty(data, "warning", true);
             }
             moodler._diagram.model.setDataProperty(data, "errorMessage", null);
-            moodler._diagram.model.setDataProperty(data, "warningMessage", "The System returned:<br>" + basicWord + "!");
+            moodler._diagram.model.setDataProperty(data, "warningMessage", "Das System gibt zurück:<br>" + basicWord + "!");
             moodler._diagram.commitTransaction("setWarning");
         }
     }
