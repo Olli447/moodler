@@ -93,7 +93,7 @@ function suggestEntityAndRelation(entityData) {
     if (toEntityNodes.length === 0 && toEntityRelations.length === 0) {
         return;
     }
-    var toast = notification.createInfo("Empfehlungen verfügbar", "<div class='row' style='margin-left: 0.33333%;'><p>Es gibt Empfehlungen für die weitere Modellierung. Sollen diese angezeigt werden?</p></div><div class='row col-md-offset-1' style=\"margin-left: 0.33333%;\"><div></div><button type='button' class='btn btn-raised btn-success btn-block' style='width: 45%; margin: 2.5%' id='suggestYes'>Yes</button><button type='button' class='btn btn-raised btn-danger btn-block' style='width: 45%; margin: 2.5%' id='suggestNo'>No</button></div>", entityData.entityName);
+	var toast = notification.createInfo("Empfehlungen verfügbar", "<div class='row' style='margin-left: 0.33333%;'><p>Es gibt Empfehlungen für die weitere Modellierung ausgehend von " + entityData.entityName + ". Sollen diese angezeigt werden?</p></div><div class='row col-md-offset-1' style=\"margin-left: 0.33333%;\"><div></div><button type='button' class='btn btn-raised btn-success btn-block' style='width: 45%; margin: 2.5%' id='suggestYes'>Yes</button><button type='button' class='btn btn-raised btn-danger btn-block' style='width: 45%; margin: 2.5%' id='suggestNo'>No</button></div>", entityData.entityName);
     toast.find("#suggestYes").on("click", function () {
         initSuggestionModal(toEntityRelations, toEntityNodes)
     });
@@ -252,6 +252,11 @@ function suggestionModalCallback() {
                         properties: entities[u1].properties,
                         category: "entity"
                     });
+	                var entityData = {
+		                entityName: entities[u1].name,
+		                properties: entities[u1].properties
+	                };
+	                suggestEntityAndRelation(entityData);
                     break;
                 }
             }
@@ -267,6 +272,11 @@ function suggestionModalCallback() {
                         properties: entities[u2].properties,
                         category: "entity"
                     });
+	                var entityData = {
+		                entityName: entities[u2].name,
+		                properties: entities[u2].properties
+	                };
+	                suggestEntityAndRelation(entityData);
                     break;
                 }
             }
@@ -305,7 +315,8 @@ function suggestionModalCallback() {
             category: "relationshipLine"
         });
 
-        moodler._diagram.commitTransaction("Add Relationship: " + relations[x].name);
+
+	    moodler._diagram.commitTransaction("Add Relationship: " + relations[x].name);
     }
     $("#suggestModal").modal('hide');
 }

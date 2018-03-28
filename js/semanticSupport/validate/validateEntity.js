@@ -18,7 +18,7 @@ function checkName() {
 
 function checkNameCallback(entityName, isPlural, basicWord) {
 
-    for (var i = 0; i < entityArray; i++) {
+	for (var i = 0; i < entityArray.length; i++) {
         if (entityName === entityArray[i].name) {
             return;
         }
