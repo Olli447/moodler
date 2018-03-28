@@ -69,7 +69,7 @@ function suggestGeneralSpecial(entityData) {
         });
         toast.find("#suggestNo2").on("click", function () {
         });
-        notification.addEventListener(toast, "keydown", handleKeyDownEnterSuggestion);
+	    notification.addEventListener(toast, "keydown", handleKeyDownEnterSuggestion, true);
     }
 }
 

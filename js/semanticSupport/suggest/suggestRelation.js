@@ -12,7 +12,7 @@ function suggestRelation(from, to, name){
 		            });
 		            toast.find("#suggestNo3").on("click", function () {
 		            });
-		            notification.addEventListener(toast, "keydown", handleKeyDownEnterSuggestion);
+		            notification.addEventListener(toast, "keydown", handleKeyDownEnterSuggestion, true);
 	            }
             }
         }

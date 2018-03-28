@@ -100,7 +100,7 @@ function suggestEntityAndRelation(entityData) {
     toast.find("#suggestNo").on("click", function () {
         //NoOp
     });
-    notification.addEventListener(toast, "keydown", handleKeyDownEnterSuggestion);
+	notification.addEventListener(toast, "keydown", handleKeyDownEnterSuggestion, true);
 }
 
 function initSuggestionModal(relations, entities) {

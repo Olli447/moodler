@@ -1,5 +1,6 @@
 window.notification = {
     activeToasts: [],
+	enterEventToast: null,
     observer: new MutationObserver(this.somethingChanged),
     createInfo: function (title, content, key) {
 
@@ -79,20 +80,33 @@ window.notification = {
 
         return newToast;
     },
-    addEventListener: function (toast, type, callback) {
-
+	addEventListener: function (toast, type, callback, isEnter) {
         if (!semanticSupportEnabled) {
             return;
         }
+		if (isEnter == undefined) {
+			this.isEnter = false;
+		}
+		var id = toast.attr("data-id");
 
         for (var i = 0, len = notification.activeToasts.length; i < len; i++) {
-            if (this.activeToasts[i].id === toast.attr("data-id")) {
+	        if (this.activeToasts[i].id === id) {
                 type === "keydown" ? setTimeout(function () {
+	                for (var j = 0, len = notification.activeToasts.length; j < len; j++) {
+		                var tmpToast = notification.activeToasts[j];
+		                for (var o = 0; o < tmpToast.events.length; o++) {
+			                var event = tmpToast.events[o];
+			                if (isEnter && id !== tmpToast.id)
+				                document.removeEventListener(event.type, event.callback);
+		                }
+	                }
+
                     document.addEventListener(type, callback);
                 }, 500) : this.activeToasts[i].toast.addEventListener(type, callback);
                 this.activeToasts[i].events.push({
                     type: type,
-                    callback: callback
+	                callback: callback,
+	                isEnter: isEnter
                 });
                 break;
             }
