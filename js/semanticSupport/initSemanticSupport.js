@@ -106,25 +106,21 @@ function startToasts(){
     //$.material.init();
     $('body').bootstrapMaterialDesign();
 
-    /*var request = new XMLHttpRequest();
-    request.open("GET", "json/szenario.json", false);
-    request.send(null);
-    autocomplete.sourceEntity = JSON.parse(request.responseText);*/
 
     toastr.options.progressBar = true;
     toastr.options.timeOut = 30000;
     toastr.options.extendedTimeOut = 60000;
     moodler.init("moodler");
     formHandler.init();
-    notification.createInfo("Litte Helper", "Mistakes will be highlighted. Click on the highlighted area to know more about it.", "overview");
+    notification.createInfo("Kleiner Helfer", "Fehler werden hervorgehoben. Klicke auf die hervorgehobene Fläche, um dir den Fehler anzeigen zu lassen.", "overview");
     setTimeout(function () {
-        notification.createInfo("Domäne auswählen", "Bitte wählen Sie eine Domäne aus um Kontexthilfen zu erhalten", "overview");
+        notification.createInfo("Domäne auswählen", "Bitte wählen Sie eine Domäne aus, um Kontexthilfen zu erhalten", "overview");
     }, 1000);
 
     if (typeof(Storage) !== "undefined") {
         var save = localStorage.getItem("quicksave");
         if (save) {
-            var modal = notification.createWarning("Hinweis", "<div class='row' style='margin-left: 0.33333%;'><p>Es wurde ein Modell wiederhergestellt. Soll es geladen werden?</p></div><div class='row col-md-offset-1' style=\"margin-left: 0.33333%;\"><div></div><button type='button' class='btn btn-raised btn-success btn-block' style='width: 45%; margin: 2.5%' id='reload'>Yes</button><button type='button' class='btn btn-raised btn-danger btn-block' style='width: 45%; margin: 2.5%' id='discard'>No</button></div>");
+            var modal = notification.createWarning("Hinweis", "<div class='row' style='margin-left: 0.33333%;'><p>Es wurde ein Modell wiederhergestellt. Soll es geladen werden?</p></div><div class='row col-md-offset-1' style=\"margin-left: 0.33333%;\"><div></div><button type='button' class='btn btn-raised btn-success btn-block' style='width: 45%; margin: 2.5%' id='reload'>Ja</button><button type='button' class='btn btn-raised btn-danger btn-block' style='width: 45%; margin: 2.5%' id='discard'>Nein</button></div>");
             modal.find("#reload").on("click", function () {
                 moodler.fromJSON(save);
                 if (moodler.getEntityList.length !== 0) {

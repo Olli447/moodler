@@ -87,7 +87,7 @@ function checkAtomar() {
                     var linkAdresse = {
                         source: key,
                         target: "Adresse",
-                        name: "wohnt_in",
+                        name: "hat",
                         sourceRole: "",
                         sourceMultiplicity: "0,*",
                         targetRole: "",

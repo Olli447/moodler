@@ -103,7 +103,7 @@
                         <div class="col-sm-12">
                             <div class="form-group label-floating">
                                 <label class="control-label" for="entityName">Name des Entitätstyp</label>
-                                <input class="form-control" id="entityName" type="text" pattern="[\wöäüÄÖÜß]+"
+                                <input class="form-control" id="entityName" onblur="checkDoubleEntity()" type="text" pattern="[\wöäüÄÖÜß]+"
                                        title="Nur Buchstaben, Ziffern oder _"
                                        required/>
                             </div>
@@ -113,14 +113,14 @@
                         <div class="col-sm-7">
                             <div class="label-floating form-group">
                                 <label class="control-label" for="attributeName">Attr. Name</label>
-                                <input pattern="[\wöäüßÄÖÜ]+" id="attributeName" onblur="if($('#attributeName').val()!=''){$('#attributeType').prop('required',true);}else{('#attributeType').prop('required',false);}" class="form-control"
+                                <input pattern="[\wöäüßÄÖÜ]+" id="attributeName" onblur="if($('#attributeName').val()==''){$('#attributeType').prop('required',false);}else{$('#attributeType').prop('required',true);}" class="form-control"
                                        type="text" title="Nur Buchstaben, Ziffern oder _">
                             </div>
                         </div>
                         <div class="col-sm-3">
                             <div class="label-floating form-group">
                                 <label for="attributeType" class="control-label">Attr. Typ</label>
-                                <select id="attributeType" class="form-control" title="Pflichtfeld">
+                                <select id="attributeType" onblur="if($('#attributeType').val()==''){$('#attributeName').prop('required',false);}else{$('#attributeName').prop('required',true);}" class="form-control" title="Pflichtfeld">
                                     <option></option>
                                     <option value="String">String</option>
                                     <option value="Integer">Integer</option>
@@ -430,7 +430,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12">
-                            <h4>Relationen</h4>
+                            <h4>Beziehungstypen</h4>
                             <div class="table-responsive">
                                 <table class="table" id="relationTable">
                                     <thead>

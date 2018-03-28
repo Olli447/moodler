@@ -66,27 +66,28 @@ window.moodler = {
         this._diagram.startTransaction("Add/Edit Entity " + entityData.entityName);
 
         if (entityData.id !== undefined) {
-            var entity = this._diagram.model.findNodeDataForKey(entityData.id);
-            this._diagram.model.setDataProperty(entity, "properties", entityData.properties);
-            this._diagram.model.setDataProperty(entity, "entityName", entityData.entityName);
+            console.log(entityData.id);
+                var entity = this._diagram.model.findNodeDataForKey(entityData.id);
+                this._diagram.model.setDataProperty(entity, "properties", entityData.properties);
+                this._diagram.model.setDataProperty(entity, "entityName", entityData.entityName);
         }
         else {
-            if (x && y) {
-                this._diagram.model.addNodeData({
-                    key: entityData.entityName,
-                    entityName: entityData.entityName,
-                    location: new go.Point(parseFloat(x), parseFloat(y)),
-                    properties: entityData.properties,
-                    category: "entity"
-                });
-            } else {
-                this._diagram.model.addNodeData({
-                    key: entityData.entityName,
-                    entityName: entityData.entityName,
-                    properties: entityData.properties,
-                    category: "entity"
-                });
-            }
+               if (x && y) {
+                   this._diagram.model.addNodeData({
+                       key: entityData.entityName,
+                       entityName: entityData.entityName,
+                       location: new go.Point(parseFloat(x), parseFloat(y)),
+                       properties: entityData.properties,
+                       category: "entity"
+                   });
+               } else {
+                   this._diagram.model.addNodeData({
+                       key: entityData.entityName,
+                       entityName: entityData.entityName,
+                       properties: entityData.properties,
+                       category: "entity"
+                   });
+               }
             suggestEntityAndRelation(entityData);
             suggestGeneralSpecial(entityData);
         }
