@@ -46,3 +46,25 @@ function callBackThirdSingular(response, relName) {
     }
 }
 
+function checkRelationEvent(){
+    var part = event.subject.part;
+
+    var toasts = document.getElementsByClassName("toast-title");
+    var isSingleton = true;
+
+    var index, len;
+    for (index = 0, len = toasts.length; index < len; index++) {
+        if ((toasts[index].innerText === part.data.relationshipName + ' - Fehler - Relationstyp steht in der 3. Person - Singular') || (toasts[index].innerText === part.data.relationshipName + ' - Fehler - Relationstyp steht in der 3. Person - Singular')) {
+            isSingleton = false;
+            break;
+        }
+    }
+
+    if (part.category === "relationshipDiamond" && part.data.error === true && isSingleton) {
+        notification.createError(part.data.relationshipName + ' - Fehler - Relationstyp steht in der 3. Person - Singular', part.data.errorMessage, part.data.id);
+    }
+    if (part.category === "relationshipDiamond" && part.data.warning === true && isSingleton) {
+        notification.createWarning(part.data.relationshipName + ' - Fehler - Relationstyp steht in der 3. Person - Singular', part.data.warningMessage, part.data.id);
+    }
+}
+
