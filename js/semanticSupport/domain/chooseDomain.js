@@ -268,7 +268,9 @@ function createDomain(name, data) {
         },
         function (response) {
             console.log("Error while loading domain");
-            console.log(response.responseJSON.error)
+	        console.log(response.responseJSON.message);
+
+	        alert("Der Server antwortete: " + response.responseJSON.message);
         },
         {
             type: 'POST'
@@ -312,16 +314,18 @@ function deleteDomain(id) {
         },
         function (response) {
             if (response.status === 200) {
-                $('#szenarioModal').modal('hide')
+	            $('#szenarioModal').modal('hide');
+	            var currentDomain = $("#currentDomain");
 
-                entityArray = [];
-                relationArray = [];
-                specialArray = [];
-                var currentDomain = $("#currentDomain");
-                currentDomain.find(".name").text("");
-                currentDomain.find(".id").text("");
-                domainDetails.name = "";
-                domainDetails.id = "";
+	            if (currentDomain.find(".id").text() === id) {
+		            entityArray = [];
+		            relationArray = [];
+		            specialArray = [];
+		            currentDomain.find(".name").text("");
+		            currentDomain.find(".id").text("");
+		            domainDetails.name = "";
+		            domainDetails.id = "";
+	            }
 
                 alert("Domäne gelöscht!");
             } else {
@@ -368,10 +372,12 @@ function createDomainHandler(event) {
     }
     var reader = new FileReader();
     reader.readAsText(files[0]);
-    reader.onload = function (event) {
+	reader.onload = function (event2) {
         var name = files[0].name;
         name = name.replace(/\.[^/\\.]+$/, "");
-        createDomain(name, event.target.result);
+		createDomain(name, event2.target.result);
+
+		event.target.value = '';
     };
 }
 

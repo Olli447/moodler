@@ -1,10 +1,12 @@
 function checkDoubleEntity(){
     if(moodler.existNode($('#entityName').val())){
-        if(moodler.getEntityData($('#entityName').val())!== undefined){
-            alert('Dieser Entitätstyp existiert bereits');
-            $('#entityName').focus();
-        }
+	    //if(moodler.getEntityData($('#entityName').val())!== undefined){
+	    //    alert('Dieser Entitätstyp existiert bereits');
+	    //    $('#entityName').focus();
+	    //    return false;
+	    //}
     }
+	return true;
 }
 
 function checkName() {
@@ -27,7 +29,7 @@ function checkName() {
 
 function checkNameCallback(entityName, isPlural, basicWord) {
 
-    for (var i = 0; i < entityArray; i++) {
+	for (var i = 0; i < entityArray.length; i++) {
         if (entityName === entityArray[i].name) {
             return;
         }
