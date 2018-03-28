@@ -31,7 +31,7 @@ window.moodler = {
             initialAutoScale: go.Diagram.Uniform
         });
         this._diagram.addDiagramListener("ObjectSingleClicked", checkNameEvent);
-	    //this._diagram.addDiagramListener("ObjectSingleClicked", checkRelationEvent); //Fehler heist errorRelation
+	    this._diagram.addDiagramListener("ObjectSingleClicked", checkRelationEvent); //Fehler heist errorRelation
         this._diagram.addModelChangedListener(function (evt) {
             if (evt.isTransactionFinished) {
                 if (typeof(Storage) !== "undefined") {
