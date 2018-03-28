@@ -54,11 +54,6 @@ window.moodler = {
      */
     addEntity: function (entityData, x, y) {
         var node = this._diagram.model.findNodeDataForKey(entityData.entityName);
-        // if (node !== null) {
-        //         notification.createError("Fehler", "A Entity with this name already exists.");
-        //         throw new Error("A Entity with this name already exists.");
-        //         return;
-        // }
         if (entityData.id !== undefined)
             notification.destroyToastForKey(entityData.id);
 

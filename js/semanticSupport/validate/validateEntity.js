@@ -1,10 +1,12 @@
 function checkDoubleEntity(){
     if(moodler.existNode($('#entityName').val())){
-        if(moodler.getEntityData($('#entityName').val())!== undefined){
-            alert('Dieser Entitätstyp existiert bereits');
-            $('#entityName').focus();
-        }
+	    //if(moodler.getEntityData($('#entityName').val())!== undefined){
+	    //    alert('Dieser Entitätstyp existiert bereits');
+	    //    $('#entityName').focus();
+	    //    return false;
+	    //}
     }
+	return true;
 }
 
 function checkName() {
