@@ -68,25 +68,32 @@ window.moodler = {
                 this._diagram.model.setDataProperty(entity, "entityName", entityData.entityName);
         }
         else {
-               if (x && y) {
-                   this._diagram.model.addNodeData({
-                       key: entityData.entityName,
-                       entityName: entityData.entityName,
-                       location: new go.Point(parseFloat(x), parseFloat(y)),
-                       properties: entityData.properties,
-                       category: "entity"
-                   });
-               } else {
-                   this._diagram.model.addNodeData({
-                       key: entityData.entityName,
-                       entityName: entityData.entityName,
-                       properties: entityData.properties,
-                       category: "entity"
-                   });
-               }
-            suggestEntityAndRelation(entityData);
-            suggestGeneralSpecial(entityData);
-        }
+            if(moodler.existNode($('#entityName').val())) {
+                if (moodler.getEntityData($('#entityName').val()) !== undefined) {
+                    alert('Dieser Entitätstyp existiert bereits');
+                    return false;
+                    }
+                } else {
+                    if (x && y) {
+                        this._diagram.model.addNodeData({
+                            key: entityData.entityName,
+                            entityName: entityData.entityName,
+                            location: new go.Point(parseFloat(x), parseFloat(y)),
+                            properties: entityData.properties,
+                            category: "entity"
+                        });
+                    } else {
+                        this._diagram.model.addNodeData({
+                            key: entityData.entityName,
+                            entityName: entityData.entityName,
+                            properties: entityData.properties,
+                            category: "entity"
+                        });
+                    }
+                    suggestEntityAndRelation(entityData);
+                    suggestGeneralSpecial(entityData);
+                }
+            }
         this._diagram.commitTransaction("Add/Edit Entity " + entityData.entityName);
     },
 
