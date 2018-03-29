@@ -46,7 +46,7 @@ function callBackThirdSingular(response, relName) {
     }
 }
 
-function checkRelationEvent(){
+function checkRelationEvent(event) {
     var part = event.subject.part;
 
     var toasts = document.getElementsByClassName("toast-title");
@@ -60,10 +60,10 @@ function checkRelationEvent(){
         }
     }
 
-    if (part.category === "relationshipDiamond" && part.data.error === true && isSingleton) {
+	if (part.category === "relationshipDiamond" && part.data.errorRelation === true && isSingleton) {
         notification.createError(part.data.relationshipName + ' - Fehler - Relationstyp steht in der 3. Person - Singular', part.data.errorMessage, part.data.id);
     }
-    if (part.category === "relationshipDiamond" && part.data.warning === true && isSingleton) {
+	if (part.category === "relationshipDiamond" && part.data.warningRelation === true && isSingleton) {
         notification.createWarning(part.data.relationshipName + ' - Fehler - Relationstyp steht in der 3. Person - Singular', part.data.warningMessage, part.data.id);
     }
 }
