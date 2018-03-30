@@ -150,6 +150,15 @@ window.moodler = {
         })
     },
 
+	getEntityAndRelationList: function (filters) {
+		return this._diagram.model.nodeDataArray.filter(function (nodeData) {
+			var retVal = nodeData.category === "entity" || nodeData.category === "relationshipDiamond";
+			if (typeof  filters !== "undefined" && Array.isArray(filters))
+				retVal = retVal && (filters.indexOf(nodeData.key) === -1);
+			return retVal;
+		})
+	},
+
 
     /**
      * Retrieves the data of a specified entity
@@ -390,6 +399,8 @@ window.moodler = {
 
     fromJSON: function (jsonData) {
         this._diagram.model = go.Model.fromJson(jsonData);
+
+	    setTimeout(() => initMoodlerAfterLoad(), 500);
     },
 
     toPNG: function () {

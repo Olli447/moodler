@@ -160,3 +160,10 @@ function startWelcomeTour(again) {
     Cookies.set('visited', 'value');
 
 }
+
+function initMoodlerAfterLoad() {
+	//It works dont ask!!!
+	$('#SwitchMessagesBtn').click();
+
+	setTimeout(() => $('#SwitchMessagesBtn').click(), 1000);
+}
