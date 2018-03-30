@@ -54,17 +54,17 @@ function checkRelationEvent(event) {
 
     var index, len;
     for (index = 0, len = toasts.length; index < len; index++) {
-        if ((toasts[index].innerText === part.data.relationshipName + ' - Fehler - Relationstyp steht in der 3. Person - Singular') || (toasts[index].innerText === part.data.relationshipName + ' - Fehler - Relationstyp steht in der 3. Person - Singular')) {
+        if ((toasts[index].innerText === part.data.relationshipName + ' - Fehler - Relationstyp steht nicht in der 3. Person - Singular') || (toasts[index].innerText === part.data.relationshipName + ' - Fehler - Relationstyp steht nicht in der 3. Person - Singular')) {
             isSingleton = false;
             break;
         }
     }
 
 	if (part.category === "relationshipDiamond" && part.data.errorRelation === true && isSingleton) {
-        notification.createError(part.data.relationshipName + ' - Fehler - Relationstyp steht in der 3. Person - Singular', part.data.errorMessage, part.data.id);
+        notification.createError(part.data.relationshipName + ' - Fehler - Relationstyp steht nicht in der 3. Person - Singular', part.data.errorMessage, part.data.id);
     }
 	if (part.category === "relationshipDiamond" && part.data.warningRelation === true && isSingleton) {
-        notification.createWarning(part.data.relationshipName + ' - Fehler - Relationstyp steht in der 3. Person - Singular', part.data.warningMessage, part.data.id);
+        notification.createWarning(part.data.relationshipName + ' - Fehler - Relationstyp steht nicht in der 3. Person - Singular', part.data.warningMessage, part.data.id);
     }
 }
 
